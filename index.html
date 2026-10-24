@@ -337,6 +337,55 @@ body.dashmode .dept .fill{transition:width .6s}
 body.dashmode .feed{max-height:56vh;overflow:auto}
 body.dashmode .feed li{padding:.45rem 0;font-size:.9rem}
 @media (max-width:820px){ .db-top{grid-template-columns:1fr} }
+/* reveal effects */
+.ld-flash{position:fixed;inset:0;z-index:60;pointer-events:none;background:radial-gradient(circle at 50% 48%,#fff 0%,rgba(255,243,196,.85) 25%,rgba(242,207,115,.25) 55%,transparent 75%);animation:flash 1s ease-out forwards}
+.ld-flash.gold{background:radial-gradient(circle at 50% 48%,#fff 0%,#FFF3C4 30%,rgba(242,207,115,.6) 60%,rgba(201,150,46,.2) 80%)}
+@keyframes flash{0%{opacity:0}12%{opacity:1}100%{opacity:0}}
+.ld-wave{position:absolute;left:50%;top:45%;width:20vmin;height:20vmin;margin:-10vmin 0 0 -10vmin;border-radius:50%;border:4px solid rgba(242,207,115,.9);pointer-events:none;animation:wave 1.2s ease-out forwards}
+.ld-wave.late{animation-delay:.25s;border-color:rgba(224,34,138,.8)}
+@keyframes wave{from{transform:scale(.3);opacity:1}to{transform:scale(6);opacity:0}}
+.ld-panel.rays::before{content:"";position:absolute;inset:-60%;z-index:0;pointer-events:none;background:repeating-conic-gradient(from 0deg at 50% 50%,rgba(242,207,115,.16) 0 6deg,transparent 6deg 18deg);animation:rays 10s linear infinite,raysIn .8s ease both}
+@keyframes rays{to{transform:rotate(360deg)}}
+@keyframes raysIn{from{opacity:0}to{opacity:1}}
+.ld-panel > *{position:relative;z-index:1}
+.ld-panel.grand{border-color:var(--gold);box-shadow:0 0 0 2px rgba(242,207,115,.6),0 0 80px rgba(242,207,115,.35),inset 0 0 120px rgba(242,207,115,.15);animation:grandPulse 1.8s ease-in-out infinite alternate}
+@keyframes grandPulse{from{box-shadow:0 0 0 2px rgba(242,207,115,.5),0 0 50px rgba(242,207,115,.25),inset 0 0 90px rgba(242,207,115,.12)}to{box-shadow:0 0 0 3px rgba(242,207,115,.9),0 0 110px rgba(242,207,115,.5),inset 0 0 140px rgba(242,207,115,.2)}}
+.ld.shake{animation:ldshake .7s ease}
+@keyframes ldshake{0%,100%{transform:none}15%{transform:translate(-10px,4px)}30%{transform:translate(9px,-5px)}45%{transform:translate(-7px,3px)}60%{transform:translate(5px,-2px)}80%{transform:translate(-2px,1px)}}
+.ld-num.spinning{filter:blur(.6px) drop-shadow(0 0 30px rgba(242,207,115,.4))}
+.ld-num.spinning.hot{filter:blur(.6px) drop-shadow(0 0 50px rgba(224,34,138,.55))}
+.ld-num.lockhit{animation:lockhit .25s ease}
+@keyframes lockhit{0%{transform:scaleX(1.12) scale(1)}40%{transform:scaleX(1.12) scale(1.07)}100%{transform:scaleX(1.12) scale(1)}}
+.ld-num.grandnum{animation:popw .7s cubic-bezier(.2,1.4,.4,1) both,grandGlow 1.4s .7s ease-in-out infinite alternate}
+@keyframes grandGlow{from{filter:drop-shadow(0 0 30px rgba(242,207,115,.45))}to{filter:drop-shadow(0 0 70px rgba(255,243,196,.9))}}
+#fw{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:55}
+@media (prefers-reduced-motion:reduce){ .ld-panel.rays::before,.ld-panel.grand,.ld-num.grandnum{animation:none} }
+/* intro overlay */
+.intro{position:fixed;inset:0;z-index:90;display:grid;place-items:center;overflow:hidden;background:radial-gradient(ellipse 70% 60% at 50% 55%,#3b1a6e 0%,#160e33 60%,#07040f 100%);animation:introIn .5s ease both}
+.intro.out{animation:introOut .6s ease both}
+@keyframes introIn{from{opacity:0}to{opacity:1}}
+@keyframes introOut{to{opacity:0;transform:scale(1.04)}}
+.intro-beams{position:absolute;inset:-50%;background:conic-gradient(from 0deg at 50% 100%,transparent 0 8deg,rgba(242,207,115,.18) 10deg,transparent 14deg 40deg,rgba(224,34,138,.16) 44deg,transparent 48deg 80deg,rgba(139,63,193,.2) 84deg,transparent 88deg 120deg,rgba(245,158,43,.16) 124deg,transparent 128deg 360deg);animation:beams 6s linear infinite;filter:blur(2px)}
+@keyframes beams{to{transform:rotate(360deg)}}
+.intro-glow{position:absolute;width:70vmin;height:70vmin;border-radius:50%;background:radial-gradient(circle,rgba(242,207,115,.35),transparent 65%);animation:glow 1.6s ease-in-out infinite alternate}
+@keyframes glow{from{transform:scale(.85);opacity:.6}to{transform:scale(1.1);opacity:1}}
+.intro-stage{position:relative;z-index:1;text-align:center;padding:0 4vw}
+.intro-logos{display:block;margin:0 auto 2vh;height:clamp(28px,6vh,64px);width:auto;opacity:0;animation:fadeUp .8s .2s ease forwards}
+.intro-kick{margin:0 0 3vh;color:var(--gold);font-weight:700;letter-spacing:.35em;text-transform:uppercase;font-size:clamp(.8rem,1.6vw,1.4rem);opacity:0;animation:fadeUp .8s .5s ease forwards}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.intro-word{font-family:var(--display);font-weight:800;line-height:1;color:var(--ink);min-height:1em;text-transform:uppercase;letter-spacing:.04em;font-size:clamp(3rem,10vw,9rem);opacity:0}
+.intro-word.in{animation:wordIn .55s cubic-bezier(.2,1.5,.4,1) both}
+.intro-word.small{font-size:clamp(2rem,6vw,5rem);font-weight:700;letter-spacing:.2em}
+.intro-word.big{font-size:clamp(4rem,14vw,13rem)}
+.intro-word.count{font-size:clamp(8rem,32vh,26rem);background:linear-gradient(180deg,#FFF3C4,#F2CF73 45%,#C9962E);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.intro-word.gold{background:linear-gradient(180deg,#FFF3C4,#F2CF73 45%,#C9962E);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 40px rgba(242,207,115,.5))}
+.intro-word.shake.in{animation:wordIn .55s cubic-bezier(.2,1.5,.4,1) both,shake .5s .5s ease both}
+@keyframes wordIn{from{opacity:0;transform:scale(2.2);filter:blur(10px)}to{opacity:1;transform:scale(1);filter:none}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-14px) rotate(-1deg)}40%{transform:translateX(12px) rotate(1deg)}60%{transform:translateX(-8px)}80%{transform:translateX(6px)}}
+.intro-skip{position:absolute;right:1.5vw;bottom:2vh;z-index:2;background:rgba(14,8,34,.6);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:.45rem 1rem;font-weight:600;cursor:pointer;opacity:.6}
+.intro-skip:hover{opacity:1}
+.intro-video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
+@media (prefers-reduced-motion:reduce){ .intro-beams,.intro-glow{animation:none} .intro-word.in,.intro-word.shake.in{animation:fadeUp .3s ease both} }
 @media (max-width:820px){ .grid{grid-template-columns:1fr} }
 @media print{ body{padding:0;-webkit-print-color-adjust:exact;print-color-adjust:exact} body::after{display:none} .brand,.noprint,.toast,.demobar,.demonote{display:none!important} .poster{max-width:none} }
 @media (prefers-reduced-motion:reduce){ .pop{animation:none} .toast{transition:none} }
@@ -610,20 +659,19 @@ function staffGate(title, sub, next){
   inp.focus();
 }
 
-/* ---------- sound: festive game-show music and big draw effects (Web Audio, no files needed) ---------- */
+/* ---------- sound: music for each moment + tiered draw effects (Web Audio, no files needed) ----------
+   Modes:  wait  = before the draw (lucky-draw music; epic version when the grand prize is next)
+           draw  = numbers spinning (music off, only the draw sounds)
+           win   = winner walking up to collect (celebration music; epic for the grand prize)
+   Tiers:  1 normal · 2 big prize · 3 grand prize                                                     */
 const Sound = (function(){
-  let ctx = null, master, musicBus, musicGain, fxGain, noiseBuf, timer = null, nextT = 0, s16 = 0, held = false;
+  let ctx = null, master, musicBus, musicGain, fxGain, noiseBuf, timer = null, nextT = 0, s16 = 0;
+  let song = null, mode = "wait", tier = 1, pendingStart = null;
   const get = (k, d) => { try{ const v = localStorage.getItem("ghg-" + k); return v === null ? d : v; }catch(e){ return d; } };
   const put = (k, v) => { try{ localStorage.setItem("ghg-" + k, String(v)); }catch(e){} };
   let musicOn = get("music", "1") === "1", fxOn = get("fx", "1") === "1";
   let musicVol = parseFloat(get("musicvol", ".7")), fxVol = parseFloat(get("fxvol", ".9"));
-  const BPM = 118, SIX = 60 / BPM / 4;
-  /* Bright gala groove in C: C – Am – F – G, with a catchy hook */
-  const PROG = [[130.81, [523.25, 659.25, 783.99]], [110, [440, 523.25, 659.25]], [87.31, [440, 523.25, 698.46]], [98, [493.88, 587.33, 783.99]]];
-  /* 2-bar hook (sixteenth steps → semitones above C5, null = rest) */
-  const HOOK = [12, null, 7, null, 9, null, 7, 4, null, 7, null, 12, null, 14, 12, null,
-                16, null, 14, null, 12, null, 9, null, 7, null, 9, 12, null, null, null, null];
-  const C5 = 523.25, semi = n => C5 * Math.pow(2, n / 12);
+  const N = n => 440 * Math.pow(2, (n - 69) / 12);          /* MIDI note → Hz */
 
   function init(){
     if (ctx){ if (ctx.state === "suspended") ctx.resume(); return true; }
@@ -660,92 +708,162 @@ const Sound = (function(){
     else env(g, t, a || .002, peak, dur);
     s.start(t, Math.random() * 2); s.stop(t + dur + .1);
   }
-  const kick = (t, v, dest) => osc("sine", 165, t, .4, v, dest, {to:45, glide:.11});
-  const clap = (t, v, dest) => { [0, .011, .022].forEach(o => nz(t + o, .15, v, dest, "bandpass", 1400, .8)); };
-  const hat = (t, v, open, dest) => nz(t, open ? .2 : .045, v, dest, "highpass", 8500, .7);
-  const shaker = (t, v, dest) => nz(t, .06, v, dest, "bandpass", 6000, 2, .02);
-  function brass(freqs, t, dur, vol, dest){ freqs.forEach(f => { osc("sawtooth", f, t, dur, vol, dest, {cut:900, cutTo:3800, cutTime:.08, a:.02, detune:-6}); osc("sawtooth", f, t, dur, vol, dest, {cut:900, cutTo:3800, cutTime:.08, a:.02, detune:6}); }); }
-  function piano(freqs, t, vol, dest){ freqs.forEach(f => { osc("triangle", f, t, .35, vol, dest, {a:.003}); osc("sine", f * 2, t, .25, vol * .4, dest, {a:.003}); }); }
+  /* instruments */
+  const kick  = (t, v, d) => osc("sine", 165, t, .4, v, d, {to:45, glide:.11});
+  const clap  = (t, v, d) => { [0, .011, .022].forEach(o => nz(t + o, .15, v, d, "bandpass", 1400, .8)); };
+  const snare = (t, v, d) => { nz(t, .18, v, d, "bandpass", 2200, .7); osc("triangle", 190, t, .1, v * .6, d); };
+  const hat   = (t, v, open, d) => nz(t, open ? .2 : .045, v, d, "highpass", 8500, .7);
+  const tamb  = (t, v, d) => nz(t, .07, v, d, "bandpass", 7500, 3, .004);
+  const taiko = (t, v, d) => { osc("sine", 72, t, .9, v, d, {to:38, glide:.5}); nz(t, .12, v * .35, d, "lowpass", 700, .7); };
+  const crash = (t, v, d) => nz(t, 2.2, v, d, "highpass", 4000, .5);
+  function saws(freqs, t, dur, vol, d, cut, a){ freqs.forEach(f => [-12, 0, 12].forEach(dt => osc("sawtooth", f, t, dur, vol, d, {cut:cut || 2200, a:a || .01, detune:dt}))); }
+  function brass(freqs, t, dur, vol, d){ freqs.forEach(f => { osc("sawtooth", f, t, dur, vol, d, {cut:900, cutTo:4200, cutTime:.07, a:.02, detune:-6}); osc("sawtooth", f, t, dur, vol, d, {cut:900, cutTo:4200, cutTime:.07, a:.02, detune:6}); }); }
+  function strings(f, t, dur, vol, d){ osc("sawtooth", f, t, dur, vol, d, {cut:2600, a:.005}); osc("sawtooth", f * 2, t, dur, vol * .5, d, {cut:3200, a:.005}); }
+  function choir(freqs, t, dur, vol, d){ freqs.forEach(f => { osc("triangle", f, t, dur, vol, d, {a:.5}); osc("sine", f * 2, t, dur, vol * .5, d, {a:.6}); }); }
+  const pluck = (f, t, vol, d) => osc("square", f, t, .22, vol, d, {cut:3800, cutTo:900, cutTime:.2, a:.003});
 
-  /* one sixteenth of the music */
-  function play16(t, i){
-    const bar = Math.floor(i / 16) % 8, pos = i % 16, ch = PROG[bar % 4], M = musicGain, half = Math.floor(i / 128) % 2;
-    if (pos % 4 === 0) kick(t, .8, M);
-    if (pos === 4 || pos === 12) clap(t, .3, M);
-    if (pos % 4 === 2) hat(t, .14, true, M);
-    shaker(t, pos % 2 ? .035 : .05, M);
-    /* funky octave bass */
-    const bassPat = [1, 0, 2, 0, 1, 1, 0, 2, 1, 0, 2, 0, 1, 0, 2, 1];
-    if (bassPat[pos]) osc("sawtooth", ch[0] * bassPat[pos], t, SIX * 1.4, .15, M, {cut:700, q:6});
-    /* house piano stabs on the off-beats */
-    if (pos === 2 || pos === 6 || pos === 10 || pos === 14) piano(ch[1], t, .045, M);
-    /* catchy hook (second half of each phrase, and the whole phrase every other time) */
-    if (half === 1 || bar >= 4){ const n = HOOK[(bar % 2) * 16 + pos]; if (n !== null) osc("square", semi(n), t, SIX * 1.7, .045, M, {cut:3500, a:.004}); }
-    /* brass hit every 4 bars and a little fill at the end of the phrase */
-    if (pos === 0 && bar % 4 === 0) brass(ch[1].map(f => f / 2), t, .45, .035, M);
-    if (bar === 7 && pos >= 12) clap(t, .18 + (pos - 12) * .05, M);
+  /* ===== songs (one sixteenth at a time) ===== */
+  const SONGS = {
+    /* lucky-draw party: festive EDM, 124 BPM, Am – F – C – G */
+    wait: { bpm:124, bars:8, prog:[[45,[69,72,76]],[41,[65,69,72]],[48,[67,72,76]],[43,[67,71,74]]],
+      hook:[76,null,74,null,72,null,74,76, null,79,null,76,null,74,72,null],
+      play(t, i){ const M = musicGain, bar = Math.floor(i / 16) % 8, pos = i % 16, ch = this.prog[bar % 4];
+        if (pos % 4 === 0) kick(t, .9, M);
+        if (pos === 4 || pos === 12) clap(t, .32, M);
+        if (pos % 4 === 2) hat(t, .16, true, M); else hat(t, .05, false, M);
+        if (pos % 4 === 2) osc("sawtooth", N(ch[0]), t, .2, .18, M, {cut:600, q:7});
+        if (pos === 14) osc("sawtooth", N(ch[0] + 12), t, .15, .12, M, {cut:900, q:5});
+        if ([0, 3, 6, 10].indexOf(pos) >= 0) saws(ch[1].map(N), t, .22, .012, M, 2600);
+        if (bar >= 4){ const n = this.hook[pos]; if (n !== null) pluck(N(n), t, .05, M); }
+        if (bar === 7 && pos >= 8) snare(t, .08 + (pos - 8) * .03, M);
+        if (bar === 6 && pos === 0) nz(t, 60 / this.bpm * 8, .14, M, "bandpass", 300, 1.4, 0, {to:8000, ramp:true});
+        if (bar === 0 && pos === 0 && i > 0) crash(t, .22, M);
+      } },
+    /* grand prize is next: epic trailer, 96 BPM, Dm – Bb – F – C */
+    wait_epic: { bpm:96, bars:8, prog:[[38,[62,65,69]],[34,[62,65,70]],[41,[60,65,69]],[36,[60,64,67]]],
+      play(t, i){ const M = musicGain, bar = Math.floor(i / 16) % 8, pos = i % 16, ch = this.prog[Math.floor(bar / 2)];
+        if ([0, 3, 6, 8, 11].indexOf(pos) >= 0) taiko(t, pos === 0 || pos === 8 ? .9 : .55, M);
+        if (bar === 7) taiko(t, .25 + pos * .04, M);
+        if (pos % 2 === 0) strings(N(ch[1][[0, 1, 2, 1, 0, 2, 1, 2][(pos >> 1)]]), t, .14, .03, M);
+        if (pos === 0 && bar % 2 === 0){ brass(ch[1].map(f => N(f - 12)), t, 60 / this.bpm * 7.5, .03, M); choir(ch[1].map(N), t, 60 / this.bpm * 8, .025, M); osc("sawtooth", N(ch[0]), t, 60 / this.bpm * 8, .12, M, {cut:300}); }
+        if (bar === 6 && pos === 0) nz(t, 60 / this.bpm * 8, .2, M, "bandpass", 200, 1.5, 0, {to:7000, ramp:true});
+        if (bar === 0 && pos === 0 && i > 0){ crash(t, .3, M); osc("sine", 60, t, 1.5, .9, M, {to:28, glide:1.2}); }
+      } },
+    /* winner walk-up: victory party, 128 BPM, C – G – Am – F */
+    win: { bpm:128, bars:4, prog:[[48,[67,72,76]],[43,[67,71,74]],[45,[69,72,76]],[41,[65,69,72]]],
+      mel:[[72,0],[76,2],[79,4],[84,6],[79,10],[81,12],[79,14]],
+      play(t, i){ const M = musicGain, bar = Math.floor(i / 16) % 4, pos = i % 16, ch = this.prog[bar];
+        if (pos % 4 === 0) kick(t, .9, M);
+        if (pos === 4 || pos === 12) clap(t, .35, M);
+        tamb(t, pos % 2 ? .05 : .08, M);
+        if (pos % 2 === 0) osc("sawtooth", N(ch[0] + (pos % 4 === 2 ? 12 : 0)), t, .16, .15, M, {cut:800, q:5});
+        if (pos % 4 === 2) saws(ch[1].map(N), t, .15, .012, M, 3000);
+        const m = this.mel.find(x => x[1] === pos); if (m && bar % 2 === 0) brass([N(m[0] + (bar === 2 ? 2 : 0))], t, .22, .05, M);
+        if (bar === 3 && pos === 12) brass(ch[1].map(N), t, .5, .04, M);
+      } },
+    /* grand prize winner: same victory party, bigger: taiko, choir, octave brass */
+    win_epic: { bpm:132, bars:4,
+      play(t, i){ const M = musicGain, bar = Math.floor(i / 16) % 4, pos = i % 16, w = SONGS.win, ch = w.prog[bar];
+        w.play.call(w, t, i);
+        if (pos === 0 || pos === 8) taiko(t, .7, M);
+        if (pos === 0) choir(ch[1].map(N), t, 60 / this.bpm * 4, .03, M);
+        const m = w.mel.find(x => x[1] === pos); if (m) brass([N(m[0] + 12)], t, .2, .03, M);
+        if (bar === 0 && pos === 0 && i > 0) crash(t, .25, M);
+      } }
+  };
+
+  function scheduler(){
+    const sg = SONGS[song]; if (!sg) return; const six = 60 / sg.bpm / 4;
+    while (nextT < ctx.currentTime + .15){ sg.play(nextT, s16); nextT += six; s16++; }
   }
-  function scheduler(){ while (nextT < ctx.currentTime + .15){ play16(nextT, s16); nextT += SIX; s16++; } }
   function busTo(v, sec){ const g = musicBus.gain, n = ctx.currentTime; g.cancelScheduledValues(n); g.setValueAtTime(g.value, n); g.linearRampToValueAtTime(v, n + sec); }
-  function startMusic(fade){
-    if (!init() || held || !musicOn) return;
-    if (!timer){ nextT = ctx.currentTime + .1; s16 = 0; timer = setInterval(scheduler, 25); }
-    busTo(1, fade || 1.2);
+  function stopSong(fade){ if (!ctx) return; clearTimeout(pendingStart); pendingStart = null; busTo(0, fade || .4); const t = timer; timer = null; setTimeout(() => clearInterval(t), (fade || .4) * 1000 + 80); }
+  function startSong(name, fade){
+    if (!ctx || !musicOn) return;
+    const go = () => { song = name; nextT = ctx.currentTime + .08; s16 = 0; clearInterval(timer); timer = setInterval(scheduler, 25); busTo(1, fade || 1.2); };
+    if (timer){ busTo(0, .35); clearInterval(timer); timer = null; pendingStart = setTimeout(go, 380); } else go();
   }
-  function stopMusic(fade){ if (!ctx || !timer) return; busTo(0, fade || .5); const t = timer; timer = null; setTimeout(() => clearInterval(t), (fade || .5) * 1000 + 100); }
+  function songFor(){ return mode === "wait" ? (tier >= 3 ? "wait_epic" : "wait") : mode === "win" ? (tier >= 3 ? "win_epic" : "win") : null; }
+  function apply(delay){
+    if (!ctx) return;
+    const want = songFor();
+    if (!want){ stopSong(.35); song = null; return; }
+    if (want === song && timer) return;
+    clearTimeout(pendingStart);
+    if (delay){ stopSong(.3); pendingStart = setTimeout(() => startSong(want, 1.5), delay); } else startSong(want, 1.4);
+  }
 
   return {
     get musicOn(){ return musicOn; }, get fxOn(){ return fxOn; }, get musicVol(){ return musicVol; }, get fxVol(){ return fxVol; },
-    unlock(){ if (!init()) return; if (musicOn && !held && !timer) startMusic(); },
-    toggleMusic(){ musicOn = !musicOn; put("music", musicOn ? 1 : 0); if (musicOn) startMusic(); else stopMusic(); return musicOn; },
+    unlock(){ if (!init()) return; if (musicOn && !timer && !pendingStart) apply(0); },
+    toggleMusic(){ musicOn = !musicOn; put("music", musicOn ? 1 : 0); if (musicOn) apply(0); else { stopSong(.5); song = null; } return musicOn; },
     toggleFx(){ fxOn = !fxOn; put("fx", fxOn ? 1 : 0); return fxOn; },
     setMusicVol(v){ musicVol = v; put("musicvol", v); if (ctx) musicGain.gain.setTargetAtTime(v, ctx.currentTime, .05); },
     setFxVol(v){ fxVol = v; put("fxvol", v); if (ctx) fxGain.gain.setTargetAtTime(v, ctx.currentTime, .05); },
-    /* hold(true): music off while a draw is running or a winner is being called; hold(false): music back on */
-    hold(on){
-      if (on === held) return; held = on;
+    /* m: "wait" | "draw" | "win" | "intro";  tr: 1 normal, 2 big, 3 grand */
+    mode(m, tr){
+      tr = tr || 1;
+      if (m === mode && tr === tier) return;
+      const fromDraw = mode === "draw"; mode = m; tier = tr;
       if (!ctx) return;
-      if (on) stopMusic(.4); else setTimeout(() => startMusic(2.5), 600);
+      apply(m === "win" && fromDraw ? (tr >= 3 ? 5200 : tr === 2 ? 4200 : 3400) : 0);   /* let the winner fanfare play first */
     },
-    tick(){ if (!fxOn || !init()) return; const t = ctx.currentTime; osc("square", 1900 + Math.random() * 300, t, .03, .05, fxGain, {cut:6000}); osc("sine", 120, t, .05, .08, fxGain); },
+    hold(on){ this.mode(on ? "draw" : "wait", tier); },
+    tick(tr){ if (!fxOn || !init()) return; const t = ctx.currentTime; osc("square", 1900 + Math.random() * 300, t, .03, .05, fxGain, {cut:6000}); osc("sine", 120, t, .05, .08, fxGain); if (tr >= 2) osc("sine", 2600, t, .02, .03, fxGain); },
     /* the build-up while the numbers spin */
-    roll(sec){
-      if (!init()) return; this.hold(true); if (!fxOn) return;
-      const t0 = ctx.currentTime + .05, F = fxGain;
-      /* start: whoosh + brass "go!" */
+    roll(sec, tr){
+      if (!init()) return; this.mode("draw", tr || 1); if (!fxOn) return;
+      tr = tr || 1; const t0 = ctx.currentTime + .05, F = fxGain;
       nz(t0, .5, .3, F, "bandpass", 400, 1, 0, {to:6000, ramp:true});
       brass([261.63, 329.63, 392, 523.25], t0 + .45, .5, .06, F); kick(t0 + .45, .9, F);
-      /* drum roll that speeds up and gets louder */
+      if (tr >= 2){ taiko(t0 + .45, 1, F); crash(t0 + .45, .25, F); }
       let t = t0 + .9, gap = .2;
-      while (t < t0 + sec - .35){ const p = (t - t0) / sec; nz(t, .08, .1 + .32 * p, F, "bandpass", 1600 + 1600 * p, .9); if (Math.random() < .35) osc("sine", 140 + 80 * p, t, .12, .12 + .2 * p, F, {to:90}); t += gap; gap = Math.max(.032, gap * .92); }
-      /* heartbeat kick on every beat */
-      for (let b = .9; b < sec - .3; b += .5) kick(t0 + b, .35 + .55 * (b / sec), F);
-      /* rising string chord, stepping up every second */
+      while (t < t0 + sec - .35){ const p = (t - t0) / sec; snare(t, .08 + .3 * p, F); if (tr >= 2 && Math.random() < .5) taiko(t, .2 + .4 * p, F); t += gap; gap = Math.max(tr >= 3 ? .026 : .032, gap * .92); }
+      for (let b = .9; b < sec - .3; b += (tr >= 3 ? .45 : .5)) kick(t0 + b, .35 + .55 * (b / sec), F);
       const steps = Math.max(2, Math.floor(sec - 1));
       for (let k = 0; k < steps; k++){ const st = t0 + .9 + k * ((sec - 1.2) / steps), f = 196 * Math.pow(2, k / 12 * 2);
-        [1, 1.26, 1.5].forEach(m => osc("sawtooth", f * m, st, (sec - 1.2) / steps + .05, .022 + .012 * k / steps, F, {cut:1200 + 400 * k, a:.1, detune:(m - 1) * 10})); }
-      /* rising sweep and cymbal swell into the reveal */
+        [1, 1.26, 1.5].forEach(m => osc("sawtooth", f * m, st, (sec - 1.2) / steps + .05, .022 + .012 * k / steps, F, {cut:1200 + 400 * k, a:.1, detune:(m - 1) * 10}));
+        if (tr >= 3) choir([f * 2, f * 2.52, f * 3], st, (sec - 1.2) / steps + .1, .02 + .01 * k / steps, F); }
       osc("sawtooth", 98, t0 + .9, sec - .9, .06, F, {to:1568, glide:sec - .9, cut:500, cutTo:6000, cutTime:sec - .9, a:sec * .8});
-      nz(t0 + sec - 2.2, 2, .38, F, "highpass", 2500, .5, 0, {ramp:true});
+      if (tr >= 2) osc("sawtooth", 65, t0 + .9, sec - .9, .05, F, {to:1046, glide:sec - .9, cut:400, cutTo:5000, cutTime:sec - .9, a:sec * .8});
+      nz(t0 + sec - 2.2, 2, tr >= 3 ? .5 : .38, F, "highpass", 2500, .5, 0, {ramp:true});
     },
-    /* the winner: boom, crash, "ta-da-DAAA!", confetti pops, sparkles and a cheering crowd */
-    win(){
-      if (!init()) return; this.hold(true); if (!fxOn) return;
+    /* each digit locking into place */
+    lock(final, tr){ if (!fxOn || !init()) return; const t = ctx.currentTime + .01, F = fxGain;
+      osc("square", final ? 330 : 220, t, .12, .14, F, {cut:2400}); nz(t, .05, .3, F, "highpass", 5000, 1); kick(t, final ? 1 : .6, F);
+      if (tr >= 2) taiko(t, final ? .9 : .5, F); },
+    /* the winner: boom, crash, "ta-da-DAAA!", fireworks, crowd */
+    win(tr){
+      if (!init() || !fxOn) return; tr = tr || 1;
       const t = ctx.currentTime + .03, F = fxGain;
-      osc("sine", 95, t, 1.8, 1, F, {to:26, glide:1.4}); kick(t, 1, F); nz(t, 3.5, .55, F, "highpass", 3200, .5);
-      [0, .1, .2, .3].forEach(o => nz(t + o + Math.random() * .05, .12, .4, F, "bandpass", 900 + Math.random() * 1500, .7));
-      brass([261.63, 329.63, 392], t, .18, .06, F);
-      brass([261.63, 329.63, 392], t + .2, .18, .06, F);
-      brass([261.63, 329.63, 392, 523.25, 659.25], t + .42, 2.6, .055, F);
+      osc("sine", 95, t, 1.8, 1, F, {to:26, glide:1.4}); kick(t, 1, F); crash(t, .55, F);
+      if (tr >= 2){ taiko(t, 1, F); osc("sine", 70, t + .05, 2.4, .8, F, {to:24, glide:2}); }
+      const tri = [261.63, 329.63, 392];
+      brass(tri, t, .18, .06, F); brass(tri, t + .2, .18, .06, F);
+      brass(tri.concat([523.25, 659.25]), t + .42, tr >= 3 ? 3.6 : 2.6, .055, F);
+      if (tr >= 2) brass([130.81, 196, 261.63], t + .42, tr >= 3 ? 3.6 : 2.6, .04, F);
+      if (tr >= 3){ choir([523.25, 659.25, 783.99, 1046.5], t + .42, 4, .035, F); strings(1046.5, t + .42, 3.5, .02, F); }
       osc("sawtooth", 65.41, t + .42, 2.6, .12, F, {cut:400});
       [1046.5, 1318.51, 1567.98, 2093, 2637.02, 3135.96].forEach((f, k) => osc("triangle", f, t + .6 + k * .07, 1, .05, F));
-      for (let i = 0; i < 520; i++){ const at = t + .35 + Math.random() * 4.2, p = Math.max(0, 1 - Math.abs((at - t - 1.8) / 2.6));
+      const crowd = tr >= 3 ? 900 : tr === 2 ? 700 : 520, len = tr >= 3 ? 6 : tr === 2 ? 5 : 4.2;
+      for (let i = 0; i < crowd; i++){ const at = t + .35 + Math.random() * len, p = Math.max(0, 1 - Math.abs((at - t - 1.8) / (len * .6)));
         nz(at, .025 + Math.random() * .03, .03 + .1 * p, F, "bandpass", 1100 + Math.random() * 3000, 1.6); }
-      for (let i = 0; i < 6; i++){ const at = t + .5 + Math.random() * 2, f = 600 + Math.random() * 500; osc("sine", f, at, .35, .05, F, {to:f * 1.6, glide:.3}); }
     },
+    /* firework: whistle up, then bang and crackle */
+    firework(delay){ if (!fxOn || !init()) return; const t = ctx.currentTime + (delay || 0), F = fxGain;
+      osc("sine", 700 + Math.random() * 300, t, .55, .03, F, {to:2200, glide:.5});
+      nz(t + .55, .5, .35, F, "lowpass", 1400, .6); for (let i = 0; i < 14; i++) nz(t + .6 + Math.random() * .7, .02, .08, F, "highpass", 5000, 1); },
+    boom(big){ if (!fxOn || !init()) return; const t = ctx.currentTime + .02, F = fxGain;
+      osc("sine", big ? 110 : 90, t, big ? 1.6 : 1, 1, F, {to:28, glide:big ? 1.2 : .7}); kick(t, 1, F); nz(t, big ? 2.4 : 1.2, big ? .45 : .28, F, "highpass", 3000, .5);
+      if (big) brass([130.81, 196, 261.63, 329.63], t, 1.2, .05, F); },
+    riser(sec){ if (!fxOn || !init()) return; const t = ctx.currentTime + .02, F = fxGain;
+      nz(t, sec, .3, F, "bandpass", 300, 1.4, 0, {to:9000, ramp:true});
+      osc("sawtooth", 110, t, sec, .05, F, {to:880, glide:sec, cut:500, cutTo:6000, cutTime:sec, a:sec * .9});
+      let x = t, g = .16; while (x < t + sec - .05){ snare(x, .08 + .25 * ((x - t) / sec), F); x += g; g = Math.max(.03, g * .9); } },
+    beep(){ if (!fxOn || !init()) return; const t = ctx.currentTime + .02; osc("square", 880, t, .25, .12, fxGain, {cut:4000}); osc("sine", 440, t, .3, .15, fxGain); kick(t, .9, fxGain); },
     chime(){ if (!fxOn || !init()) return; const t = ctx.currentTime; osc("sine", 783.99, t, .9, .2, fxGain, {a:.01}); osc("sine", 622.25, t + .45, 1.2, .2, fxGain, {a:.01}); },
     soft(){ if (!fxOn || !init()) return; const t = ctx.currentTime; [1318.51, 1567.98, 2093].forEach((f, k) => osc("triangle", f, t + k * .08, .6, .08, fxGain)); },
-    stop(){ this.hold(false); }
+    stop(){ this.mode("wait", tier); }
   };
 })();
 
@@ -766,6 +884,7 @@ function viewDraw(pin){
   const fxBtn = el("button", {class:"ld-tool", type:"button", onclick:() => { const on = Sound.toggleFx(); paintTools(); toast(on ? "Draw sounds on" : "Draw sounds off"); }});
   const fsBtn = el("button", {class:"ld-tool gold", type:"button", onclick:fullscreen});
   const setBtn = el("button", {class:"ld-tool", type:"button", text:"⚙ Lucky draw settings", onclick:() => { setDock(false); openSettings(); }});
+  const introBtn = el("button", {class:"ld-tool gold", type:"button", text:"🎬 Play intro (I)", onclick:() => { setDock(false); playIntro(); }});
   const mVol = el("input", {type:"range", min:"0", max:"1", step:"0.05", value:String(Sound.musicVol), "aria-label":"Music volume"});
   mVol.addEventListener("input", () => Sound.setMusicVol(parseFloat(mVol.value)));
   const fVol = el("input", {type:"range", min:"0", max:"1", step:"0.05", value:String(Sound.fxVol), "aria-label":"Sound effects volume"});
@@ -773,10 +892,10 @@ function viewDraw(pin){
   const dockBtn = el("button", {class:"ld-dock-btn", type:"button", "aria-label":"Show controls", "aria-expanded":"false", text:"+"});
   const dock = el("div", {class:"ld-dock"},
     el("div", {class:"ld-dock-panel", role:"group", "aria-label":"Lucky draw controls"},
-      fsBtn, musicBtn, el("label", {class:"ld-vol"}, el("span", {text:"Music"}), mVol),
+      introBtn, fsBtn, musicBtn, el("label", {class:"ld-vol"}, el("span", {text:"Music"}), mVol),
       fxBtn, el("label", {class:"ld-vol"}, el("span", {text:"Effects"}), fVol),
       setBtn,
-      el("p", {class:"ld-keys", text:"Keys: Space draw · F full screen · M music · S settings"})),
+      el("p", {class:"ld-keys", text:"Keys: I intro · Space draw · F full screen · M music · S settings"})),
     dockBtn);
   function setDock(open){ dock.classList.toggle("open", open); dockBtn.setAttribute("aria-expanded", open); dockBtn.setAttribute("aria-label", open ? "Hide controls" : "Show controls"); }
   dockBtn.addEventListener("click", e => { e.stopPropagation(); Sound.unlock(); setDock(!dock.classList.contains("open")); });
@@ -816,14 +935,17 @@ function viewDraw(pin){
     dlg.append(el("div", {class:"ld-dlg-head"}, el("h2", {text:"Lucky draw settings"}), el("button", {class:"btn", type:"button", text:"Close", onclick:() => dlg.close()})), nav, pane);
   }
   function prizesPane(){
-    const list = S.prizes.map(p => ({name:p.name, qty:p.qty, won:p.qty - p.remaining}));
+    const list = S.prizes.map(p => ({name:p.name, qty:p.qty, level:p.level || "", won:p.qty - p.remaining}));
     const tb = el("tbody");
     function paint(){
       tb.innerHTML = "";
       list.forEach((p, i) => {
         const n = el("input", {type:"text", value:p.name, "aria-label":"Prize name", placeholder:"Prize name"}); n.addEventListener("input", () => p.name = n.value);
         const q = el("input", {type:"number", min:"1", max:"999", value:String(p.qty), "aria-label":"Quantity", style:"width:5.5rem"}); q.addEventListener("input", () => p.qty = q.value);
-        tb.append(el("tr", null, el("td", {text:String(i + 1)}), el("td", null, n), el("td", null, q), el("td", {class:"muted small", text: p.won ? p.won + " drawn" : ""}),
+        const lv = el("select", {"aria-label":"Level", style:"width:auto;font-size:.85rem;padding:.4rem .5rem"},
+          [["", "Auto"], ["NORMAL", "Normal"], ["BIG", "Big prize"], ["GRAND", "Grand prize"]].map(([v, t]) => el("option", {value:v, text:t})));
+        lv.value = p.level || ""; lv.addEventListener("change", () => p.level = lv.value);
+        tb.append(el("tr", null, el("td", {text:String(i + 1)}), el("td", null, n), el("td", null, q), el("td", null, lv), el("td", {class:"muted small", text: p.won ? p.won + " drawn" : ""}),
           el("td", {class:"nowrap"},
             el("button", {class:"btn mini", type:"button", text:"↑", "aria-label":"Move up", disabled: i === 0, onclick:() => { [list[i-1], list[i]] = [list[i], list[i-1]]; paint(); }}),
             el("button", {class:"btn mini", type:"button", text:"↓", "aria-label":"Move down", disabled: i === list.length - 1, onclick:() => { [list[i+1], list[i]] = [list[i], list[i+1]]; paint(); }}),
@@ -834,9 +956,9 @@ function viewDraw(pin){
     const save = el("button", {class:"btn primary", type:"button", text:"Save prizes"});
     save.addEventListener("click", async () => { save.disabled = true; try{ S = await call("apiSavePrizes", pin, list); render(); toast("Prizes saved."); renderSettings(); }catch(e){ toast(errText(e)); save.disabled = false; } });
     return el("div", null,
-      el("p", {class:"muted small", text:"Prizes are drawn from top to bottom, so put the grand prize last. The quantity is how many winners that prize has."}),
-      el("div", {class:"tablewrap"}, el("table", {class:"tbl"}, el("thead", null, el("tr", null, ["#","Prize","Quantity","",""].map(h => el("th", {text:h})))), tb)),
-      el("div", {class:"row"}, el("button", {class:"btn", type:"button", text:"+ Add prize", onclick:() => { list.push({name:"", qty:1, won:0}); paint(); tb.querySelector("tr:last-child input").focus(); }}), save));
+      el("p", {class:"muted small", text:"Prizes are drawn from top to bottom, so put the grand prize last. The quantity is how many winners that prize has. Level sets how big the music and effects are: Auto makes the last prize Grand and the two before it Big."}),
+      el("div", {class:"tablewrap"}, el("table", {class:"tbl"}, el("thead", null, el("tr", null, ["#","Prize","Quantity","Level","",""].map(h => el("th", {text:h})))), tb)),
+      el("div", {class:"row"}, el("button", {class:"btn", type:"button", text:"+ Add prize", onclick:() => { list.push({name:"", qty:1, level:"", won:0}); paint(); tb.querySelector("tr:last-child input").focus(); }}), save));
   }
   function drawPane(){
     const st = S.settings;
@@ -846,11 +968,12 @@ function viewDraw(pin){
     const src = el("div", {class:"ld-seg", role:"radiogroup", "aria-label":"Draw from"},
       el("label", null, el("input", {type:"radio", name:"src", value:"REGISTERED", checked: st.source !== "RANGE"}), el("span", {text:"Registered numbers only"})),
       el("label", null, el("input", {type:"radio", name:"src", value:"RANGE", checked: st.source === "RANGE"}), el("span", {text:"Every number in the range"})));
+    const vid = el("input", {type:"text", value:String(st.introVideo || ""), placeholder:"e.g. intro.mp4 (leave empty for the built-in intro)", "aria-label":"Intro video"});
     const save = el("button", {class:"btn primary", type:"button", text:"Save draw settings"});
     save.addEventListener("click", async () => {
       save.disabled = true;
       try{
-        S = await call("apiSaveDrawSettings", pin, {from:from.value, to:to.value, duration:dlg.querySelector("input[name=dur]:checked").value, source:dlg.querySelector("input[name=src]:checked").value});
+        S = await call("apiSaveDrawSettings", pin, {from:from.value, to:to.value, duration:dlg.querySelector("input[name=dur]:checked").value, source:dlg.querySelector("input[name=src]:checked").value, introVideo:vid.value});
         render(); toast("Draw settings saved."); renderSettings();
       }catch(e){ toast(errText(e)); save.disabled = false; }
     });
@@ -861,7 +984,11 @@ function viewDraw(pin){
       el("h3", {text:"Spin time"}), dur,
       el("h3", {text:"Draw from"}), src,
       el("p", {class:"muted small", text:"“Registered numbers only” is recommended: only people who scanned the QR code and registered can win."}),
-      el("div", {class:"row"}, save),
+      el("h3", {text:"Intro before the draw"}),
+      el("p", {class:"muted small", text:"Press “🎬 Play intro” (or I) to show “ARE YOU READY? … LUCKY DRAW! … 3, 2, 1, LET’S GO!”. To use your own video instead, upload an MP4 next to index.html on GitHub (for example intro.mp4) and type its name here."}),
+      vid,
+      el("div", {class:"row"}, save,
+        el("button", {class:"btn", type:"button", text:"Preview intro", onclick:() => { dlg.close(); playIntro(); }})),
       el("h3", {text:"Sound"}),
       el("div", {class:"row"}, el("button", {class:"btn", type:"button", text: Sound.musicOn ? "Turn music off" : "Turn music on", onclick:() => { Sound.toggleMusic(); paintTools(); renderSettings(); }}),
         el("button", {class:"btn", type:"button", text: Sound.fxOn ? "Turn draw sounds off" : "Turn draw sounds on", onclick:() => { Sound.toggleFx(); paintTools(); renderSettings(); }})));
@@ -902,6 +1029,99 @@ function viewDraw(pin){
 
   const pending = () => S && S.winners.find(w => w.status === "Called");
   function currentPrize(){ if (!S) return null; const open = S.prizes.filter(p => p.remaining > 0); return open.find(p => p.name === chosen) || open[0] || null; }
+  /* prize level → 1 normal, 2 big, 3 grand */
+  function tierOf(name){
+    if (!S) return 1;
+    const i = S.prizes.findIndex(x => x.name === name), p = S.prizes[i];
+    if (!p) return 1;
+    if (p.level === "GRAND") return 3; if (p.level === "BIG") return 2; if (p.level === "NORMAL") return 1;
+    const n = S.prizes.length; return i === n - 1 ? 3 : i >= n - 3 ? 2 : 1;
+  }
+  /* ===== reveal effects: flash, shockwave, light rays, shake, fireworks ===== */
+  function revealFx(tr){
+    const fl = el("div", {class:"ld-flash" + (tr >= 3 ? " gold" : ""), "aria-hidden":"true"}); document.body.append(fl); setTimeout(() => fl.remove(), 1100);
+    const wv = el("div", {class:"ld-wave", "aria-hidden":"true"}); panel.append(wv); setTimeout(() => wv.remove(), 1300);
+    if (tr >= 2){ const w2 = el("div", {class:"ld-wave late", "aria-hidden":"true"}); panel.append(w2); setTimeout(() => w2.remove(), 1600); }
+    panel.classList.add("rays"); setTimeout(() => panel.classList.remove("rays"), tr >= 3 ? 9000 : 6000);
+    if (!reduce && tr >= 2){ const st = document.querySelector(".ld"); st.classList.remove("shake"); void st.offsetWidth; st.classList.add("shake"); }
+    confetti(); if (tr >= 3) setTimeout(confetti, 900);
+    if (!reduce) fireworks(tr >= 3 ? 14 : tr === 2 ? 7 : 3, tr);
+  }
+  function fireworks(count, tr){
+    let cv = document.getElementById("fw");
+    if (!cv){ cv = el("canvas", {id:"fw", "aria-hidden":"true"}); document.body.append(cv); }
+    const cx = cv.getContext("2d"), dpr = devicePixelRatio || 1; cv.width = innerWidth * dpr; cv.height = innerHeight * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const cols = ["#F2CF73", "#FFF3C4", "#E0228A", "#F59E2B", "#8B3FC1", "#4A63E0", "#7EE0B8"];
+    let rockets = [], sparks = [], running = true;
+    for (let i = 0; i < count; i++){
+      const delay = 200 + i * (tr >= 3 ? 330 : 420) + Math.random() * 200;
+      setTimeout(() => { rockets.push({x:innerWidth * (.12 + Math.random() * .76), y:innerHeight + 10, vy:-(innerHeight * .016 + Math.random() * 4), ty:innerHeight * (.12 + Math.random() * .35), c:cols[Math.floor(Math.random() * cols.length)]}); Sound.firework(0); }, delay);
+    }
+    const until = performance.now() + 900 + count * (tr >= 3 ? 330 : 420) + 2600;
+    (function frame(){
+      cx.clearRect(0, 0, innerWidth, innerHeight);
+      rockets.forEach(r => { r.y += r.vy; r.vy *= .985; cx.fillStyle = r.c; cx.beginPath(); cx.arc(r.x, r.y, 2.4, 0, 7); cx.fill();
+        if (r.y <= r.ty || r.vy > -1){ r.done = true; const n = tr >= 3 ? 110 : 80, gold = tr >= 3 && Math.random() < .5;
+          for (let k = 0; k < n; k++){ const a = Math.random() * Math.PI * 2, sp = 1.5 + Math.random() * (tr >= 3 ? 6.5 : 5);
+            sparks.push({x:r.x, y:r.y, px:r.x, py:r.y, vx:Math.cos(a) * sp, vy:Math.sin(a) * sp, life:0, max:60 + Math.random() * 40, c: gold ? "#F2CF73" : (Math.random() < .3 ? "#FFF3C4" : r.c)}); } } });
+      rockets = rockets.filter(r => !r.done);
+      cx.lineCap = "round";
+      sparks.forEach(p => { p.px = p.x; p.py = p.y; p.vy += .06; p.vx *= .985; p.vy *= .985; p.x += p.vx; p.y += p.vy; p.life++;
+        cx.globalAlpha = Math.max(0, 1 - p.life / p.max); cx.strokeStyle = p.c; cx.lineWidth = 2.2; cx.beginPath(); cx.moveTo(p.px, p.py); cx.lineTo(p.x, p.y); cx.stroke(); });
+      cx.globalAlpha = 1; sparks = sparks.filter(p => p.life < p.max);
+      if (performance.now() < until || rockets.length || sparks.length) requestAnimationFrame(frame); else cx.clearRect(0, 0, innerWidth, innerHeight);
+    })();
+  }
+  /* ===== "Are you ready?" intro: built-in animation, or your own video if one is set ===== */
+  let introOn = false;
+  function playIntro(){
+    if (introOn) return; introOn = true; Sound.unlock(); Sound.mode("intro", 1);
+    const ov = el("div", {class:"intro", role:"dialog", "aria-label":"Lucky draw intro"});
+    const skip = el("button", {class:"intro-skip", type:"button", text:"Skip ›"});
+    const timers = [];
+    function end(){
+      if (!introOn) return; introOn = false;
+      timers.forEach(clearTimeout); document.removeEventListener("keydown", onKey, true);
+      ov.classList.add("out"); setTimeout(() => { ov.remove(); render(); }, 600);
+    }
+    function onKey(e){ if (e.key === "Escape" || e.code === "Space" || e.key === "Enter"){ e.preventDefault(); e.stopPropagation(); end(); } }
+    skip.addEventListener("click", end);
+    document.addEventListener("keydown", onKey, true);
+    const video = S && S.settings && String(S.settings.introVideo || "").trim();
+    if (video){
+      const v = el("video", {class:"intro-video", src:video, playsinline:true, autoplay:true});
+      v.addEventListener("ended", end);
+      v.addEventListener("error", () => { toast("Couldn’t play the intro video. Playing the built-in intro instead."); ov.remove(); introOn = false; animated(); });
+      ov.append(v, skip); document.body.append(ov);
+      const pr = v.play(); if (pr && pr.catch) pr.catch(() => {});
+      return;
+    }
+    animated();
+    function animated(){
+      introOn = true;
+      const word = el("div", {class:"intro-word", "aria-live":"assertive"});
+      ov.innerHTML = "";
+      ov.append(el("div", {class:"intro-beams", "aria-hidden":"true"}), el("div", {class:"intro-glow", "aria-hidden":"true"}),
+        el("div", {class:"intro-stage"},
+          el("img", {class:"intro-logos", src:LOGOS, alt:""}),
+          el("p", {class:"intro-kick", text:"Annual Dinner 2027 · Global Harmony Gala"}),
+          word),
+        skip);
+      if (!ov.isConnected) document.body.append(ov);
+      const show = (text, cls, snd) => { word.className = "intro-word " + (cls || ""); word.textContent = text; void word.offsetWidth; word.classList.add("in"); if (snd) snd(); };
+      const at = (ms, fn) => timers.push(setTimeout(fn, ms));
+      at(700,  () => show("Are you", "small"));
+      at(1600, () => show("READY?", "big", () => Sound.boom(true)));
+      at(3000, () => { show("for the", "small"); Sound.riser(1.6); });
+      at(4700, () => show("LUCKY DRAW!", "gold big shake", () => { Sound.boom(true); confetti(); }));
+      at(6500, () => { show("", ""); Sound.riser(1); });
+      at(7400, () => show("3", "count", () => Sound.beep()));
+      at(8400, () => show("2", "count", () => Sound.beep()));
+      at(9400, () => show("1", "count", () => Sound.beep()));
+      at(10400, () => show("LET’S GO!", "gold big", () => { Sound.win(); confetti(); }));
+      at(12600, end);
+    }
+  }
   function fullscreen(){
     Sound.unlock();
     const d = document, r = d.documentElement;
@@ -912,7 +1132,10 @@ function viewDraw(pin){
   function render(){
     if (!S) return;
     const p = pending(), cur = currentPrize();
-    Sound.hold(!!p || busy);
+    if (busy) Sound.mode("draw", cur ? tierOf(cur.name) : 1);
+    else if (p) Sound.mode("win", tierOf(p.prize));
+    else Sound.mode("wait", cur ? tierOf(cur.name) : 1);
+    panel.classList.toggle("grand", !!p && tierOf(p.prize) >= 3);
     sel.innerHTML = "";
     S.prizes.forEach(x => { const o = el("option", {value:x.name, text:x.name + " (" + x.remaining + " of " + x.qty + " left)"}); if (x.remaining <= 0) o.disabled = true; sel.append(o); });
     if (p) sel.value = p.prize; else if (cur) sel.value = cur.name;
@@ -921,7 +1144,7 @@ function viewDraw(pin){
     sub.textContent = S.poolCount + " numbers left in the draw" + (st.source === "RANGE" ? " (" + st.from + "–" + st.to + ")" : " (from " + S.registered + " registered)") + " · " + st.duration + "-second draw";
     winCard.innerHTML = ""; btns.innerHTML = "";
     if (p){
-      line.textContent = "🎉 Winner for " + p.prize + "! 🎉";
+      line.textContent = tierOf(p.prize) >= 3 ? "🏆 GRAND PRIZE WINNER! 🏆" : "🎉 Winner for " + p.prize + "! 🎉";
       pname.textContent = p.name; pmeta.textContent = [p.staffId, p.dept].filter(Boolean).join(" · ");
       panel.classList.add("has-winner");
       if (!busy){ num.className = "ld-num"; num.textContent = String(p.luckyNo); }
@@ -958,21 +1181,37 @@ function viewDraw(pin){
     if (busy || !S || pending()) return;
     const cur = currentPrize(); if (!cur){ toast("All prizes have been drawn."); return; }
     if (!S.poolCount){ toast("No numbers left in the draw."); return; }
+    const tr = tierOf(cur.name);
     busy = true; chosen = cur.name; render();
-    line.textContent = "Drawing for " + cur.name + "…"; btns.innerHTML = ""; num.className = "ld-num"; pname.textContent = ""; pmeta.textContent = ""; panel.classList.remove("has-winner");
+    line.textContent = (tr >= 3 ? "🏆 Drawing the GRAND PRIZE…" : "Drawing for " + cur.name + "…"); btns.innerHTML = ""; num.className = "ld-num spinning" + (tr >= 2 ? " hot" : ""); pname.textContent = ""; pmeta.textContent = ""; panel.classList.remove("has-winner", "grand");
     const src = S.poolSample.length ? S.poolSample : [0];
     const secs = reduce ? 1 : (S.settings.duration || 8), D = secs * 1000, start = performance.now();
-    Sound.roll(secs);
+    Sound.roll(secs, tr);
     let res = null, err = null; call("apiDraw", pin, cur.name).then(r => res = r, e => err = e);
     (function step(){
       const t = (performance.now() - start) / D;
       if (t >= 1 && (res || err)){
-        busy = false;
-        if (err){ Sound.stop(); handle(err); refresh(); return; }
-        S = res.state; render(); num.className = "ld-num pop"; Sound.win(); confetti(); return;
+        if (err){ busy = false; Sound.stop(); handle(err); refresh(); return; }
+        const won = (res.state.winners.find(w => w.status === "Called") || {}).luckyNo;
+        lockDigits(String(won), tr, () => { busy = false; S = res.state; render(); num.className = "ld-num pop" + (tr >= 3 ? " grandnum" : ""); Sound.win(tr); revealFx(tr); });
+        return;
       }
-      num.textContent = String(src[Math.floor(Math.random() * src.length)]); Sound.tick();
+      num.textContent = String(src[Math.floor(Math.random() * src.length)]); Sound.tick(tr);
       setTimeout(step, 40 + 360 * Math.pow(Math.min(t, 1), 2.6));
+    })();
+  }
+  /* slot-machine finish: digits lock in one by one, left to right */
+  function lockDigits(finalStr, tr, done){
+    if (reduce || !finalStr){ num.textContent = finalStr; done(); return; }
+    const gap = tr >= 3 ? 950 : tr === 2 ? 700 : 480;
+    let locked = 0;
+    const spin = setInterval(() => { num.textContent = finalStr.split("").map((ch, i) => i < locked ? ch : String(Math.floor(Math.random() * 10))).join(""); }, 55);
+    (function next(){
+      setTimeout(() => {
+        locked++; Sound.lock(locked === finalStr.length, tr);
+        num.classList.remove("lockhit"); void num.offsetWidth; num.classList.add("lockhit");
+        if (locked >= finalStr.length){ clearInterval(spin); num.textContent = finalStr; setTimeout(done, tr >= 3 ? 450 : 250); } else next();
+      }, gap);
     })();
   }
   sel.addEventListener("change", () => { chosen = sel.value; render(); });
@@ -984,6 +1223,7 @@ function viewDraw(pin){
     else if (e.key === "f" || e.key === "F") fullscreen();
     else if (e.key === "m" || e.key === "M"){ Sound.toggleMusic(); paintTools(); }
     else if (e.key === "s" || e.key === "S") openSettings();
+    else if (e.key === "i" || e.key === "I") playIntro();
   });
   refresh(); setInterval(() => { if (!busy && !dlg.open) refresh(); }, 20000);
 }
@@ -1016,7 +1256,7 @@ function viewPoster(){
     el("img", {class:"qr", src:c.toDataURL("image/png"), alt:"QR code to register for the gala"}),
     el("p", {class:"cta", text:"Scan to register"}),
     el("ol", null,
-      el("li", null, el("b", {text:"1"}), "Scan this QR code with your phone camera"),
+      el("li", null, el("b", {text:"1"}), "Scan QR Code"),
       el("li", null, el("b", {text:"2"}), "Fill in your details"),
       el("li", null, el("b", {text:"3"}), "Get your lucky draw number")),
     el("p", {class:"fine", text:"No sign-in needed. One registration per person."})),
