@@ -6,6 +6,8 @@
 <meta name="robots" content="noindex">
 <title>Global Harmony Gala Registration</title>
 <meta name="description" content="Annual Dinner 2027 Global Harmony Gala registration and lucky draw.">
+<link rel="preconnect" href="https://script.google.com">
+<link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
@@ -760,6 +762,42 @@ body.dashmode .bgart{position:fixed}
 .ds-saving.err{color:var(--warn);border-color:var(--warn)}
 .dl-item.busy{opacity:.6;pointer-events:none}
 .db-link,.dl-item,.btn,.ld-btn,.ld-tabs button,.ld-seg label{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+/* anything marked hidden really is hidden (labels and fields included) */
+[hidden]{display:none!important}
+/* QR posters v2 */
+.poster2{position:relative;max-width:30rem;margin:.5rem auto 1rem;padding:1.4rem 1.3rem 1.3rem;border-radius:24px;text-align:center;color:var(--ink);
+  background:linear-gradient(180deg,rgba(30,16,66,.92),rgba(20,10,48,.94));border:1.5px solid transparent;background-clip:padding-box;box-shadow:0 30px 70px -30px rgba(0,0,0,.9)}
+.poster2::before{content:"";position:absolute;inset:-1.5px;border-radius:25px;padding:1.5px;background:var(--p2-ring);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.tone-teal{--p2-a:#5FE0D2;--p2-b:#F2CF73;--p2-ring:linear-gradient(135deg,#5FE0D2,#F2CF73,#1E8C9E)}
+.tone-pink{--p2-a:#FF7AC6;--p2-b:#F2CF73;--p2-ring:linear-gradient(135deg,#FF7AC6,#F2CF73,#C38BFF)}
+.tone-royal{--p2-a:#FF7AC6;--p2-b:#7FB2FF;--p2-ring:linear-gradient(135deg,#7FB2FF,#F2CF73,#FF7AC6)}
+.p2-kick{margin:0;font-size:.7rem;font-weight:800;letter-spacing:.28em;text-transform:uppercase;color:var(--gold)}
+.p2-badge{display:inline-block;margin:.7rem 0 .2rem;padding:.25rem .9rem;border-radius:999px;font-size:.72rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#1b1040;background:linear-gradient(90deg,var(--p2-a),var(--p2-b))}
+.p2-title{margin:.2rem 0 .1rem;font-family:var(--display);font-weight:800;text-transform:uppercase;line-height:1.02;letter-spacing:.03em;font-size:clamp(1.9rem,7.5vw,2.6rem)}
+.p2-title span{display:block;background:linear-gradient(90deg,var(--p2-a),#FFF3C4 50%,var(--p2-b));background-size:200% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 6s linear infinite;filter:drop-shadow(0 2px 14px rgba(0,0,0,.35))}
+.tone-royal .p2-title span:first-child{font-size:.62em;letter-spacing:.2em;background:none;-webkit-text-fill-color:var(--ink);color:var(--ink);filter:none}
+.p2-motto{margin:.35rem 0 0;font-family:var(--serif);font-style:italic;font-size:1.05rem;color:#F7E7B8;white-space:nowrap}
+.poster2 .bd-tag{margin:.35rem 0 0}
+.poster2 .bd-text{font-size:1.15rem}
+.p2-qrwrap{position:relative;width:min(62%,14rem);margin:1rem auto .4rem;padding:4px;border-radius:20px;background:linear-gradient(135deg,var(--p2-a),#FFF3C4,var(--p2-b));box-shadow:0 0 40px -6px var(--p2-a)}
+.p2-qr{display:block;width:100%;height:auto;border-radius:16px;background:#fff;padding:.45rem}
+.p2-cta{margin:.5rem 0 0;font-family:var(--display);font-weight:800;font-size:1.35rem;letter-spacing:.1em;text-transform:uppercase;
+  background:linear-gradient(90deg,var(--p2-b),#FFF3C4,var(--p2-a));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.p2-steps{list-style:none;margin:.8rem auto 0;padding:.7rem .9rem;display:grid;gap:.5rem;max-width:20rem;text-align:left;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid var(--line)}
+.p2-steps li{display:flex;align-items:center;gap:.7rem;font-weight:700;font-size:.95rem}
+.p2-steps li b{flex:none;width:1.75rem;height:1.75rem;border-radius:50%;display:grid;place-items:center;font-size:.85rem;color:#1b1040;background:linear-gradient(135deg,var(--p2-a),var(--p2-b))}
+.p2-steps .li2{display:flex;flex-direction:column;line-height:1.2}
+.p2-steps .li2 small{font-size:.76em;font-weight:600;color:var(--muted)}
+.p2-fine{margin:.8rem 0 0;font-size:.78rem;color:var(--muted)}
+.poster2 .poster-crowns{margin:.7rem 0 0}
+.poster2 .poster-crowns .royal{width:3.8rem}
+@media print{ .poster2{box-shadow:none} }
+/* one see-through music button (stop / play): barely visible on the big screen, clear when the mouse comes near */
+.mtoggle{position:absolute;left:1.2vw;bottom:1.6vh;z-index:60;width:2.6rem;height:2.6rem;border-radius:50%;display:grid;place-items:center;font-size:1.1rem;cursor:pointer;
+  background:transparent;border:1px solid rgba(255,255,255,.12);color:#fff;opacity:.14;transition:opacity .25s,background .25s}
+.mtoggle:hover,.mtoggle:focus-visible{opacity:.95;background:rgba(14,8,34,.65)}
+.mtoggle.fixed{position:fixed;z-index:44}
+body:not(.drawmode) .mtoggle.fixed{display:none}
 /* posters: fit on one screen */
 .poster .qr.sm{width:min(50%,13rem)}
 .poster{padding-top:1.2rem;padding-bottom:1.2rem}
@@ -896,8 +934,8 @@ function viewForm(){
   const guestBits = [el("label", {class:"f", for:"company", text:"Company / organisation (optional)"}), company];
   const phoneLabel = el("label", {class:"f", for:"phone", text: B.phoneRequired ? "Phone number" : "Phone number (optional)"});
   const who = desk ? el("div", {class:"who-seg", role:"radiogroup", "aria-label":"Who is registering"},
-    el("button", {type:"button", role:"radio", "aria-checked":"true", text:"👔 Staff"}),
-    el("button", {type:"button", role:"radio", "aria-checked":"false", text:"🎟 Guest (no staff ID)"})) : null;
+    el("button", {type:"button", role:"radio", "aria-checked":"true", text:"Staff"}),
+    el("button", {type:"button", role:"radio", "aria-checked":"false", text:"Guest"})) : null;
   function setGuest(g){
     guest = g;
     if (who) who.querySelectorAll("button").forEach((b, i) => b.setAttribute("aria-checked", String(i === (g ? 1 : 0))));
@@ -1755,7 +1793,7 @@ function royalPair(cls){
 function bdTag(text){ return el("p", {class:"bd-tag"}, el("span", {class:"bd-line", "aria-hidden":"true"}), el("span", {class:"bd-text", text:text || "Best Dressed of the Evening"}), el("span", {class:"bd-line r", "aria-hidden":"true"})); }
 
 /* ===================== Best Dressed voting: King & Queen of the Night ===================== */
-const CAT_ORDER = ["QUEEN", "KING"];
+const CAT_ORDER = ["KING", "QUEEN"];   /* King on the left, Queen on the right */
 function initials(n){ return String(n || "?").split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0]).join("").toUpperCase(); }
 
 /* ---------- public voting page (what the voting QR opens) ---------- */
@@ -1843,27 +1881,6 @@ function viewVote(){
   }
 }
 
-/* ---------- voting poster ---------- */
-function viewVotePoster(){
-  clear(); document.body.classList.add("postermode");
-  const url = pageUrl("vote");
-  const q = qrcode(0, "M"); q.addData(url); q.make();
-  const n = q.getModuleCount(), cell = 14, size = (n + 8) * cell, c = document.createElement("canvas");
-  c.width = c.height = size; const g = c.getContext("2d"); g.fillStyle = "#fff"; g.fillRect(0, 0, size, size); g.fillStyle = "#000";
-  for (let r = 0; r < n; r++) for (let k = 0; k < n; k++) if (q.isDark(r, k)) g.fillRect((k + 4) * cell, (r + 4) * cell, cell, cell);
-  app.append(el("div", {class:"poster"},
-    el("p", {class:"kick", style:"letter-spacing:.3em;font-weight:700;color:var(--gold);text-transform:uppercase;margin:0", text:"Annual Dinner 2027 · Global Harmony Gala"}),
-    royalPair("poster-crowns"),
-    el("p", {class:"cta", style:"margin:0", text:"Vote for"}),
-    el("h2", {style:"font-size:1.6rem;margin:.1rem 0 0", text:"King & Queen of the Night"}),
-    bdTag(),
-    el("img", {class:"qr sm", src:c.toDataURL("image/png"), alt:"QR code to vote for King and Queen"}),
-    el("ol", null,
-      el("li", null, el("b", {text:"1"}), "Scan QR Code"),
-      el("li", null, el("b", {text:"2"}), el("span", {class:"li2"}, "Enter your staff ID", el("small", {text:"Guests: your phone number"}))),
-      el("li", null, el("b", {text:"3"}), "Pick your King & Queen")),
-    el("p", {class:"fine", text:"One vote per person for each award."})));
-}
 
 /* ---------- blinking sparkles for the King & Queen screens ---------- */
 function twinkles(cat, n){
@@ -1880,15 +1897,15 @@ function twinkles(cat, n){
 /* ---------- music controls for stage moments: L = softer / louder, M = stop / play ---------- */
 function musicCtl(start){
   let soft = false, stopped = false;
-  const bSoft = el("button", {class:"mc-btn", type:"button"}), bStop = el("button", {class:"mc-btn", type:"button"});
-  const paint = () => { bSoft.textContent = soft ? "🔊 Louder (L)" : "🔉 Softer (L)"; bStop.textContent = stopped ? "▶ Play music (M)" : "⏹ Stop music (M)"; bSoft.disabled = stopped; };
-  const setSoft = v => { soft = v; Sound.duck(v ? .22 : 1); MUSIC.duck(v ? .22 : 1); paint(); };
+  const btn = el("button", {class:"mtoggle", type:"button"});
+  const paint = () => { btn.textContent = stopped ? "🔇" : "🔊"; btn.title = stopped ? "Play music (M)" : "Stop music (M)"; btn.setAttribute("aria-label", btn.title); };
+  const setSoft = v => { soft = v; Sound.duck(v ? .22 : 1); MUSIC.duck(v ? .22 : 1); };
   const toggleSoft = () => { if (!stopped) setSoft(!soft); };
   const toggleStop = () => { stopped = !stopped; if (stopped){ setSoft(false); Sound.mode("intro", 1); MUSIC.stop(900); } else { setSoft(false); start(); } paint(); };
-  bSoft.addEventListener("click", toggleSoft); bStop.addEventListener("click", toggleStop); paint();
+  btn.addEventListener("click", e => { e.stopPropagation(); toggleStop(); }); paint();
   return {
-    el: el("div", {class:"mc", role:"group", "aria-label":"Music controls"}, bSoft, bStop),
-    key(e){ if (e.key === "l" || e.key === "L"){ toggleSoft(); return true; } if (e.key === "m" || e.key === "M"){ toggleStop(); return true; } return false; },
+    el: btn,
+    key(e){ if (e.key === "m" || e.key === "M"){ toggleStop(); return true; } if (e.key === "l" || e.key === "L"){ toggleSoft(); return true; } return false; },
     reset(){ Sound.duck(1); MUSIC.duck(1); },
     get stopped(){ return stopped; }
   };
@@ -1926,7 +1943,7 @@ function viewAwards(pin){
       el("p", {class:"ld-keys", text:"Keys: 1 / 2 call Queen / King finalists · Q / K reveal · F full screen"})), dockBtn);
   dockBtn.addEventListener("click", e => { e.stopPropagation(); Sound.unlock(); dock.classList.toggle("open"); });
   document.addEventListener("click", e => { if (!dock.contains(e.target)) dock.classList.remove("open"); });
-  app.append(el("div", {class:"ld aw"}, head, el("section", {class:"aw-body"}, cards.QUEEN.box, cards.KING.box), strip), dock, dlg);
+  app.append(el("div", {class:"ld aw"}, head, el("section", {class:"aw-body"}, cards.KING.box, cards.QUEEN.box), strip), dock, dlg);
 
   function fullscreen(){ Sound.unlock(); const d = document, r = d.documentElement; if (d.fullscreenElement){ d.exitFullscreen && d.exitFullscreen(); return; }
     if (r.requestFullscreen) r.requestFullscreen().catch(() => toast("Press F11 for full screen.")); else toast("Press F11 for full screen."); }
@@ -2222,7 +2239,7 @@ function viewDraw(pin){
       introBtn, fsBtn, musicBtn, el("label", {class:"ld-vol"}, el("span", {text:"Music"}), mVol),
       fxBtn, el("label", {class:"ld-vol"}, el("span", {text:"Effects"}), fVol),
       setBtn,
-      el("p", {class:"ld-keys", text:"Keys: I intro · Space draw · L softer · M stop music · F full screen · S settings"})),
+      el("p", {class:"ld-keys", text:"Keys: I intro · Space draw · M stop / play music · L softer · F full screen · S settings"})),
     dockBtn);
   function setDock(open){ dock.classList.toggle("open", open); dockBtn.setAttribute("aria-expanded", open); dockBtn.setAttribute("aria-label", open ? "Hide controls" : "Show controls"); }
   dockBtn.addEventListener("click", e => { e.stopPropagation(); Sound.unlock(); setDock(!dock.classList.contains("open")); });
@@ -2368,13 +2385,12 @@ function viewDraw(pin){
 
   /* emcee music controls: L = softer / louder, M = stop / play (only for this moment) */
   let mcSoft = false, mcStop = false, lastPhase = "";
-  const mcSoftBtn = el("button", {class:"mc-btn", type:"button", onclick:() => toggleSoft()});
-  const mcStopBtn = el("button", {class:"mc-btn", type:"button", onclick:() => toggleQuiet()});
+  const mcBtn = el("button", {class:"mtoggle fixed", type:"button", onclick:e => { e.stopPropagation(); toggleQuiet(); }});
   function applyQuiet(){ const f = mcStop ? 0 : mcSoft ? .22 : 1; Sound.duck(f); MUSIC.duck(f);
-    mcSoftBtn.textContent = mcSoft ? "🔊 Louder (L)" : "🔉 Softer (L)"; mcStopBtn.textContent = mcStop ? "▶ Play music (M)" : "⏹ Stop music (M)"; mcSoftBtn.disabled = mcStop; }
-  function toggleSoft(){ Sound.unlock(); if (mcStop) return; mcSoft = !mcSoft; applyQuiet(); toast(mcSoft ? "Music softer" : "Music back to normal"); }
-  function toggleQuiet(){ Sound.unlock(); mcStop = !mcStop; if (mcStop) mcSoft = false; applyQuiet(); toast(mcStop ? "Music stopped" : "Music playing"); }
-  app.append(el("div", {class:"ld"}, head, body), dock, dlg, el("div", {class:"mc fixed", role:"group", "aria-label":"Music controls"}, mcSoftBtn, mcStopBtn));
+    mcBtn.textContent = mcStop ? "🔇" : "🔊"; mcBtn.title = mcStop ? "Play music (M)" : "Stop music (M)"; mcBtn.setAttribute("aria-label", mcBtn.title); }
+  function toggleSoft(){ Sound.unlock(); if (mcStop) return; mcSoft = !mcSoft; applyQuiet(); }
+  function toggleQuiet(){ Sound.unlock(); mcStop = !mcStop; if (mcStop) mcSoft = false; applyQuiet(); }
+  app.append(el("div", {class:"ld"}, head, body), dock, dlg, mcBtn);
   applyQuiet();
   paintTools();
   document.addEventListener("fullscreenchange", paintTools);
@@ -2678,25 +2694,6 @@ function confetti(){
 }
 
 /* ---------- printable poster ---------- */
-function viewPoster(){
-  clear();
-  const q = qrcode(0, "L"); q.addData(B.appUrl); q.make();
-  const n = q.getModuleCount(), cell = 14, size = (n + 8) * cell, c = document.createElement("canvas");
-  c.width = c.height = size; const g = c.getContext("2d");
-  g.fillStyle = "#fff"; g.fillRect(0, 0, size, size); g.fillStyle = "#000";
-  for (let r = 0; r < n; r++) for (let k = 0; k < n; k++) if (q.isDark(r, k)) g.fillRect((k + 4) * cell, (r + 4) * cell, cell, cell);
-  document.body.classList.add("postermode");
-  const hdr = document.querySelector(".brand").cloneNode(true); hdr.querySelectorAll("img, .when").forEach(n => n.remove());
-  app.append(el("div", {class:"poster"},
-    hdr,
-    el("img", {class:"qr", src:c.toDataURL("image/png"), alt:"QR code to register for the gala"}),
-    el("p", {class:"cta", text:"Scan to register"}),
-    el("ol", null,
-      el("li", null, el("b", {text:"1"}), "Scan QR Code"),
-      el("li", null, el("b", {text:"2"}), "Fill in your details"),
-      el("li", null, el("b", {text:"3"}), "Get your lucky draw number")),
-    el("p", {class:"fine", text:"No sign-in needed. One registration per person."})));
-}
 
 /* ---------- guest registration (invited guests without a staff ID, on their own phone) ---------- */
 function viewGuest(){
@@ -2739,26 +2736,41 @@ function viewGuest(){
   name.focus();
 }
 
-/* ---------- guest registration poster ---------- */
-function viewGuestPoster(){
-  clear();
-  const q = qrcode(0, "L"); q.addData(pageUrl("guest")); q.make();
+
+/* ---------- QR posters: one colourful design for staff, guest and voting ---------- */
+function qrCanvas(url){
+  const q = qrcode(0, "M"); q.addData(url); q.make();
   const n = q.getModuleCount(), cell = 14, size = (n + 8) * cell, c = document.createElement("canvas");
   c.width = c.height = size; const g = c.getContext("2d");
   g.fillStyle = "#fff"; g.fillRect(0, 0, size, size); g.fillStyle = "#000";
   for (let r = 0; r < n; r++) for (let k = 0; k < n; k++) if (q.isDark(r, k)) g.fillRect((k + 4) * cell, (r + 4) * cell, cell, cell);
-  document.body.classList.add("postermode");
-  const hdr = document.querySelector(".brand").cloneNode(true); hdr.querySelectorAll("img, .when").forEach(n => n.remove());
-  app.append(el("div", {class:"poster"},
-    hdr,
-    el("p", {class:"guest-badge", text:"🎟 Guest registration"}),
-    el("img", {class:"qr sm", src:c.toDataURL("image/png"), alt:"QR code for guest registration"}),
-    el("p", {class:"cta", text:"Guests, scan to register"}),
-    el("ol", null,
-      el("li", null, el("b", {text:"1"}), "Scan QR Code"),
-      el("li", null, el("b", {text:"2"}), "Your name and phone number"),
-      el("li", null, el("b", {text:"3"}), "Get your lucky draw number")),
-    el("p", {class:"fine", text:"For invited guests without a staff ID. Staff, please use the staff QR code."})));
+  return c.toDataURL("image/png");
+}
+function posterView(o){
+  clear(); document.body.classList.add("postermode");
+  app.append(el("div", {class:"poster2 tone-" + o.tone},
+    el("p", {class:"p2-kick", text:"Annual Dinner 2027 · Global Harmony Gala"}),
+    o.top || null,
+    el("p", {class:"p2-badge", text:o.badge}),
+    el("h2", {class:"p2-title"}, o.title.map(t => el("span", {text:t}))),
+    o.tag ? bdTag(o.tag) : el("p", {class:"p2-motto", text:"United by Diversity, Connected by Excellence"}),
+    el("div", {class:"p2-qrwrap"}, el("img", {class:"p2-qr", src:qrCanvas(o.url), alt:o.alt})),
+    el("p", {class:"p2-cta", text:o.cta}),
+    el("ol", {class:"p2-steps"}, o.steps.map((s, i) => el("li", null, el("b", {text:String(i + 1)}),
+      Array.isArray(s) ? el("span", {class:"li2"}, s[0], el("small", {text:s[1]})) : el("span", {text:s})))),
+    el("p", {class:"p2-fine", text:o.fine})));
+}
+function viewPoster(){
+  posterView({tone:"teal", badge:"Staff", title:["Staff", "Registration"], url:B.appUrl, alt:"QR code for staff registration",
+    cta:"Scan to register", steps:["Scan QR Code", "Fill in your details", "Get your lucky draw number"], fine:"No sign-in needed. One registration per person."});
+}
+function viewGuestPoster(){
+  posterView({tone:"pink", badge:"Guest", title:["Guest", "Registration"], url:pageUrl("guest"), alt:"QR code for guest registration",
+    cta:"Guests, scan to register", steps:["Scan QR Code", "Your name and phone number", "Get your lucky draw number"], fine:"For invited guests without a staff ID. Staff, please use the staff QR code."});
+}
+function viewVotePoster(){
+  posterView({tone:"royal", badge:"Best Dressed", top:royalPair("poster-crowns"), title:["Vote for", "King & Queen"], tag:"Best Dressed of the Evening", url:pageUrl("vote"), alt:"QR code to vote for King and Queen",
+    cta:"Scan to vote", steps:["Scan QR Code", ["Enter your staff ID", "Guests: your phone number"], "Pick your King & Queen"], fine:"One vote per person for each award."});
 }
 
 if (B.view === "dashboard") viewDashboard();
@@ -2774,23 +2786,31 @@ else viewForm();
 };
 </script>
 <script>
+/* Fast start: show the page at once with the last known settings (or the built-in defaults),
+   then fetch the latest settings in the background. */
 (function(){
   var app = document.getElementById("app");
-  app.innerHTML = '<div class="card center"><p class="muted">Loading…</p></div>';
   var q = new URLSearchParams(location.search), page = (q.get("page") || "").toLowerCase();
   var views = ["kiosk", "dashboard", "poster", "draw", "vote", "awards", "vote-poster", "guest", "guest-poster"];
+  var view = views.indexOf(page) >= 0 ? page : "form";
+  var FALLBACK = {"open": true, "staffIdRequired": true, "phoneRequired": true, "orgs": ["Cyberjaya Education Group", "University of Cyberjaya", "Cyberjaya College Central", "SMR HR Group"], "departments": ["Centre for Academic Development a.k.a. Academic Management and Development", "Admission and Records", "Academic Administration Department", "Centre for Collaborative Partnerships", "Centre for Foundation, Language & General Studies", "Centre for Graduate Studies", "Centre of Postgraduate Studies", "Centre of Quality Assurance", "Centre of Research and Development", "Centre for Learning & Teaching", "Chancellery", "Continuing Education and Training", "Cyberjaya College Central", "Examinations", "Facilities and Logistics Management", "Faculty of Business & Technology", "Faculty of Creative Arts and Design", "Faculty of Medicine", "Faculty of Pharmacy", "Faculty of Psychology and Social Sciences", "Faculty of Safety & Health", "Faculty of Health", "Group Corporate and Marketing Communications", "Group Directorate", "Group Finance", "Group Governance", "Group Human Resources", "Group Information Technology", "Group Procurement", "Group Property Development Department", "Group Regional Recruitment", "Industry Engagement & Graduate Employability Department (pka GED, IIED)", "Internal Audit and Risk Management", "International Student Recruitment Department", "International Student Visa Department", "Laboratory", "Library and Knowledge Management", "Malaysian Student Recruitment Department", "Oxbridge Language Centre", "Quality Management and Enhancement Centre (QUAMEC)", "Registry", "Regulatory and Governance Department", "Research Management Department", "School of Biomedical Engineering", "Student Experience and Support Department (pka STAD)", "Tabung Amanah Zakat UOC"], "demo": false, "votingOpen": false, "guestOpen": true};
+  var cached = null; try{ cached = JSON.parse(localStorage.getItem("ghg-config") || "null"); }catch(e){}
+  function boot(c){ return {view:view, appUrl:location.origin + location.pathname, open:c.open, staffIdRequired:c.staffIdRequired, phoneRequired:c.phoneRequired,
+    orgs:c.orgs, departments:c.departments, demo:c.demo, votingOpen:c.votingOpen, guestOpen:c.guestOpen}; }
+  BOOT = boot(cached || FALLBACK);
+  app.innerHTML = ""; window.__startApp();
   window.__apiPost("apiConfig", [])
     .then(function(c){
-      BOOT = {view: views.indexOf(page) >= 0 ? page : "form", appUrl: location.origin + location.pathname,
-        open: c.open, staffIdRequired: c.staffIdRequired, phoneRequired: c.phoneRequired, orgs: c.orgs, departments: c.departments, demo: c.demo, votingOpen: c.votingOpen, guestOpen: c.guestOpen};
-      app.innerHTML = ""; window.__startApp();
+      try{ localStorage.setItem("ghg-config", JSON.stringify(c)); }catch(e){}
+      var before = JSON.stringify(boot(cached || FALLBACK)), fresh = boot(c);
+      Object.keys(fresh).forEach(function(k){ BOOT[k] = fresh[k]; });
+      /* a guest-facing form opened with old settings: redraw it if nothing has been typed yet */
+      if (before !== JSON.stringify(fresh) && ["form", "guest", "vote"].indexOf(view) >= 0){
+        var typed = Array.prototype.some.call(app.querySelectorAll("input[type=text],input[type=tel]"), function(i){ return i.value.trim(); });
+        if (!typed){ app.innerHTML = ""; window.__startApp(); }
+      }
     })
-    .catch(function(e){
-      console.error("Gala API:", e && e.message, e && e.detail);
-      app.innerHTML = '<div class="card center"><h2>Can’t connect right now</h2><p class="muted">Check your Wi-Fi or mobile data, then reload this page. If it still doesn’t work, please go to the registration counter.</p><button class="btn primary big" onclick="location.reload()">Reload</button>' +
-        '<details style="margin-top:1rem;text-align:left"><summary class="muted small">Technical details (for the organiser)</summary><p class="muted small" style="word-break:break-word"></p></details></div>';
-      app.querySelector("details p").textContent = (e && e.detail) || (e && e.message) || "unknown error";
-    });
+    .catch(function(e){ console.warn("Gala API:", e && e.message, e && e.detail); });
 })();
 </script>
 </body>
