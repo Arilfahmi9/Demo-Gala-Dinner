@@ -142,7 +142,7 @@ body.drawmode main{max-width:none;height:100%}
 .ld-num.idle{opacity:.3}
 .ld-num.pop{animation:pop .7s cubic-bezier(.2,1.4,.4,1) both}
 .ld-pname{margin:0;font-family:var(--display);font-weight:800;color:var(--ink);font-size:clamp(1.4rem,3.4vw,3.4rem);line-height:1.1}
-.ld-pname:empty,.ld-pmeta:empty{display:none}
+.ld-pname:empty,.ld-pmeta:empty,.ld-line:empty{display:none}
 .ld-pmeta{margin:0;color:var(--muted);font-weight:600;font-size:clamp(.9rem,1.5vw,1.5rem)}
 .ld-sub{margin:.4vh 0 0;color:var(--muted);font-size:clamp(.75rem,1vw,1rem)}
 .ld-bottom{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr) minmax(0,1.4fr);gap:1.4vw;align-items:stretch;height:clamp(9rem,22vh,15rem)}
@@ -337,6 +337,103 @@ body.dashmode .dept .fill{transition:width .6s}
 body.dashmode .feed{max-height:56vh;overflow:auto}
 body.dashmode .feed li{padding:.45rem 0;font-size:.9rem}
 @media (max-width:820px){ .db-top{grid-template-columns:1fr} }
+/* opening screen */
+.ld-start{position:fixed;inset:0;z-index:91;display:grid;place-items:center;overflow:hidden;background:radial-gradient(ellipse 70% 60% at 50% 55%,#3b1a6e 0%,#160e33 60%,#07040f 100%);animation:introIn .4s ease both}
+.ld-start.out{animation:introOut .6s ease both}
+.ld-start-stage{position:relative;z-index:1;text-align:center;padding:0 5vw}
+.ld-start-title{margin:0;font-family:var(--display);font-weight:800;text-transform:uppercase;letter-spacing:.06em;line-height:1;font-size:clamp(3rem,10vw,9rem);white-space:nowrap;
+  background:linear-gradient(180deg,#FFF3C4,#F2CF73 45%,#C9962E);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 40px rgba(242,207,115,.45));animation:fadeUp .9s .7s ease both}
+.ld-start-when{margin:1.6vh 0 4vh;color:var(--ink);font-weight:600;letter-spacing:.06em;font-size:clamp(.85rem,1.5vw,1.3rem);animation:fadeUp .9s .9s ease both}
+.ld-start-when .sep{color:var(--rose);margin:0 .7em}
+.ld-start-btns{display:flex;justify-content:center;align-items:center;width:100%;animation:fadeUp .9s 1.1s ease both}
+.ld-start-btns .ld-btn{min-width:min(26rem,80vw);padding:clamp(.9rem,2.2vh,1.4rem) 2rem;font-size:clamp(1rem,1.5vw,1.4rem)}
+.ld-start-go{animation:goPulse 1.6s 2s ease-in-out infinite}
+@keyframes goPulse{0%,100%{box-shadow:0 12px 34px -14px rgba(242,207,115,.8)}50%{box-shadow:0 0 0 10px rgba(242,207,115,.15),0 12px 50px -8px rgba(242,207,115,1)}}
+.ld-start .linkbtn{display:block;margin:1.6vh auto 0;color:var(--muted)}
+.ld-start-keys{margin:1vh 0 0;color:var(--muted);font-size:.8rem;opacity:.7}
+@media (prefers-reduced-motion:reduce){ .ld-start-go,.ld-start-title,.ld-start-when,.ld-start-btns{animation:none} }
+/* voting page */
+.vote-card{position:relative}
+.vote-crown{font-size:2.4rem;line-height:1;text-align:center;margin:0 0 .3rem;filter:drop-shadow(0 0 18px rgba(242,207,115,.6))}
+.vote-crown.big{font-size:4rem;animation:float 2.4s ease-in-out infinite alternate}
+.vote-sec{margin-top:1rem}
+.vote-cat{margin:0 0 .5rem;font-size:1rem;color:var(--gold);font-family:var(--display);font-weight:800;letter-spacing:.02em}
+.vote-done{margin:0;padding:.6rem .8rem;border-radius:10px;background:rgba(126,224,184,.1);color:var(--ok);font-weight:700;font-size:.9rem}
+.nom-grid{display:grid;gap:.5rem}
+.nom{display:flex;align-items:center;gap:.75rem;width:100%;text-align:left;padding:.6rem .75rem;border:1.5px solid var(--line);border-radius:12px;background:rgba(255,255,255,.04);color:var(--ink);cursor:pointer;min-height:56px}
+.nom[aria-checked="true"]{border-color:var(--gold);background:rgba(242,207,115,.12);box-shadow:0 0 0 3px rgba(242,207,115,.15)}
+.av{flex:none;width:2.6rem;height:2.6rem;border-radius:50%;display:grid;place-items:center;font-weight:800;color:#fff;font-size:.95rem}
+.av.queen{background:linear-gradient(135deg,#E0228A,#8B3FC1)}
+.av.king{background:linear-gradient(135deg,#4A63E0,#8B3FC1)}
+.nom-txt{flex:1;display:flex;flex-direction:column;min-width:0}
+.nom-txt b{font-size:.98rem}
+.nom-txt small{color:var(--muted);font-size:.78rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nom-tick{flex:none;width:1.6rem;height:1.6rem;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-weight:800;color:transparent}
+.nom[aria-checked="true"] .nom-tick{background:var(--gold);border-color:var(--gold);color:var(--on-gold)}
+/* awards screen */
+.aw-body{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;gap:2vw;max-width:1600px;width:100%;margin:0 auto}
+.aw-card{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:1vh;padding:2.5vh 2vw;border-radius:28px;border:1px solid var(--line);
+  background:radial-gradient(ellipse 70% 60% at 50% 40%,rgba(139,63,193,.35),transparent 70%),rgba(22,12,52,.75);box-shadow:0 40px 90px -40px rgba(0,0,0,.9);overflow:hidden}
+.aw-card.queen{background:radial-gradient(ellipse 70% 60% at 50% 40%,rgba(224,34,138,.3),transparent 70%),rgba(22,12,52,.75)}
+.aw-card.king{background:radial-gradient(ellipse 70% 60% at 50% 40%,rgba(74,99,224,.32),transparent 70%),rgba(22,12,52,.75)}
+.aw-card.done{border-color:var(--gold);box-shadow:0 0 0 2px rgba(242,207,115,.5),0 0 80px rgba(242,207,115,.25)}
+.aw-crown{font-size:clamp(2.2rem,6vh,4rem);line-height:1;filter:drop-shadow(0 0 20px rgba(242,207,115,.6))}
+.aw-crown.big{font-size:clamp(3rem,10vh,6rem);margin-bottom:2vh}
+.aw-label{margin:0;font-family:var(--display);font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);font-size:clamp(1rem,2vw,2rem)}
+.aw-orb{width:clamp(7rem,22vh,15rem);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:clamp(3rem,10vh,7rem);color:#fff;
+  box-shadow:0 0 0 4px rgba(242,207,115,.6),0 0 60px rgba(242,207,115,.35);animation:glow 1.8s ease-in-out infinite alternate}
+.aw-orb.queen{background:radial-gradient(circle at 35% 30%,#ff6fb5,#8B3FC1 70%)}
+.aw-orb.king{background:radial-gradient(circle at 35% 30%,#8fa6ff,#3a2a9a 70%)}
+.aw-name{margin:0;font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,4.5vh,3.4rem);line-height:1.1;color:var(--ink)}
+.aw-name:empty,.aw-meta:empty{display:none}
+.aw-meta{margin:0;color:var(--muted);font-weight:600;font-size:clamp(.9rem,2vh,1.3rem)}
+.aw-count{margin:0;color:var(--muted);font-size:clamp(.75rem,1.5vh,1rem)}
+.aw-card .ld-btn{min-width:min(22rem,80%);margin-top:1vh}
+.aw-strip{display:flex;align-items:center;justify-content:center;gap:1.4vw;margin:1.2vh auto 0;padding:1vh 1.4vw;border:1px solid var(--line);border-radius:18px;background:rgba(14,8,34,.7);max-width:1000px}
+.aw-strip.closed .aw-qr,.aw-strip.closed .aw-url{display:none}
+.aw-qr{width:clamp(70px,12vh,120px);height:auto;background:#fff;border-radius:10px;padding:4px}
+.aw-status{margin:0;font-weight:700;font-size:clamp(.9rem,1.8vh,1.3rem)}
+.aw-live{color:var(--ok);display:inline-flex;align-items:center;gap:.5rem}
+.aw-live i{width:.7rem;height:.7rem;border-radius:50%;background:currentColor;animation:dbpulse 1.8s infinite}
+.aw-closed{color:var(--warn)}
+.aw-tot{color:var(--muted);font-weight:600}
+.aw-url{margin:.2rem 0 0;color:var(--muted);font-size:.8rem}
+.aw-roll{margin-top:3vh;font-family:var(--display);font-weight:800;font-size:clamp(2.4rem,8vw,7rem);line-height:1.1;background:linear-gradient(180deg,#FFF3C4,#F2CF73 45%,#C9962E);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;min-height:1.1em}
+.aw-winname{font-size:clamp(3rem,11vh,9rem)!important;line-height:1.05!important}
+.aw-winname span{transform:none!important}
+.aw-tie{margin:.6vh 0 0;color:var(--rose);font-weight:800;letter-spacing:.2em;text-transform:uppercase}
+@media (orientation:portrait),(max-width:900px){ .aw-body{grid-template-columns:1fr} }
+.db-vote{margin-top:1rem}
+.db-top3{margin:0;padding-left:1.2rem}
+.db-top3 li{display:flex;justify-content:space-between;gap:.6rem;padding:.2rem 0}
+.db-top3 li b{color:var(--gold)}
+/* winner celebration */
+.cele{position:fixed;inset:0;z-index:50;display:grid;place-items:center;overflow:hidden;background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(90,40,150,.9) 0%,rgba(22,10,50,.97) 55%,rgba(4,2,12,.99) 100%);animation:introIn .35s ease both}
+.cele-stage::before{content:"";position:absolute;left:50%;top:50%;width:90vmin;height:90vmin;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(242,207,115,.28),rgba(242,207,115,0) 60%);z-index:-1;animation:glow 1.6s ease-in-out infinite alternate}
+.cele.out{animation:celeOut .7s ease both}
+@keyframes celeOut{to{opacity:0;transform:scale(.92)}}
+.cele-rays{position:absolute;inset:-60%;background:repeating-conic-gradient(from 0deg at 50% 50%,rgba(242,207,115,.22) 0 5deg,transparent 5deg 15deg);animation:rays 14s linear infinite;mask-image:radial-gradient(circle,#000 20%,transparent 65%);-webkit-mask-image:radial-gradient(circle,#000 20%,transparent 65%)}
+.cele.grand .cele-rays{background:repeating-conic-gradient(from 0deg at 50% 50%,rgba(255,243,196,.35) 0 4deg,transparent 4deg 12deg);animation-duration:9s}
+.cele-sky{position:absolute;inset:0;width:100%;height:100%}
+.cele-ring{position:absolute;width:60vmin;height:60vmin;border-radius:50%;border:3px solid rgba(242,207,115,.7);box-shadow:0 0 60px rgba(242,207,115,.5),inset 0 0 60px rgba(242,207,115,.3);animation:ringPulse 1.6s ease-in-out infinite alternate}
+@keyframes ringPulse{from{transform:scale(.92);opacity:.55}to{transform:scale(1.06);opacity:1}}
+.cele-stage{position:relative;z-index:1;text-align:center;padding:0 4vw}
+.cele-crown{font-size:clamp(3rem,10vh,7rem);line-height:1;animation:crown .9s cubic-bezier(.2,1.5,.4,1) both,float 2.4s 1s ease-in-out infinite alternate}
+@keyframes crown{from{transform:translateY(-60vh) rotate(-30deg)}to{transform:none}}
+@keyframes float{to{transform:translateY(-12px)}}
+.cele-title{margin:0;font-family:var(--display);font-weight:800;letter-spacing:.14em;font-size:clamp(1.6rem,5vw,4.2rem);color:var(--ink)}
+.cele-title span{display:inline-block;opacity:0;animation:letter .6s cubic-bezier(.2,1.6,.4,1) forwards}
+.cele.grand .cele-title{background:linear-gradient(180deg,#FFF3C4,#F2CF73 50%,#C9962E);-webkit-background-clip:text;background-clip:text;color:transparent}
+.cele.grand .cele-title span{-webkit-text-fill-color:transparent;background:inherit;-webkit-background-clip:text;background-clip:text}
+@keyframes letter{0%{opacity:0;transform:translateY(-80px) scale(1.6)}70%{opacity:1;transform:translateY(8px)}100%{opacity:1;transform:none}}
+.cele-num{position:relative;margin:2vh 0 1vh;font-family:var(--display);font-weight:800;line-height:.9;font-size:clamp(7rem,32vh,24rem);animation:numZoom 1s .2s cubic-bezier(.2,1.3,.4,1) both}
+.cele-num span{display:inline-block;background:linear-gradient(110deg,#C9962E 0%,#F2CF73 30%,#FFFBEA 45%,#F2CF73 60%,#C9962E 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 2.2s 1s linear infinite;filter:drop-shadow(0 0 40px rgba(242,207,115,.6));transform:scaleX(1.12)}
+@keyframes numZoom{from{opacity:0;transform:scale(3) rotateX(70deg);filter:blur(12px)}to{opacity:1;transform:none;filter:none}}
+@keyframes shimmer{from{background-position:120% 0}to{background-position:-120% 0}}
+.cele-name{margin:0;font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,5vh,3.6rem);color:var(--ink);opacity:0;animation:fadeUp .7s 1.1s ease forwards}
+.cele-meta{margin:.4rem 0 0;font-weight:600;color:var(--muted);font-size:clamp(1rem,2.4vh,1.6rem);opacity:0;animation:fadeUp .7s 1.3s ease forwards}
+.cele-prize{display:inline-block;margin:1.4vh 0 0;padding:.4rem 1.2rem;border-radius:999px;border:1px solid var(--gold);color:var(--gold);font-weight:700;font-size:clamp(.95rem,2.2vh,1.4rem);background:rgba(242,207,115,.08);opacity:0;animation:fadeUp .7s 1.5s ease forwards}
+@media (prefers-reduced-motion:reduce){ .cele-rays,.cele-ring,.cele-num span,.cele-crown{animation:none} .cele-title span,.cele-num,.cele-name,.cele-meta,.cele-prize{animation:fadeUp .3s ease forwards} }
 /* YouTube music window */
 .yt-box{position:fixed;left:1.2vw;bottom:1.6vh;z-index:95;width:260px;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#000;box-shadow:0 14px 40px -12px rgba(0,0,0,.9);opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .4s,transform .4s}
 .yt-box.on{opacity:1;transform:none;pointer-events:auto}
@@ -366,6 +463,7 @@ body.dashmode .feed li{padding:.45rem 0;font-size:.9rem}
 .ld-num.grandnum{animation:popw .7s cubic-bezier(.2,1.4,.4,1) both,grandGlow 1.4s .7s ease-in-out infinite alternate}
 @keyframes grandGlow{from{filter:drop-shadow(0 0 30px rgba(242,207,115,.45))}to{filter:drop-shadow(0 0 70px rgba(255,243,196,.9))}}
 #fw{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:55}
+#confetti{z-index:58!important}
 @media (prefers-reduced-motion:reduce){ .ld-panel.rays::before,.ld-panel.grand,.ld-num.grandnum{animation:none} }
 /* intro overlay */
 .intro{position:fixed;inset:0;z-index:90;display:grid;place-items:center;overflow:hidden;background:radial-gradient(ellipse 70% 60% at 50% 55%,#3b1a6e 0%,#160e33 60%,#07040f 100%);animation:introIn .5s ease both}
@@ -560,6 +658,7 @@ function viewResult(r, headline, fresh){
     card.append(next);
     kioskTimer = setInterval(() => { left--; next.textContent = "Next person (" + left + ")"; if (left <= 0){ clearInterval(kioskTimer); viewForm(); } }, 1000);
   } else {
+    if (B.votingOpen) app.append(el("p", {class:"center", style:"margin:.9rem 0 0"}, el("a", {class:"btn primary", href:B.appUrl + "?page=vote", text:"👑 Vote for King & Queen of the Night"})));
     app.append(el("p", {class:"muted small center", text:"Each person registers once, on their own phone. Need help? Please go to the registration counter."}));
   }
 }
@@ -606,16 +705,32 @@ function viewDashboard(){
     const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], {type:"text/csv"})); a.download = "Global-Harmony-Gala-registrations.csv"; document.body.append(a); a.click(); a.remove();
   });
   const drawLink = el("a", {class:"btn", href:B.appUrl + "?page=draw", target:"_blank", rel:"noopener", text:"Open lucky draw"});
+  const awLink = el("a", {class:"btn", href:B.appUrl + "?page=awards", target:"_blank", rel:"noopener", text:"👑 Open King & Queen awards"});
+  const voteBox = el("div");
   app.append(
     el("section", {class:"db-top"},
       el("div", {class:"db-total"}, el("p", {class:"db-label", text:"Total registered"}), totalNum, live, lastAt),
       orgBox),
-    el("div", {class:"row noprint db-actions"}, drawLink, copyBtn, dlBtn),
+    el("div", {class:"row noprint db-actions"}, drawLink, awLink, copyBtn, dlBtn),
     el("div", {class:"grid db-grid"},
       el("div", {class:"card"}, el("div", {class:"db-head"}, el("h2", {text:"By department"}), deptCount), deptList),
-      el("div", {class:"card"}, el("h2", {text:"Just registered"}), feed)));
+      el("div", {class:"card"}, el("h2", {text:"Just registered"}), feed)),
+    el("div", {class:"card db-vote"}, el("div", {class:"db-head"}, el("h2", {text:"👑 Best Dressed voting"})), voteBox));
   function bump(node){ node.classList.remove("db-bump"); void node.offsetWidth; node.classList.add("db-bump"); }
+  async function loadVotes(){
+    try{
+      const v = await call("apiAwardsState", sessionStorage.getItem("ghg-pin"));
+      voteBox.innerHTML = "";
+      voteBox.append(el("p", {class:"muted small", style:"margin:0 0 .6rem"}, el("b", {style:"color:" + (v.open ? "var(--ok)" : "var(--warn)"), text: v.open ? "● Voting open" : "● Voting closed"}), " · " + v.voters + " guests voted"));
+      const g = el("div", {class:"grid", style:"margin-top:0"});
+      CAT_ORDER.forEach(cat => { const list = v.nominees.filter(n => n.cat === cat).sort((a, b) => b.votes - a.votes).slice(0, 3);
+        g.append(el("div", null, el("p", {style:"margin:0 0 .3rem;font-weight:800;color:var(--gold)", text:(cat === "QUEEN" ? "👸 " : "🤴 ") + v.labels[cat] + " · " + v.perCat[cat] + " votes"}),
+          list.length ? el("ol", {class:"db-top3"}, list.map(n => el("li", null, el("span", {text:n.name}), el("b", {text:String(n.votes)})))) : el("p", {class:"muted small", text:"No nominees yet."}))); });
+      voteBox.append(g);
+    }catch(e){}
+  }
   async function load(){
+    loadVotes();
     try{
       const d = await call("apiDashboard", sessionStorage.getItem("ghg-pin"));
       rows = d.rows;
@@ -779,6 +894,64 @@ const Sound = (function(){
       } }
   };
 
+  /* ===== draw build-ups ===== */
+  function marimba(f, t, v, d){ osc("sine", f, t, .35, v, d, {a:.002}); osc("sine", f * 4, t, .08, v * .3, d, {a:.001}); }
+  function rollNormal(t0, end, sec, F){
+    /* start: "ding-ding!" + whoosh */
+    nz(t0, .4, .25, F, "bandpass", 500, 1, 0, {to:6000, ramp:true});
+    [1046.5, 1318.5, 1568].forEach((f, i) => marimba(f, t0 + .3 + i * .09, .14, F));
+    /* bouncy marimba melody that climbs, claps that speed up */
+    const mel = [60, 64, 67, 72, 67, 64, 62, 65, 69, 74, 69, 65, 64, 67, 71, 76];
+    let t = t0 + .8, k = 0, st = .2;
+    while (t < end - .6){ const p = (t - t0) / sec; marimba(N(mel[k % mel.length] + 12 * Math.floor(p * 2)), t, .1 + .06 * p, F);
+      if (k % 2 === 0) osc("triangle", N(36 + (k >> 3) % 4 * 2), t, st * 1.6, .12, F, {cut:900});
+      if (k % 4 === 2) clap(t, .12 + .25 * p, F);
+      t += st; k++; st = Math.max(.075, st * .975); }
+    /* drum roll + ta-da riser */
+    let s = end - 1.8, g = .12; while (s < end - .45){ snare(s, .1 + .3 * ((s - (end - 1.8)) / 1.4), F); s += g; g = Math.max(.035, g * .85); }
+    osc("triangle", 392, end - 1.8, 1.4, .08, F, {to:1568, glide:1.4, a:1});
+    nz(end - 1.6, 1.15, .3, F, "highpass", 3000, .5, 0, {ramp:true});
+  }
+  function rollBig(t0, end, sec, F){
+    /* start: impact + reverse cymbal */
+    kick(t0 + .3, 1, F); taiko(t0 + .3, 1, F); crash(t0 + .3, .35, F); saws([N(57), N(64), N(69)], t0 + .3, .6, .02, F, 3000);
+    /* EDM build: 4-on-the-floor that doubles, pumping supersaw chords, siren riser */
+    const prog = [[57, 60, 64], [53, 57, 60], [55, 59, 62], [52, 56, 59]];
+    let t = t0 + .9, beat = .5, k = 0;
+    while (t < end - .55){ const p = (t - t0) / sec;
+      kick(t, .7 + .3 * p, F); if (p > .55) clap(t, .2 + .2 * p, F);
+      const ch = prog[Math.floor(k / 4) % 4]; saws(ch.map(n => N(n + (p > .7 ? 12 : 0))), t + beat * .5, beat * .45, .012 + .01 * p, F, 1500 + 4000 * p);
+      osc("sawtooth", N(ch[0] - 24), t + beat * .5, beat * .45, .14, F, {cut:500, q:6});
+      t += beat; k++; if (p > .45) beat = .25; if (p > .8) beat = .125; }
+    osc("square", 300, t0 + .9, sec - 1.4, .03, F, {to:2400, glide:sec - 1.4, cut:4000, a:sec * .5});    /* siren */
+    nz(t0 + .9, sec - 1.35, .3, F, "bandpass", 200, 1.6, 0, {to:9000, ramp:true});
+    let s = end - 2.4, g = .16; while (s < end - .45){ snare(s, .12 + .35 * ((s - (end - 2.4)) / 1.95), F); s += g; g = Math.max(.03, g * .87); }
+    nz(end - 2, 1.55, .5, F, "highpass", 2500, .5, 0, {ramp:true});
+  }
+  function braam(t, f, dur, F){ [-15, -5, 5, 15].forEach(dt => osc("sawtooth", f, t, dur, .045, F, {cut:220, cutTo:1600, cutTime:.25, a:.06, detune:dt})); osc("sine", f / 2, t, dur, .5, F, {a:.03}); nz(t, .3, .25, F, "lowpass", 600, .7); }
+  function rollGrand(t0, end, sec, F){
+    /* opening BRAAAM */
+    braam(t0 + .2, N(26), 2.2, F); taiko(t0 + .2, 1, F); crash(t0 + .2, .3, F);
+    /* war drums ostinato that intensifies */
+    let t = t0 + 1, k = 0, st = .25;
+    while (t < end - .6){ const p = (t - t0) / sec; const pat = [1, 0, 0, 1, 0, 1, 0, 0];
+      if (pat[k % 8] || p > .7) taiko(t, .45 + .5 * p, F);
+      if (k % 2 === 0) nz(t, .05, .05 + .1 * p, F, "highpass", 6000, 1);
+      t += st; k++; if (p > .6) st = .18; if (p > .85) st = .12; }
+    /* BRAAAM every couple of seconds, each one higher */
+    for (let b = 1, i = 0; t0 + b < end - 1; b += 2.2, i++) braam(t0 + b, N(26 + i * 3), 1.9, F);
+    /* endless rising strings (Shepard-style) + choir clusters */
+    for (let v = 0; v < 3; v++) osc("sawtooth", 110 * Math.pow(2, v), t0 + 1, sec - 1.4, .022, F, {to:110 * Math.pow(2, v + 1), glide:sec - 1.4, cut:2500, a:(sec - 1.4) * .5});
+    for (let c = 0; t0 + 1.2 + c * 1.5 < end - .8; c++) choir([N(62 + c * 2), N(65 + c * 2), N(69 + c * 2)], t0 + 1.2 + c * 1.5, 1.6, .025 + .006 * c, F);
+    /* heartbeat */
+    let hb = t0 + 1.4, gap = .85; while (hb < end - .7){ osc("sine", 55, hb, .3, .8, F, {to:35, glide:.2}); osc("sine", 55, hb + .17, .25, .5, F, {to:35, glide:.2}); hb += gap; gap = Math.max(.38, gap * .9); }
+    /* final: everything rises, then silence */
+    braam(end - 2.6, N(38), 2.1, F);
+    let s = end - 2.4, g = .14; while (s < end - .45){ snare(s, .15 + .35 * ((s - (end - 2.4)) / 1.95), F); taiko(s, .2 + .35 * ((s - (end - 2.4)) / 1.95), F); s += g; g = Math.max(.028, g * .86); }
+    osc("sawtooth", 55, end - 2.6, 2.15, .08, F, {to:1760, glide:2.15, cut:300, cutTo:7000, cutTime:2.15, a:2});
+    nz(end - 2.2, 1.75, .6, F, "highpass", 2000, .5, 0, {ramp:true});
+  }
+
   function scheduler(){
     const sg = SONGS[song]; if (!sg) return; const six = 60 / sg.bpm / 4;
     while (nextT < ctx.currentTime + .15){ sg.play(nextT, s16); nextT += six; s16++; }
@@ -816,25 +989,30 @@ const Sound = (function(){
       apply(m === "win" && fromDraw ? (tr >= 3 ? 5200 : tr === 2 ? 4200 : 3400) : 0);   /* let the winner fanfare play first */
     },
     hold(on){ this.mode(on ? "draw" : "wait", tier); },
-    tick(tr){ if (!fxOn || !init()) return; const t = ctx.currentTime; osc("square", 1900 + Math.random() * 300, t, .03, .05, fxGain, {cut:6000}); osc("sine", 120, t, .05, .08, fxGain); if (tr >= 2) osc("sine", 2600, t, .02, .03, fxGain); },
+    tick(tr){ if (!fxOn || !init()) return; const t = ctx.currentTime;
+      if (tr >= 3){ osc("sine", 900, t, .05, .06, fxGain); nz(t, .03, .12, fxGain, "bandpass", 3500, 4); }          /* deep clock tick */
+      else if (tr === 2){ osc("square", 1500 + Math.random() * 600, t, .03, .045, fxGain, {cut:5000}); }              /* synth blip */
+      else { osc("triangle", 2000 + Math.random() * 300, t, .025, .05, fxGain); nz(t, .015, .08, fxGain, "highpass", 6000, 1); } },  /* prize-wheel click */
     /* the build-up while the numbers spin */
+    /* the build-up while the numbers spin — three different designs:
+       1 normal  : bright game-show "prize wheel"
+       2 big     : EDM build-up to a drop (used for the two prizes before the grand prize)
+       3 grand   : cinematic trailer — BRAAAM horns, war drums, choir, endless rising strings */
     roll(sec, tr){
       if (!init()) return; this.mode("draw", tr || 1); if (!fxOn) return;
-      tr = tr || 1; const t0 = ctx.currentTime + .05, F = fxGain;
-      nz(t0, .5, .3, F, "bandpass", 400, 1, 0, {to:6000, ramp:true});
-      brass([261.63, 329.63, 392, 523.25], t0 + .45, .5, .06, F); kick(t0 + .45, .9, F);
-      if (tr >= 2){ taiko(t0 + .45, 1, F); crash(t0 + .45, .25, F); }
-      let t = t0 + .9, gap = .2;
-      while (t < t0 + sec - .35){ const p = (t - t0) / sec; snare(t, .08 + .3 * p, F); if (tr >= 2 && Math.random() < .5) taiko(t, .2 + .4 * p, F); t += gap; gap = Math.max(tr >= 3 ? .026 : .032, gap * .92); }
-      for (let b = .9; b < sec - .3; b += (tr >= 3 ? .45 : .5)) kick(t0 + b, .35 + .55 * (b / sec), F);
-      const steps = Math.max(2, Math.floor(sec - 1));
-      for (let k = 0; k < steps; k++){ const st = t0 + .9 + k * ((sec - 1.2) / steps), f = 196 * Math.pow(2, k / 12 * 2);
-        [1, 1.26, 1.5].forEach(m => osc("sawtooth", f * m, st, (sec - 1.2) / steps + .05, .022 + .012 * k / steps, F, {cut:1200 + 400 * k, a:.1, detune:(m - 1) * 10}));
-        if (tr >= 3) choir([f * 2, f * 2.52, f * 3], st, (sec - 1.2) / steps + .1, .02 + .01 * k / steps, F); }
-      osc("sawtooth", 98, t0 + .9, sec - .9, .06, F, {to:1568, glide:sec - .9, cut:500, cutTo:6000, cutTime:sec - .9, a:sec * .8});
-      if (tr >= 2) osc("sawtooth", 65, t0 + .9, sec - .9, .05, F, {to:1046, glide:sec - .9, cut:400, cutTo:5000, cutTime:sec - .9, a:sec * .8});
-      nz(t0 + sec - 2.2, 2, tr >= 3 ? .5 : .38, F, "highpass", 2500, .5, 0, {ramp:true});
+      tr = tr || 1; const t0 = ctx.currentTime + .05, F = fxGain, end = t0 + sec;
+      if (tr >= 3) return rollGrand(t0, end, sec, F);
+      if (tr === 2) return rollBig(t0, end, sec, F);
+      return rollNormal(t0, end, sec, F);
     },
+    /* countdown in the intro: 3 · 2 · 1 */
+    count(n){ if (!fxOn || !init()) return; const t = ctx.currentTime + .02, F = fxGain, f = {3:392, 2:523.25, 1:659.25}[n] || 523.25;
+      taiko(t, 1, F); kick(t, 1, F); brass([f / 2, f * .75, f], t, .5, .06, F); osc("square", f * 2, t, .18, .08, F, {cut:5000});
+      nz(t + .45, .5, .2, F, "bandpass", 400, 1.2, 0, {to:6000, ramp:true}); },
+    go(){ if (!fxOn || !init()) return; const t = ctx.currentTime + .02, F = fxGain;
+      osc("sine", 100, t, 1.6, 1, F, {to:28, glide:1.3}); kick(t, 1, F); crash(t, .5, F); taiko(t, 1, F);
+      brass([261.63, 329.63, 392, 523.25, 659.25], t, 1.8, .06, F); saws([N(72), N(76), N(79), N(84)], t, 1.4, .016, F, 5000);
+      for (let i = 0; i < 380; i++){ const at = t + .2 + Math.random() * 3; nz(at, .03, .03 + .08 * Math.max(0, 1 - Math.abs((at - t - 1) / 2)), F, "bandpass", 1200 + Math.random() * 2800, 1.6); } },
     /* each digit locking into place */
     lock(final, tr){ if (!fxOn || !init()) return; const t = ctx.currentTime + .01, F = fxGain;
       osc("square", final ? 330 : 220, t, .12, .14, F, {cut:2400}); nz(t, .05, .3, F, "highpass", 5000, 1); kick(t, final ? 1 : .6, F);
@@ -952,6 +1130,395 @@ const YTM = (function(){
   };
 })();
 
+/* ---------- your own music: MP3 file (sound only) or YouTube link (small player window) ---------- */
+const MUSIC = (function(){
+  let audio = null, fadeT = null;
+  const isFile = u => /^([\w\-. \/]+|https:\/\/[^\s"'<>]+)\.(mp3|m4a|aac|ogg|wav)(#t=\d+)?$/i.test(String(u || "").trim());
+  function fade(a, to, ms, then){
+    clearInterval(fadeT); const from = a.volume, steps = Math.max(1, Math.round(ms / 60)); let k = 0;
+    fadeT = setInterval(() => { k++; a.volume = Math.max(0, Math.min(1, from + (to - from) * k / steps)); if (k >= steps){ clearInterval(fadeT); if (then) then(); } }, 60);
+  }
+  return {
+    valid: u => isFile(u) || YTM.valid(u),
+    isFile,
+    play(u, label, vol, loop){
+      u = String(u || "").trim();
+      if (isFile(u)){
+        if (audio){ try{ audio.pause(); }catch(e){} }
+        audio = new Audio(u); audio.loop = !!loop; audio.volume = 0; audio.preload = "auto";
+        return audio.play().then(() => { fade(audio, (vol || 90) / 100, 1200); return true; })
+          .catch(() => { toast("Couldn’t play the music file “" + u + "”. Check the file name on GitHub. Using the built-in music instead."); return false; });
+      }
+      return YTM.play(u, label, vol);
+    },
+    stop(ms){
+      if (audio){ const a = audio; audio = null; if (!ms){ clearInterval(fadeT); a.pause(); } else fade(a, 0, ms, () => a.pause()); }
+      YTM.stop(ms);
+    }
+  };
+})();
+
+  /* twinkling stars, shooting stars, fireworks with star-shaped sparks and falling gold glitter */
+function celebrationSky(ov, cv, tr){
+  const cx = cv.getContext("2d"), dpr = devicePixelRatio || 1, W = innerWidth, H = innerHeight;
+  cv.width = W * dpr; cv.height = H * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const cols = ["#F2CF73", "#FFF3C4", "#E0228A", "#F59E2B", "#B57BFF", "#6E95EE", "#7EE0B8", "#ffffff"];
+  const stars = Array.from({length:tr >= 3 ? 200 : 140}, () => ({x:Math.random() * W, y:Math.random() * H, r:.6 + Math.random() * 1.8, ph:Math.random() * 6.3, sp:.02 + Math.random() * .05}));
+  let rockets = [], sparks = [], glitter = [], shooters = [], last = 0, lastShoot = 0, t0 = performance.now();
+  const every = tr >= 3 ? 260 : tr === 2 ? 380 : 520;
+  function star(x, y, r, rot){ cx.beginPath(); for (let i = 0; i < 10; i++){ const a = rot + i * Math.PI / 5, rr = i % 2 ? r * .45 : r; cx.lineTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr); } cx.closePath(); cx.fill(); }
+  function sparkle(x, y, r){ cx.beginPath(); cx.moveTo(x, y - r); cx.lineTo(x + r * .22, y - r * .22); cx.lineTo(x + r, y); cx.lineTo(x + r * .22, y + r * .22); cx.lineTo(x, y + r); cx.lineTo(x - r * .22, y + r * .22); cx.lineTo(x - r, y); cx.lineTo(x - r * .22, y - r * .22); cx.closePath(); cx.fill(); }
+  function launch(){ const c = cols[Math.floor(Math.random() * cols.length)];
+    rockets.push({x:W * (.08 + Math.random() * .84), y:H + 10, vy:-(H * .017 + Math.random() * 5), ty:H * (.08 + Math.random() * .42), c}); if (Math.random() < .5) Sound.firework(0); }
+  function burst(r){ const n = tr >= 3 ? 90 : 70, kind = Math.random(), gold = tr >= 3 && kind < .4;
+    for (let k = 0; k < n; k++){ const a = (k / n) * Math.PI * 2 + Math.random() * .1, sp = (kind < .3 ? 4.5 : 2 + Math.random() * 4) * (tr >= 3 ? 1.2 : 1);
+      sparks.push({x:r.x, y:r.y, vx:Math.cos(a) * sp, vy:Math.sin(a) * sp, life:0, max:55 + Math.random() * 45, c: gold ? "#F2CF73" : (Math.random() < .25 ? "#FFF3C4" : r.c), star: Math.random() < .35, rot:Math.random() * 6, willow: gold}); }
+    for (let k = 0; k < 14; k++) sparks.push({x:r.x, y:r.y, vx:(Math.random() - .5) * 2, vy:(Math.random() - .5) * 2, life:0, max:20, c:"#ffffff", star:false, rot:0, flash:true}); }
+  (function frame(now){
+    if (!ov.isConnected) return;
+    cx.clearRect(0, 0, W, H);
+    /* twinkling stars */
+    stars.forEach(s => { s.ph += s.sp; const a = .25 + .75 * Math.abs(Math.sin(s.ph)); cx.globalAlpha = a; cx.fillStyle = "#FFF3C4"; s.r > 1.6 ? sparkle(s.x, s.y, s.r * 2.2 * a) : (cx.beginPath(), cx.arc(s.x, s.y, s.r * a, 0, 7), cx.fill()); });
+    /* shooting stars */
+    if (now - lastShoot > (tr >= 3 ? 700 : 1300)){ lastShoot = now; shooters.push({x:Math.random() * W * .7, y:Math.random() * H * .35, vx:9 + Math.random() * 6, vy:3 + Math.random() * 2, life:0}); }
+    shooters.forEach(s => { s.x += s.vx; s.y += s.vy; s.life++; const g = cx.createLinearGradient(s.x, s.y, s.x - s.vx * 9, s.y - s.vy * 9); g.addColorStop(0, "rgba(255,243,196,.95)"); g.addColorStop(1, "rgba(255,243,196,0)");
+      cx.globalAlpha = Math.max(0, 1 - s.life / 60); cx.strokeStyle = g; cx.lineWidth = 2.5; cx.beginPath(); cx.moveTo(s.x, s.y); cx.lineTo(s.x - s.vx * 9, s.y - s.vy * 9); cx.stroke(); });
+    shooters = shooters.filter(s => s.life < 60);
+    /* fireworks */
+    if (now - last > every && now - t0 < (tr >= 3 ? 8200 : 6200)){ last = now; launch(); if (tr >= 3 && Math.random() < .5) launch(); }
+    rockets.forEach(r => { r.y += r.vy; r.vy *= .985; cx.globalAlpha = 1; cx.fillStyle = r.c; cx.beginPath(); cx.arc(r.x, r.y, 2.5, 0, 7); cx.fill();
+      cx.globalAlpha = .4; cx.fillRect(r.x - 1, r.y, 2, 18); if (r.y <= r.ty || r.vy > -1.2){ r.done = true; burst(r); } });
+    rockets = rockets.filter(r => !r.done);
+    sparks.forEach(p => { p.vy += p.willow ? .035 : .055; p.vx *= .983; p.vy *= .983; p.x += p.vx; p.y += p.vy; p.life++; p.rot += .15;
+      const a = Math.max(0, 1 - p.life / p.max); cx.globalAlpha = p.flash ? a : a * (p.life % 6 < 3 || a > .5 ? 1 : .4); cx.fillStyle = p.c;
+      if (p.star) star(p.x, p.y, 3.4, p.rot); else { cx.beginPath(); cx.arc(p.x, p.y, p.flash ? 3 : 1.8, 0, 7); cx.fill(); } });
+    sparks = sparks.filter(p => p.life < p.max);
+    /* gold glitter rain */
+    if (glitter.length < (tr >= 3 ? 160 : 80)) glitter.push({x:Math.random() * W, y:-10, vy:1 + Math.random() * 2, vx:(Math.random() - .5) * .6, r:2 + Math.random() * 3, rot:Math.random() * 6, c:Math.random() < .7 ? "#F2CF73" : "#FFF3C4"});
+    glitter.forEach(g => { g.y += g.vy; g.x += g.vx + Math.sin(g.y / 30) * .3; g.rot += .08; cx.globalAlpha = .9; cx.fillStyle = g.c; cx.save(); cx.translate(g.x, g.y); cx.rotate(g.rot); cx.fillRect(-g.r / 2, -g.r / 4, g.r, g.r / 2); cx.restore(); });
+    glitter = glitter.filter(g => g.y < H + 20);
+    cx.globalAlpha = 1;
+    requestAnimationFrame(frame);
+  })(performance.now());
+}
+
+/* ===================== Best Dressed voting: King & Queen of the Night ===================== */
+const CAT_ORDER = ["QUEEN", "KING"];
+function initials(n){ return String(n || "?").split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0]).join("").toUpperCase(); }
+
+/* ---------- public voting page (what the voting QR opens) ---------- */
+function viewVote(){
+  clear();
+  app.append(el("div", {class:"card center"}, el("p", {class:"muted", text:"Loading…"})));
+  const vkey = "ghg-voted";
+  const votedLocal = () => { try{ return JSON.parse(localStorage.getItem(vkey)) || {}; }catch(e){ return {}; } };
+  let cfg = null, voter = null;
+  call("apiVoteConfig").then(c => { cfg = c; step1(); }).catch(e => { clear(); app.append(el("div", {class:"card center"}, el("p", {class:"msg", text:errText(e)}))); });
+  function closedCard(t, sub){ clear(); app.append(el("div", {class:"card center vote-card"}, el("div", {class:"vote-crown", text:"👑"}), el("h2", {text:t}), el("p", {class:"muted", text:sub}))); }
+  function step1(){
+    if (!cfg.open) return closedCard("Best Dressed voting", "Voting isn’t open right now. Please check back when the emcee announces it.");
+    if (!cfg.nominees.length) return closedCard("Best Dressed voting", "The nominees haven’t been announced yet. Please check back soon.");
+    const done = votedLocal(); if (done.QUEEN && done.KING) return thanks(done.name);
+    clear();
+    let mem = null; try{ mem = JSON.parse(localStorage.getItem("ghg-simple-reg-v1")); }catch(e){}
+    const sid = el("input", {type:"text", id:"vsid", autocapitalize:"characters", autocomplete:"off", placeholder:"e.g. UOC1234", value:(mem && mem.staffId) || ""});
+    const ph = el("input", {type:"tel", id:"vph", inputmode:"numeric", maxlength:"4", autocomplete:"off", placeholder:"e.g. 6789"});
+    const msg = el("p", {class:"msg", role:"status"});
+    const btn = el("button", {class:"btn primary big", type:"submit", text:"Continue"});
+    const f = el("form", {novalidate:true},
+      el("label", {class:"f", for:"vsid", text:"Your staff ID"}), sid,
+      el("label", {class:"f", for:"vph", text:"Last 4 digits of the phone number you registered with"}), ph, msg, btn);
+    f.addEventListener("submit", async e => { e.preventDefault(); msg.textContent = "";
+      if (!sid.value.trim()){ msg.textContent = "Please enter your staff ID."; sid.focus(); return; }
+      btn.disabled = true; btn.textContent = "Checking…";
+      try{ const r = await call("apiVoteCheck", {staffId:sid.value, phone4:ph.value}); voter = {staffId:sid.value, phone4:ph.value, name:r.name, voted:r.voted};
+        if (r.voted.QUEEN && r.voted.KING) return thanks(r.name, true); step2(); }
+      catch(err){ msg.textContent = errText(err); btn.disabled = false; btn.textContent = "Continue"; } });
+    app.append(el("div", {class:"card vote-card"}, el("div", {class:"vote-crown", text:"👑"}),
+      el("h2", {class:"center", text:"Vote for King & Queen"}),
+      el("p", {class:"muted small center", text:"Best dressed of the night. One vote per person for each award."}), f));
+  }
+  function step2(){
+    clear();
+    const pick = {};
+    const submit = el("button", {class:"btn primary big", type:"button", text:"Submit my vote", disabled:true});
+    const msg = el("p", {class:"msg", role:"status"});
+    const sections = CAT_ORDER.map(cat => {
+      const list = cfg.nominees.filter(n => n.cat === cat);
+      const head = el("h3", {class:"vote-cat", text:(cat === "QUEEN" ? "👸 " : "🤴 ") + cfg.labels[cat]});
+      if (voter.voted[cat]) return el("section", {class:"vote-sec"}, head, el("p", {class:"vote-done", text:"✓ You’ve already voted for this award."}));
+      if (!list.length) return el("section", {class:"vote-sec"}, head, el("p", {class:"muted small", text:"No nominees yet."}));
+      const grid = el("div", {class:"nom-grid", role:"radiogroup", "aria-label":cfg.labels[cat]});
+      list.forEach(n => {
+        const b = el("button", {class:"nom", type:"button", role:"radio", "aria-checked":"false"},
+          el("span", {class:"av " + cat.toLowerCase(), text:initials(n.name)}),
+          el("span", {class:"nom-txt"}, el("b", {text:n.name}), n.dept ? el("small", {text:n.dept}) : null),
+          el("span", {class:"nom-tick", "aria-hidden":"true", text:"✓"}));
+        b.addEventListener("click", () => { pick[cat] = n.id; grid.querySelectorAll(".nom").forEach(x => x.setAttribute("aria-checked", x === b)); submit.disabled = !Object.keys(pick).length; });
+        grid.append(b);
+      });
+      return el("section", {class:"vote-sec"}, head, grid);
+    });
+    submit.addEventListener("click", async () => {
+      if (!Object.keys(pick).length) return;
+      submit.disabled = true; submit.textContent = "Sending your vote…"; msg.textContent = "";
+      try{
+        let dev = ""; try{ dev = localStorage.getItem("ghg-device") || ""; if (!dev){ dev = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(36).slice(2)); localStorage.setItem("ghg-device", dev); } }catch(e){}
+        const r = await call("apiVote", {staffId:voter.staffId, phone4:voter.phone4, queen:pick.QUEEN || "", king:pick.KING || "", deviceId:dev});
+        const done = votedLocal(); done.name = r.name; CAT_ORDER.forEach(c => { if (r.result[c] || voter.voted[c]) done[c] = true; }); try{ localStorage.setItem(vkey, JSON.stringify(done)); }catch(e){}
+        thanks(r.name);
+      }catch(err){ msg.textContent = errText(err); submit.disabled = false; submit.textContent = "Submit my vote"; }
+    });
+    app.append(el("div", {class:"card vote-card"},
+      el("p", {class:"muted small center", style:"margin:0", text:"Voting as"}), el("p", {class:"center", style:"margin:.1rem 0 .6rem;font-weight:800;font-size:1.1rem", text:voter.name}),
+      sections, msg, submit));
+  }
+  function thanks(name, already){
+    clear();
+    app.append(el("div", {class:"card center vote-card"}, el("div", {class:"vote-crown big", text:"👑"}),
+      el("h2", {text: already ? "You’ve already voted" : "Thank you for voting!"}),
+      name ? el("p", {style:"font-weight:700;margin:.2rem 0", text:name}) : null,
+      el("p", {class:"muted", text:"The King and Queen of the Night will be announced on stage. Stay tuned!"})));
+  }
+}
+
+/* ---------- voting poster ---------- */
+function viewVotePoster(){
+  clear(); document.body.classList.add("postermode");
+  const url = B.appUrl + "?page=vote";
+  const q = qrcode(0, "M"); q.addData(url); q.make();
+  const n = q.getModuleCount(), cell = 14, size = (n + 8) * cell, c = document.createElement("canvas");
+  c.width = c.height = size; const g = c.getContext("2d"); g.fillStyle = "#fff"; g.fillRect(0, 0, size, size); g.fillStyle = "#000";
+  for (let r = 0; r < n; r++) for (let k = 0; k < n; k++) if (q.isDark(r, k)) g.fillRect((k + 4) * cell, (r + 4) * cell, cell, cell);
+  app.append(el("div", {class:"poster"},
+    el("p", {class:"kick", style:"letter-spacing:.3em;font-weight:700;color:var(--gold);text-transform:uppercase;margin:0", text:"Annual Dinner 2027 · Global Harmony Gala"}),
+    el("div", {style:"font-size:3rem;line-height:1;margin:.6rem 0 .2rem", text:"👑"}),
+    el("p", {class:"cta", style:"margin:0", text:"Vote for"}),
+    el("h2", {style:"font-size:1.6rem;margin:.1rem 0 0", text:"King & Queen of the Night"}),
+    el("p", {class:"muted", style:"margin:.2rem 0 0", text:"Best dressed of the evening"}),
+    el("img", {class:"qr", src:c.toDataURL("image/png"), alt:"QR code to vote for King and Queen"}),
+    el("ol", null,
+      el("li", null, el("b", {text:"1"}), "Scan QR Code"),
+      el("li", null, el("b", {text:"2"}), "Enter your staff ID"),
+      el("li", null, el("b", {text:"3"}), "Pick your King & Queen")),
+    el("p", {class:"fine", text:"One vote per person for each award."})),
+    el("div", {class:"row noprint", style:"justify-content:center"}, el("button", {class:"btn primary", type:"button", text:"Print poster", onclick:() => window.print()})));
+}
+
+/* ---------- awards screen (staff PIN, for the big screen) ---------- */
+function viewAwards(pin){
+  document.body.classList.add("drawmode"); clear();
+  let A = null, guests = [];
+  const revealed = (() => { try{ return JSON.parse(sessionStorage.getItem("ghg-revealed")) || {}; }catch(e){ return {}; } })();
+  const saveRev = () => { try{ sessionStorage.setItem("ghg-revealed", JSON.stringify(revealed)); }catch(e){} };
+  const cards = {};
+  CAT_ORDER.forEach(cat => {
+    const name = el("p", {class:"aw-name"}), meta = el("p", {class:"aw-meta"}), label = el("p", {class:"aw-label"}), count = el("p", {class:"aw-count"});
+    const orb = el("div", {class:"aw-orb " + cat.toLowerCase()}, el("span", {text:"?"}));
+    const btn = el("button", {class:"ld-btn gold", type:"button", onclick:() => reveal(cat)});
+    cards[cat] = {name, meta, label, count, orb, btn, box: el("div", {class:"aw-card " + cat.toLowerCase()}, el("div", {class:"aw-crown", text: cat === "QUEEN" ? "👸" : "🤴"}), label, orb, name, meta, count, btn)};
+  });
+  const qrImg = el("img", {class:"aw-qr", alt:"QR code to vote"});
+  const status = el("p", {class:"aw-status"});
+  const strip = el("div", {class:"aw-strip"}, qrImg, el("div", null, status, el("p", {class:"aw-url", text:(B.appUrl + "?page=vote").replace(/^https?:\/\//, "")})));
+  const head = el("header", {class:"ld-head"},
+    el("img", {class:"ld-logos", src:LOGOS, alt:"Cyberjaya Education Group Berhad, University of Cyberjaya, Cyberjaya College Central, SMR HR Group"}),
+    el("h1", {class:"ld-title"}, el("span", null, "Best Dressed ", el("span", {class:"dot", text:"•"}), " King & Queen")),
+    el("p", {class:"ld-when"}, "Annual Dinner 2027", el("span", {class:"sep", text:"•"}), "Global Harmony Gala"));
+  /* dock */
+  const dlg = el("dialog", {class:"ld-dlg"});
+  const dockBtn = el("button", {class:"ld-dock-btn", type:"button", "aria-label":"Show controls", text:"+"});
+  const dock = el("div", {class:"ld-dock"},
+    el("div", {class:"ld-dock-panel"},
+      el("button", {class:"ld-tool gold", type:"button", text:"⛶ Full screen", onclick:fullscreen}),
+      el("button", {class:"ld-tool", type:"button", text:"⚙ Awards settings", onclick:() => { dock.classList.remove("open"); openSettings("nominees"); }}),
+      el("button", {class:"ld-tool", type:"button", text:"📊 Live results", onclick:() => { dock.classList.remove("open"); openSettings("results"); }}),
+      el("p", {class:"ld-keys", text:"Keys: Q reveal Queen · K reveal King · F full screen"})), dockBtn);
+  dockBtn.addEventListener("click", e => { e.stopPropagation(); Sound.unlock(); dock.classList.toggle("open"); });
+  document.addEventListener("click", e => { if (!dock.contains(e.target)) dock.classList.remove("open"); });
+  app.append(el("div", {class:"ld aw"}, head, el("section", {class:"aw-body"}, cards.QUEEN.box, cards.KING.box), strip), dock, dlg);
+
+  function fullscreen(){ Sound.unlock(); const d = document, r = d.documentElement; if (d.fullscreenElement){ d.exitFullscreen && d.exitFullscreen(); return; }
+    if (r.requestFullscreen) r.requestFullscreen().catch(() => toast("Press F11 for full screen.")); else toast("Press F11 for full screen."); }
+  function leaders(cat){
+    const list = A.nominees.filter(n => n.cat === cat).sort((a, b) => b.votes - a.votes);
+    const top = list.length ? list[0].votes : 0;
+    return {list, top, winners: top > 0 ? list.filter(n => n.votes === top) : []};
+  }
+  function render(){
+    if (!A) return;
+    CAT_ORDER.forEach(cat => {
+      const c = cards[cat], L = leaders(cat);
+      c.label.textContent = A.labels[cat];
+      c.count.textContent = A.perCat[cat] + " vote" + (A.perCat[cat] === 1 ? "" : "s") + " · " + L.list.length + " nominee" + (L.list.length === 1 ? "" : "s");
+      const r = revealed[cat];
+      if (r){ c.box.classList.add("done"); c.orb.innerHTML = ""; c.orb.append(el("span", {text:initials(r.names[0])})); c.name.textContent = r.names.join(" & "); c.meta.textContent = r.tie ? "It’s a tie! · " + r.votes + " votes each" : [r.dept, r.votes + " votes"].filter(Boolean).join(" · "); c.btn.textContent = "↺ Reveal again"; }
+      else { c.box.classList.remove("done"); c.orb.innerHTML = "<span>?</span>"; c.name.textContent = ""; c.meta.textContent = ""; c.btn.textContent = "👑 Reveal the " + (cat === "QUEEN" ? "Queen" : "King"); }
+      c.btn.disabled = !L.winners.length;
+    });
+    status.innerHTML = "";
+    status.append(A.open ? el("span", {class:"aw-live"}, el("i"), "Voting is OPEN · scan to vote") : el("span", {class:"aw-closed", text:"Voting is closed"}),
+      el("span", {class:"aw-tot", text:" · " + A.voters + " guest" + (A.voters === 1 ? "" : "s") + " voted"}));
+    strip.classList.toggle("closed", !A.open);
+    if (!qrImg.src){ const q = qrcode(0, "M"); q.addData(B.appUrl + "?page=vote"); q.make(); qrImg.src = q.createDataURL(6, 2); }
+    if (dlg.open) renderSettings();
+  }
+  async function refresh(){ try{ A = await call("apiAwardsState", pin); render(); }catch(e){ if (/PIN/i.test(errText(e))){ sessionStorage.removeItem("ghg-pin"); location.reload(); } else toast(errText(e)); } }
+
+  /* ----- the reveal ----- */
+  let revealing = false;
+  async function reveal(cat){
+    if (revealing || !A) return; Sound.unlock();
+    await refresh();
+    const L = leaders(cat);
+    if (!L.winners.length){ toast("No votes yet for this award."); return; }
+    if (A.open && confirm("Voting is still open. Close voting now and reveal the winner?")){ try{ A = await call("apiSetVoting", pin, false); render(); }catch(e){ toast(errText(e)); } }
+    revealing = true;
+    const label = A.labels[cat], names = L.list.map(n => n.name);
+    const ov = el("div", {class:"intro aw-reveal", role:"dialog", "aria-label":"Award reveal"});
+    const big = el("div", {class:"intro-word small", text:"And the " + label + " is…"});
+    const roll = el("div", {class:"aw-roll", "aria-live":"off"});
+    ov.append(el("div", {class:"intro-beams", "aria-hidden":"true"}), el("div", {class:"intro-glow", "aria-hidden":"true"}), el("div", {class:"intro-stage"}, el("div", {class:"aw-crown big", text:"👑"}), big, roll));
+    document.body.append(ov); void big.offsetWidth; big.classList.add("in");
+    const secs = 7; Sound.roll(secs, 3);
+    const start = performance.now();
+    (function spin(){
+      const t = (performance.now() - start) / (secs * 1000);
+      if (t >= 1){ ov.remove(); winnerScreen(cat, L); return; }
+      roll.textContent = names[Math.floor(Math.random() * names.length)];
+      setTimeout(spin, 60 + 340 * Math.pow(t, 2.4));
+    })();
+  }
+  function winnerScreen(cat, L){
+    const w = L.winners, tie = w.length > 1, label = A.labels[cat];
+    revealed[cat] = {names:w.map(x => x.name), dept: tie ? "" : w[0].dept, votes:L.top, tie}; saveRev(); render();
+    const title = label.toUpperCase();
+    const close = () => { if (!ov.isConnected) return; ov.classList.add("out"); MUSIC.stop(1500); Sound.mode("wait", 3); document.removeEventListener("keydown", key, true); setTimeout(() => ov.remove(), 700); revealing = false; };
+    const key = e => { if (["Escape", "Enter", " "].indexOf(e.key) >= 0){ e.preventDefault(); e.stopPropagation(); close(); } };
+    const ov = el("div", {class:"cele grand aw-win", role:"dialog", "aria-label":title},
+      el("canvas", {class:"cele-sky", "aria-hidden":"true"}), el("div", {class:"cele-ring", "aria-hidden":"true"}),
+      el("div", {class:"cele-stage"},
+        el("div", {class:"cele-crown", "aria-hidden":"true", text:"👑"}),
+        el("p", {class:"cele-title", "aria-label":title}, title.split("").map((c, i) => el("span", {style:"animation-delay:" + (0.3 + i * 0.045) + "s", text: c === " " ? "\u00a0" : c}))),
+        tie ? el("p", {class:"aw-tie", text:"It’s a tie!"}) : null,
+        el("div", {class:"cele-num aw-winname"}, el("span", {text:w.map(x => x.name).join(" & ")})),
+        el("p", {class:"cele-meta", text: tie ? L.top + " votes each" : [w[0].dept, L.top + " votes"].filter(Boolean).join(" · ")}),
+        el("p", {class:"cele-prize", text:"Please come up to the stage"})),
+      el("button", {class:"intro-skip", type:"button", text:"Done ›", onclick:close}));
+    document.addEventListener("keydown", key, true);
+    document.body.append(ov);
+    celebrationSky(ov, ov.querySelector(".cele-sky"), 3);
+    Sound.win(3); confetti(); setTimeout(confetti, 1000);
+    setTimeout(() => {
+      if (!ov.isConnected) return;
+      if (A.music) MUSIC.play(A.music, "Award music", 90, true).then(ok => { if (!ok) Sound.mode("win", 3); });
+      else Sound.mode("win", 3);
+    }, 4500);
+  }
+
+  /* ----- settings dialog ----- */
+  let tab = "nominees";
+  function openSettings(t){ tab = t || tab; renderSettings(); if (!dlg.open) dlg.showModal(); }
+  function renderSettings(){
+    if (!A) return;
+    dlg.innerHTML = "";
+    const tabs = [["nominees","Nominees"],["results","Live results"],["voting","Voting"],["music","Titles & music"],["reset","Reset"]];
+    const nav = el("div", {class:"ld-tabs"}, tabs.map(([k, t]) => el("button", {type:"button", "aria-selected": tab === k, text:t, onclick:() => { tab = k; renderSettings(); }})));
+    const pane = el("div", {class:"ld-pane"});
+    if (tab === "nominees") pane.append(nomineesPane());
+    if (tab === "results") pane.append(resultsPane());
+    if (tab === "voting") pane.append(votingPane());
+    if (tab === "music") pane.append(musicPane());
+    if (tab === "reset") pane.append(resetPane());
+    dlg.append(el("div", {class:"ld-dlg-head"}, el("h2", {text:"Best Dressed awards"}), el("button", {class:"btn", type:"button", text:"Close", onclick:() => dlg.close()})), nav, pane);
+  }
+  function nomineesPane(){
+    const list = A.nominees.map(n => Object.assign({}, n));
+    const wrap = el("div");
+    const dl = el("datalist", {id:"guestlist"}, guests.map(g => el("option", {value:g.name + (g.staffId ? " — " + g.staffId : "")})));
+    function paint(){
+      wrap.innerHTML = "";
+      CAT_ORDER.forEach(cat => {
+        const tb = el("tbody");
+        list.forEach((n, i) => { if (n.cat !== cat) return;
+          const nm = el("input", {type:"text", value:n.name, list:"guestlist", placeholder:"Name (type to search registered guests)", "aria-label":"Nominee name"});
+          const dp = el("input", {type:"text", value:n.dept || "", placeholder:"Department", "aria-label":"Department"});
+          nm.addEventListener("input", () => { const m = nm.value.match(/^(.*) — (\S+)$/); const g = m ? guests.find(x => x.staffId === m[2]) : null;
+            if (g){ n.name = g.name; n.staffId = g.staffId; n.dept = g.dept; nm.value = g.name; dp.value = g.dept; } else n.name = nm.value; });
+          dp.addEventListener("input", () => n.dept = dp.value);
+          tb.append(el("tr", null, el("td", null, nm), el("td", null, dp), el("td", {class:"muted small nowrap", text:n.votes ? n.votes + " votes" : ""}),
+            el("td", null, el("button", {class:"btn mini", type:"button", text:"✕", "aria-label":"Remove nominee", onclick:() => { list.splice(i, 1); paint(); }}))));
+        });
+        wrap.append(el("h3", {text:(cat === "QUEEN" ? "👸 " : "🤴 ") + A.labels[cat]}),
+          el("div", {class:"tablewrap"}, el("table", {class:"tbl"}, tb)),
+          el("div", {class:"row"}, el("button", {class:"btn", type:"button", text:"+ Add nominee", onclick:() => { list.push({id:"", cat, name:"", staffId:"", dept:"", votes:0}); paint(); }})));
+      });
+    }
+    paint();
+    const save = el("button", {class:"btn primary", type:"button", text:"Save nominees"});
+    save.addEventListener("click", async () => { save.disabled = true; try{ A = await call("apiSaveNominees", pin, list); render(); toast("Nominees saved."); renderSettings(); }catch(e){ toast(errText(e)); save.disabled = false; } });
+    return el("div", null, dl,
+      el("p", {class:"muted small", text:"Add the shortlisted nominees for each award. Type a name to pick from registered guests. Guests vote from their phones on the voting page."}),
+      wrap, el("div", {class:"row"}, save));
+  }
+  function resultsPane(){
+    const box = el("div");
+    CAT_ORDER.forEach(cat => {
+      const L = leaders(cat), max = Math.max(1, L.top);
+      box.append(el("h3", {text:(cat === "QUEEN" ? "👸 " : "🤴 ") + A.labels[cat] + " · " + A.perCat[cat] + " votes"}));
+      if (!L.list.length) box.append(el("p", {class:"muted small", text:"No nominees yet."}));
+      L.list.forEach((n, i) => box.append(el("div", {class:"dept"}, el("span", {class:"dname", text:(i === 0 && n.votes ? "👑 " : "") + n.name}),
+        el("div", {class:"track"}, el("div", {class:"fill", style:"width:" + (n.votes / max * 100) + "%;background:var(" + (cat === "QUEEN" ? "--rose" : "--lapis") + ")"})), el("span", {class:"dnum", text:String(n.votes)}))));
+    });
+    return el("div", null, el("p", {class:"muted small", text:A.voters + " guests have voted. Keep this screen away from the projector until the reveal."}), box,
+      el("div", {class:"row"}, el("button", {class:"btn", type:"button", text:"↻ Refresh", onclick:refresh})));
+  }
+  function votingPane(){
+    const link = B.appUrl + "?page=vote";
+    return el("div", null,
+      el("h3", {text: A.open ? "Voting is OPEN" : "Voting is CLOSED"}),
+      el("p", {class:"muted small", text:"Open voting when the nominees are announced, and close it just before the reveal. Revealing a winner also offers to close voting."}),
+      el("div", {class:"row"}, el("button", {class:"btn primary", type:"button", text: A.open ? "Close voting" : "Open voting", onclick: async () => { try{ A = await call("apiSetVoting", pin, !A.open); render(); toast(A.open ? "Voting is open." : "Voting is closed."); }catch(e){ toast(errText(e)); } }})),
+      el("h3", {text:"Voting link and poster"}),
+      el("p", {class:"small", style:"word-break:break-all", text:link}),
+      el("div", {class:"row"},
+        el("button", {class:"btn", type:"button", text:"Copy link", onclick:() => { try{ navigator.clipboard.writeText(link).then(() => toast("Link copied.")); }catch(e){ toast(link); } }}),
+        el("a", {class:"btn", href:B.appUrl + "?page=vote-poster", target:"_blank", rel:"noopener", text:"Open voting poster"})));
+  }
+  function musicPane(){
+    const q = el("input", {type:"text", value:A.labels.QUEEN, "aria-label":"Queen award name"});
+    const k = el("input", {type:"text", value:A.labels.KING, "aria-label":"King award name"});
+    const m = el("input", {type:"text", value:A.music || "", placeholder:"awards.mp3  or  https://www.youtube.com/watch?v=…", "aria-label":"Award music"});
+    const save = el("button", {class:"btn primary", type:"button", text:"Save"});
+    save.addEventListener("click", async () => { save.disabled = true; try{ A = await call("apiSaveAwardSettings", pin, {queen:q.value, king:k.value, music:m.value}); render(); toast("Saved."); renderSettings(); }catch(e){ toast(errText(e)); save.disabled = false; } });
+    return el("div", null,
+      el("h3", {text:"Award titles"}), el("p", {class:"small", style:"margin:.2rem 0", text:"Female award"}), q, el("p", {class:"small", style:"margin:.6rem 0 .2rem", text:"Male award"}), k,
+      el("h3", {text:"Music while the winner walks up"}),
+      el("p", {class:"muted small", text:"MP3 file next to index.html on GitHub (sound only, e.g. awards.mp3, add #t=30 to start 30 seconds in), or a YouTube link (shows a small player window). Empty = built-in epic victory music."}),
+      el("div", {class:"row", style:"margin-top:0"}, m, el("button", {class:"btn", type:"button", text:"▶ Test 10 s", onclick:() => { if (!MUSIC.valid(m.value)){ toast("Type an MP3 file name or paste a YouTube link first."); return; } MUSIC.play(m.value, "Award music").then(ok => { if (ok) setTimeout(() => MUSIC.stop(1200), 10000); }); }})),
+      el("div", {class:"row"}, save));
+  }
+  function resetPane(){
+    const typed = el("input", {type:"text", placeholder:"Type RESET", "aria-label":"Type RESET to confirm", style:"max-width:10rem"});
+    return el("div", null,
+      el("h3", {text:"Clear the reveal on this screen"}),
+      el("p", {class:"muted small", text:"Shows the ? cards again (votes are kept)."}),
+      el("div", {class:"row"}, el("button", {class:"btn", type:"button", text:"Clear reveal", onclick:() => { delete revealed.QUEEN; delete revealed.KING; saveRev(); render(); toast("Reveal cleared."); }})),
+      el("h3", {text:"Reset all votes"}),
+      el("p", {class:"muted small", text:"Deletes every vote, for example after testing. Nominees are kept. This can’t be undone."}),
+      el("div", {class:"row"}, typed, el("button", {class:"btn danger", type:"button", text:"Reset votes", onclick: async () => { if (typed.value.trim().toUpperCase() !== "RESET"){ toast("Type RESET first."); return; }
+        try{ A = await call("apiResetVotes", pin); delete revealed.QUEEN; delete revealed.KING; saveRev(); render(); toast("All votes cleared."); }catch(e){ toast(errText(e)); } }})));
+  }
+
+  document.addEventListener("keydown", e => {
+    const tag = (e.target.tagName || "").toLowerCase(); if (["input","select","textarea","button"].includes(tag) || dlg.open || revealing) return;
+    if (e.key === "q" || e.key === "Q") reveal("QUEEN"); else if (e.key === "k" || e.key === "K") reveal("KING"); else if (e.key === "f" || e.key === "F") fullscreen();
+  });
+  document.addEventListener("pointerdown", () => { Sound.unlock(); Sound.mode("wait", 3); }, {once:true});
+  refresh(); setInterval(() => { if (!revealing && !dlg.open) refresh(); }, 10000);
+  call("apiDashboard", pin).then(d => { guests = d.rows.map(r => ({name:r.name, staffId:r.staffId, dept:r.dept})); }).catch(() => {});
+}
+
 /* ---------- lucky draw (staff PIN, landscape stage) ---------- */
 function viewDraw(pin){
   document.body.classList.add("drawmode"); clear();
@@ -1053,9 +1620,9 @@ function viewDraw(pin){
     const src = el("div", {class:"ld-seg", role:"radiogroup", "aria-label":"Draw from"},
       el("label", null, el("input", {type:"radio", name:"src", value:"REGISTERED", checked: st.source !== "RANGE"}), el("span", {text:"Registered numbers only"})),
       el("label", null, el("input", {type:"radio", name:"src", value:"RANGE", checked: st.source === "RANGE"}), el("span", {text:"Every number in the range"})));
-    const wm = el("input", {type:"text", value:String(st.winnerMusic || ""), placeholder:"https://www.youtube.com/watch?v=…", "aria-label":"Winner music YouTube link"});
-    const im = el("input", {type:"text", value:String(st.introMusic || ""), placeholder:"https://www.youtube.com/watch?v=…", "aria-label":"Intro music YouTube link"});
-    const test = (inp, label) => el("button", {class:"btn", type:"button", text:"▶ Test 10 s", onclick:() => { if (!YTM.valid(inp.value)){ toast("Paste a YouTube link first."); return; } Sound.mode("intro", 1); YTM.play(inp.value, label).then(okk => { if (okk) setTimeout(() => { YTM.stop(1200); render(); }, 10000); else render(); }); }});
+    const wm = el("input", {type:"text", value:String(st.winnerMusic || ""), placeholder:"winner.mp3  or  https://www.youtube.com/watch?v=…", "aria-label":"Winner music YouTube link"});
+    const im = el("input", {type:"text", value:String(st.introMusic || ""), placeholder:"intro.mp3  or  https://www.youtube.com/watch?v=…", "aria-label":"Intro music YouTube link"});
+    const test = (inp, label) => el("button", {class:"btn", type:"button", text:"▶ Test 10 s", onclick:() => { if (!MUSIC.valid(inp.value)){ toast("Paste a YouTube link or type an MP3 file name first."); return; } Sound.mode("intro", 1); MUSIC.play(inp.value, label).then(okk => { if (okk) setTimeout(() => { MUSIC.stop(1200); render(); }, 10000); else render(); }); }});
     const vid = el("input", {type:"text", value:String(st.introVideo || ""), placeholder:"e.g. intro.mp4 (leave empty for the built-in intro)", "aria-label":"Intro video"});
     const save = el("button", {class:"btn primary", type:"button", text:"Save draw settings"});
     save.addEventListener("click", async () => {
@@ -1072,10 +1639,10 @@ function viewDraw(pin){
       el("h3", {text:"Spin time"}), dur,
       el("h3", {text:"Draw from"}), src,
       el("p", {class:"muted small", text:"“Registered numbers only” is recommended: only people who scanned the QR code and registered can win."}),
-      el("h3", {text:"Your own music from YouTube (optional)"}),
-      el("p", {class:"muted small", text:"Paste a YouTube link. Add &t=45 at the end to start 45 seconds in (for example at the chorus). The official YouTube player shows in a small corner window while it plays. Some music videos block playing on other websites; if so, the built-in music plays instead. Leave empty to use the built-in music."}),
+      el("h3", {text:"Your own music (optional)"}),
+      el("p", {class:"muted small", text:"Sound only, no window: upload an MP3 next to index.html on GitHub (for example winner.mp3) and type its name. Add #t=45 to start 45 seconds in (winner.mp3#t=45). Or paste a YouTube link: the official YouTube player then shows in a small corner window, and some music videos block this. If a song can’t play, the built-in music plays instead. Leave empty for the built-in music."}),
       el("p", {class:"small", style:"margin:.6rem 0 .2rem;font-weight:700", text:"Winner music (while the winner walks up to collect)"}), el("div", {class:"row", style:"margin-top:0"}, wm, test(wm, "Winner music")),
-      el("p", {class:"small", style:"margin:.6rem 0 .2rem;font-weight:700", text:"Intro music (during “Are you ready?”)"}), el("div", {class:"row", style:"margin-top:0"}, im, test(im, "Intro music")),
+      el("p", {class:"small", style:"margin:.6rem 0 .2rem;font-weight:700", text:"Intro music (during “Are you ready?”, stops at 3 · 2 · 1)"}), el("div", {class:"row", style:"margin-top:0"}, im, test(im, "Intro music")),
       el("h3", {text:"Intro before the draw"}),
       el("p", {class:"muted small", text:"Press “🎬 Play intro” (or I) to show “ARE YOU READY? … LUCKY DRAW! … 3, 2, 1, LET’S GO!”. To use your own video instead, upload an MP4 next to index.html on GitHub (for example intro.mp4) and type its name here."}),
       vid,
@@ -1122,6 +1689,32 @@ function viewDraw(pin){
   const pending = () => S && S.winners.find(w => w.status === "Called");
   let ytFor = null, ytTimer = null, ytFailed = false, revealedJustNow = false;
   function currentPrize(){ if (!S) return null; const open = S.prizes.filter(p => p.remaining > 0); return open.find(p => p.name === chosen) || open[0] || null; }
+  /* ===== opening screen: shown when the lucky draw page opens, so the intro plays before the main display ===== */
+  let startOn = false;
+  function showStart(){
+    startOn = true;
+    const go = intro => {
+      if (!startOn) return; startOn = false; Sound.unlock(); document.removeEventListener("keydown", key, true);
+      st.classList.add("out"); setTimeout(() => st.remove(), 600);
+      if (intro) playIntro(); else render();
+    };
+    const key = e => {
+      if (e.key === "Enter" || e.code === "Space"){ e.preventDefault(); e.stopPropagation(); go(true); }
+      else if (e.key === "Escape"){ e.preventDefault(); e.stopPropagation(); go(false); }
+      else if (e.key === "f" || e.key === "F"){ e.preventDefault(); e.stopPropagation(); fullscreen(); }
+    };
+    const st = el("div", {class:"ld-start", role:"dialog", "aria-label":"Lucky draw opening screen"},
+      el("div", {class:"intro-beams", "aria-hidden":"true"}), el("div", {class:"intro-glow", "aria-hidden":"true"}),
+      el("div", {class:"ld-start-stage"},
+        el("img", {class:"intro-logos", src:LOGOS, alt:"Cyberjaya Education Group Berhad, University of Cyberjaya, Cyberjaya College Central, SMR HR Group"}),
+        el("p", {class:"intro-kick", text:"Annual Dinner 2027 · Global Harmony Gala"}),
+        el("h1", {class:"ld-start-title", text:"Lucky Draw"}),
+        el("p", {class:"ld-start-when"}, "Friday, 29 January 2027", el("span", {class:"sep", text:"•"}), "Mövenpick Hotel & Convention Centre KLIA"),
+        el("div", {class:"ld-start-btns"},
+          el("button", {class:"ld-btn gold ld-start-go", type:"button", text:"▶ Start the lucky draw", onclick:() => go(true)}))));
+    document.addEventListener("keydown", key, true);
+    document.body.append(st);
+  }
   /* prize level → 1 normal, 2 big, 3 grand */
   function tierOf(name){
     if (!S) return 1;
@@ -1131,6 +1724,29 @@ function viewDraw(pin){
     const n = S.prizes.length; return i === n - 1 ? 3 : i >= n - 3 ? 2 : 1;
   }
   /* ===== reveal effects: flash, shockwave, light rays, shake, fireworks ===== */
+  /* full-screen winner celebration for a few seconds, then back to the draw screen */
+  function celebrate(w, tr){
+    if (!w) return;
+    const close = () => { if (!ov.isConnected) return; ov.classList.add("out"); document.removeEventListener("keydown", key, true); setTimeout(() => ov.remove(), 700); };
+    const key = e => { if (["Escape", " ", "Enter"].indexOf(e.key) >= 0){ e.preventDefault(); e.stopPropagation(); close(); } };
+    const title = tr >= 3 ? "GRAND PRIZE WINNER" : "CONGRATULATIONS";
+    const letters = el("p", {class:"cele-title", "aria-label":title}, title.split("").map((c, i) => el("span", {style:"animation-delay:" + (0.35 + i * 0.05) + "s", text: c === " " ? "\u00a0" : c})));
+    const ov = el("div", {class:"cele" + (tr >= 3 ? " grand" : tr === 2 ? " big" : ""), role:"dialog", "aria-label":title},
+      el("canvas", {class:"cele-sky", "aria-hidden":"true"}), el("div", {class:"cele-ring", "aria-hidden":"true"}),
+      el("div", {class:"cele-stage"},
+        tr >= 3 ? el("div", {class:"cele-crown", "aria-hidden":"true", text:"👑"}) : null,
+        letters,
+        el("div", {class:"cele-num"}, el("span", {text:String(w.luckyNo)})),
+        el("p", {class:"cele-name", text:w.name}),
+        el("p", {class:"cele-meta", text:[w.staffId, w.dept].filter(Boolean).join(" · ")}),
+        el("p", {class:"cele-prize", text:"🎁 " + w.prize})),
+      el("button", {class:"intro-skip", type:"button", text:"Continue ›", onclick:close}));
+    ov.addEventListener("click", e => { if (e.target === ov) close(); });
+    document.addEventListener("keydown", key, true);
+    document.body.append(ov);
+    if (!reduce) celebrationSky(ov, ov.querySelector(".cele-sky"), tr);
+    setTimeout(close, tr >= 3 ? 9000 : tr === 2 ? 7000 : 5500);
+  }
   function revealFx(tr){
     const fl = el("div", {class:"ld-flash" + (tr >= 3 ? " gold" : ""), "aria-hidden":"true"}); document.body.append(fl); setTimeout(() => fl.remove(), 1100);
     const wv = el("div", {class:"ld-wave", "aria-hidden":"true"}); panel.append(wv); setTimeout(() => wv.remove(), 1300);
@@ -1138,7 +1754,7 @@ function viewDraw(pin){
     panel.classList.add("rays"); setTimeout(() => panel.classList.remove("rays"), tr >= 3 ? 9000 : 6000);
     if (!reduce && tr >= 2){ const st = document.querySelector(".ld"); st.classList.remove("shake"); void st.offsetWidth; st.classList.add("shake"); }
     confetti(); if (tr >= 3) setTimeout(confetti, 900);
-    if (!reduce) fireworks(tr >= 3 ? 14 : tr === 2 ? 7 : 3, tr);
+    /* fireworks now live inside the celebration sky */
   }
   function fireworks(count, tr){
     let cv = document.getElementById("fw");
@@ -1175,7 +1791,7 @@ function viewDraw(pin){
     function end(){
       if (!introOn) return; introOn = false;
       timers.forEach(clearTimeout); document.removeEventListener("keydown", onKey, true);
-      if (S && S.settings && S.settings.introMusic) YTM.stop(1800);
+      if (S && S.settings && S.settings.introMusic) MUSIC.stop(800);
       ov.classList.add("out"); setTimeout(() => { ov.remove(); render(); }, 600);
     }
     function onKey(e){ if (e.key === "Escape" || e.code === "Space" || e.key === "Enter"){ e.preventDefault(); e.stopPropagation(); end(); } }
@@ -1192,8 +1808,9 @@ function viewDraw(pin){
     }
     animated();
     function animated(){
-      const ytIntro = S && S.settings && S.settings.introMusic;
-      if (ytIntro) YTM.play(ytIntro, "Intro music", 100).then(okk => { if (!okk) Sound.introTrack(); });
+      const ownIntro = S && S.settings && S.settings.introMusic;
+      let own = !!ownIntro;
+      if (own) MUSIC.play(ownIntro, "Intro music", 100).then(okk => { if (!okk){ own = false; Sound.introTrack(); } });
       else Sound.introTrack();
       introOn = true;
       const word = el("div", {class:"intro-word", "aria-live":"assertive"});
@@ -1208,14 +1825,15 @@ function viewDraw(pin){
       const show = (text, cls, snd) => { word.className = "intro-word " + (cls || ""); word.textContent = text; void word.offsetWidth; word.classList.add("in"); if (snd) snd(); };
       const at = (ms, fn) => timers.push(setTimeout(fn, ms));
       at(700,  () => show("Are you", "small"));
-      at(1600, () => show("READY?", "big", () => Sound.boom(true)));
-      at(3000, () => { show("for the", "small"); Sound.riser(1.6); });
-      at(4700, () => show("LUCKY DRAW!", "gold big shake", () => { Sound.boom(true); confetti(); }));
-      at(6500, () => { show("", ""); Sound.riser(1); });
-      at(7400, () => show("3", "count", () => Sound.beep()));
-      at(8400, () => show("2", "count", () => Sound.beep()));
-      at(9400, () => show("1", "count", () => Sound.beep()));
-      at(10400, () => show("LET’S GO!", "gold big", () => { Sound.win(); confetti(); }));
+      /* with your own intro song: only the song plays until the countdown, then it stops for 3 · 2 · 1 */
+      at(1600, () => show("READY?", "big", () => { if (!own) Sound.boom(true); }));
+      at(3000, () => { show("for the", "small"); if (!own) Sound.riser(1.6); });
+      at(4700, () => show("LUCKY DRAW!", "gold big shake", () => { if (!own) Sound.boom(true); confetti(); }));
+      at(6500, () => { show("", ""); if (own) MUSIC.stop(700); else Sound.riser(1); });
+      at(7400, () => show("3", "count", () => Sound.count(3)));
+      at(8400, () => show("2", "count", () => Sound.count(2)));
+      at(9400, () => show("1", "count", () => Sound.count(1)));
+      at(10400, () => show("LET’S GO!", "gold big", () => { Sound.go(); confetti(); }));
       at(12600, end);
     }
   }
@@ -1235,10 +1853,10 @@ function viewDraw(pin){
       if (ytWin && !ytFailed){
         Sound.mode("draw", tierOf(p.prize));                  /* built-in music off: YouTube takes over */
         if (ytFor !== p.id){ ytFor = p.id; clearTimeout(ytTimer);
-          ytTimer = setTimeout(() => { if (pending() && pending().id === ytFor) YTM.play(ytWin, "Winner music").then(okk => { if (!okk){ ytFailed = true; render(); } }); }, revealedJustNow ? (tierOf(p.prize) >= 3 ? 5000 : 3600) : 300); }
+          ytTimer = setTimeout(() => { if (pending() && pending().id === ytFor) MUSIC.play(ytWin, "Winner music", 90, true).then(okk => { if (!okk){ ytFailed = true; render(); } }); }, revealedJustNow ? (tierOf(p.prize) >= 3 ? 5000 : 3600) : 300); }
       } else Sound.mode("win", tierOf(p.prize));
     } else {
-      if (ytFor){ ytFor = null; clearTimeout(ytTimer); YTM.stop(1500); }
+      if (ytFor){ ytFor = null; clearTimeout(ytTimer); MUSIC.stop(1500); }
       Sound.mode("wait", cur ? tierOf(cur.name) : 1);
     }
     revealedJustNow = false;
@@ -1262,7 +1880,7 @@ function viewDraw(pin){
       else btns.append(el("button", {class:"ld-btn redraw", type:"button", text:"Not present – redraw", onclick:() => act(p.id, "noshow", true)}));
     } else {
       pname.textContent = ""; pmeta.textContent = ""; panel.classList.remove("has-winner");
-      line.textContent = cur ? "Up next: " + cur.name : (S.prizes.length ? "All prizes have been drawn" : "Add prizes in Settings");
+      line.textContent = cur ? "" : (S.prizes.length ? "All prizes have been drawn" : "Add prizes in Settings");
       if (!busy){ num.className = "ld-num idle"; num.textContent = "000"; }
       winCard.append(el("p", {class:"ld-label", text:"Ready"}), el("p", {class:"ld-name", text: cur ? cur.name : "Thank you"}),
         el("p", {class:"ld-meta", text: cur ? cur.remaining + " of " + cur.qty + " still to give away" : "Congratulations to every winner"}));
@@ -1300,7 +1918,7 @@ function viewDraw(pin){
       if (t >= 1 && (res || err)){
         if (err){ busy = false; Sound.stop(); handle(err); refresh(); return; }
         const won = (res.state.winners.find(w => w.status === "Called") || {}).luckyNo;
-        lockDigits(String(won), tr, () => { busy = false; S = res.state; revealedJustNow = true; render(); num.className = "ld-num pop" + (tr >= 3 ? " grandnum" : ""); Sound.win(tr); revealFx(tr); });
+        lockDigits(String(won), tr, () => { busy = false; S = res.state; revealedJustNow = true; render(); num.className = "ld-num pop" + (tr >= 3 ? " grandnum" : ""); Sound.win(tr); revealFx(tr); celebrate(pending(), tr); });
         return;
       }
       num.textContent = String(src[Math.floor(Math.random() * src.length)]); Sound.tick(tr);
@@ -1324,7 +1942,7 @@ function viewDraw(pin){
   sel.addEventListener("change", () => { chosen = sel.value; render(); });
   document.addEventListener("pointerdown", () => Sound.unlock(), {once:true});
   document.addEventListener("keydown", e => {
-    const tag = (e.target.tagName || "").toLowerCase(); if (["input","select","textarea","button"].includes(tag) || dlg.open) return;
+    const tag = (e.target.tagName || "").toLowerCase(); if (["input","select","textarea","button"].includes(tag) || dlg.open || startOn) return;
     if (e.key === "Escape") setDock(false);
     if (e.code === "Space"){ e.preventDefault(); draw(); }
     else if (e.key === "f" || e.key === "F") fullscreen();
@@ -1333,6 +1951,7 @@ function viewDraw(pin){
     else if (e.key === "i" || e.key === "I") playIntro();
   });
   refresh(); setInterval(() => { if (!busy && !dlg.open) refresh(); }, 20000);
+  showStart();
 }
 
 /* ---------- confetti ---------- */
@@ -1375,6 +1994,9 @@ if (B.view === "dashboard") viewDashboard();
 else if (B.view === "poster") viewPoster();
 else if (B.view === "kiosk") kioskPinGate(viewForm);
 else if (B.view === "draw") staffGate("Lucky draw", "Enter the staff PIN to run the lucky draw.", viewDraw);
+else if (B.view === "vote") viewVote();
+else if (B.view === "vote-poster") viewVotePoster();
+else if (B.view === "awards") staffGate("Best Dressed awards", "Enter the staff PIN to open the King & Queen screen.", viewAwards);
 else viewForm();
 };
 </script>
@@ -1383,11 +2005,11 @@ else viewForm();
   var app = document.getElementById("app");
   app.innerHTML = '<div class="card center"><p class="muted">Loading…</p></div>';
   var q = new URLSearchParams(location.search), page = (q.get("page") || "").toLowerCase();
-  var views = ["kiosk", "dashboard", "poster", "draw"];
+  var views = ["kiosk", "dashboard", "poster", "draw", "vote", "awards", "vote-poster"];
   window.__apiPost("apiConfig", [])
     .then(function(c){
       BOOT = {view: views.indexOf(page) >= 0 ? page : "form", appUrl: location.origin + location.pathname,
-        open: c.open, staffIdRequired: c.staffIdRequired, phoneRequired: c.phoneRequired, orgs: c.orgs, departments: c.departments, demo: c.demo};
+        open: c.open, staffIdRequired: c.staffIdRequired, phoneRequired: c.phoneRequired, orgs: c.orgs, departments: c.departments, demo: c.demo, votingOpen: c.votingOpen};
       app.innerHTML = ""; window.__startApp();
     })
     .catch(function(e){
