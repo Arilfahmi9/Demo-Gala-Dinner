@@ -337,6 +337,13 @@ body.dashmode .dept .fill{transition:width .6s}
 body.dashmode .feed{max-height:56vh;overflow:auto}
 body.dashmode .feed li{padding:.45rem 0;font-size:.9rem}
 @media (max-width:820px){ .db-top{grid-template-columns:1fr} }
+/* YouTube music window */
+.yt-box{position:fixed;left:1.2vw;bottom:1.6vh;z-index:95;width:260px;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#000;box-shadow:0 14px 40px -12px rgba(0,0,0,.9);opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .4s,transform .4s}
+.yt-box.on{opacity:1;transform:none;pointer-events:auto}
+.yt-label{margin:0;padding:.3rem .7rem;font-size:.75rem;font-weight:700;color:var(--gold);background:rgba(20,11,48,.95)}
+.yt-frame{position:relative;width:100%;aspect-ratio:16/9}
+.yt-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.ld-pane input[type=text]{flex:1 1 16rem}
 /* reveal effects */
 .ld-flash{position:fixed;inset:0;z-index:60;pointer-events:none;background:radial-gradient(circle at 50% 48%,#fff 0%,rgba(255,243,196,.85) 25%,rgba(242,207,115,.25) 55%,transparent 75%);animation:flash 1s ease-out forwards}
 .ld-flash.gold{background:radial-gradient(circle at 50% 48%,#fff 0%,#FFF3C4 30%,rgba(242,207,115,.6) 60%,rgba(201,150,46,.2) 80%)}
@@ -860,10 +867,88 @@ const Sound = (function(){
       nz(t, sec, .3, F, "bandpass", 300, 1.4, 0, {to:9000, ramp:true});
       osc("sawtooth", 110, t, sec, .05, F, {to:880, glide:sec, cut:500, cutTo:6000, cutTime:sec, a:sec * .9});
       let x = t, g = .16; while (x < t + sec - .05){ snare(x, .08 + .25 * ((x - t) / sec), F); x += g; g = Math.max(.03, g * .9); } },
+    /* built-in intro track (12.6 s): pulsing EDM build-up under "Are you ready?", drop on "LET'S GO!" */
+    introTrack(){
+      if (!fxOn || !init()) return; const t0 = ctx.currentTime + .05, F = fxGain, b = 60 / 128;
+      for (let k = 0; k < 20; k++){ const t = t0 + .7 + k * b; kick(t, .7, F); hat(t + b / 2, .12, true, F); if (k % 2) clap(t, .25, F); }
+      for (let k = 0; k < 20; k++){ const t = t0 + .7 + k * b; osc("sawtooth", N(k < 8 ? 45 : k < 14 ? 41 : 43), t + b / 2, b * .45, .16, F, {cut:700, q:6}); }
+      [[45, [69, 72, 76]], [41, [65, 69, 72]], [43, [67, 71, 74]]].forEach((c, i) => saws(c[1].map(N), t0 + .7 + i * 8 * b * .6, b * 4, .014, F, 1800, .3));
+      let t = t0 + 6.4, g = .25; while (t < t0 + 7.35){ snare(t, .12 + (t - t0 - 6.4) * .3, F); t += g; g = Math.max(.04, g * .82); }
+      nz(t0 + 5.8, 1.6, .35, F, "bandpass", 300, 1.4, 0, {to:9000, ramp:true});
+      [7.4, 8.4, 9.4].forEach((s2, i) => { taiko(t0 + s2, .9, F); brass([N(60 + i * 2), N(64 + i * 2), N(67 + i * 2)], t0 + s2, .5, .05, F); });
+      for (let k = 0; k < 8; k++){ const tt = t0 + 10.4 + k * b / 2; kick(tt, 1, F); if (k % 2) clap(tt, .35, F); saws([N(72), N(76), N(79)], tt, b * .4, .016, F, 4000); }
+    },
     beep(){ if (!fxOn || !init()) return; const t = ctx.currentTime + .02; osc("square", 880, t, .25, .12, fxGain, {cut:4000}); osc("sine", 440, t, .3, .15, fxGain); kick(t, .9, fxGain); },
     chime(){ if (!fxOn || !init()) return; const t = ctx.currentTime; osc("sine", 783.99, t, .9, .2, fxGain, {a:.01}); osc("sine", 622.25, t + .45, 1.2, .2, fxGain, {a:.01}); },
     soft(){ if (!fxOn || !init()) return; const t = ctx.currentTime; [1318.51, 1567.98, 2093].forEach((f, k) => osc("triangle", f, t + k * .08, .6, .08, fxGain)); },
     stop(){ this.mode("wait", tier); }
+  };
+})();
+
+/* ---------- YouTube music (official YouTube player, shown in a small corner window) ---------- */
+const YTM = (function(){
+  let apiP = null, player = null, box = null, curId = null, fadeTimer = null, onErr = null, stopTimer = null;
+  function parse(url){
+    try{
+      const u = new URL(String(url || "").trim()); let id = "";
+      if (/youtu\.be$/i.test(u.hostname)) id = u.pathname.slice(1).split("/")[0];
+      else id = u.searchParams.get("v") || ((u.pathname.match(/\/(?:embed|shorts|live)\/([\w-]{6,})/) || [])[1] || "");
+      const t = u.searchParams.get("t") || u.searchParams.get("start") || "";
+      let start = 0;
+      if (/^\d+s?$/.test(t)) start = parseInt(t, 10);
+      else { const m = t.match(/^(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s)?$/); if (m) start = (+(m[1] || 0)) * 3600 + (+(m[2] || 0)) * 60 + (+(m[3] || 0)); }
+      return /^[\w-]{6,20}$/.test(id) ? {id, start} : null;
+    }catch(e){ return null; }
+  }
+  function api(){
+    if (window.YT && window.YT.Player) return Promise.resolve();
+    if (apiP) return apiP;
+    apiP = new Promise((res, rej) => {
+      const prev = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = function(){ if (prev) prev(); res(); };
+      const s = document.createElement("script"); s.src = "https://www.youtube.com/iframe_api"; s.onerror = () => { apiP = null; rej(new Error("load")); };
+      document.head.append(s); setTimeout(() => rej(new Error("timeout")), 12000);
+    });
+    return apiP;
+  }
+  function fadeTo(target, ms, then){
+    clearInterval(fadeTimer); if (!player || !player.getVolume) { if (then) then(); return; }
+    const from = player.getVolume() || 0, steps = Math.max(1, Math.round(ms / 80)); let k = 0;
+    fadeTimer = setInterval(() => { k++; try{ player.setVolume(Math.round(from + (target - from) * k / steps)); }catch(e){}
+      if (k >= steps){ clearInterval(fadeTimer); if (then) then(); } }, 80);
+  }
+  return {
+    valid: url => !!parse(url),
+    /* returns a promise: true when playing, false when it can't play (then use built-in music) */
+    play(url, label, vol){
+      const v = parse(url); if (!v) return Promise.resolve(false);
+      clearTimeout(stopTimer);
+      return api().then(() => new Promise(resolve => {
+        if (!box){ box = el("div", {class:"yt-box", role:"region", "aria-label":"Music player"}, el("p", {class:"yt-label"}), el("div", {class:"yt-frame"}, el("div", {id:"ytm-player"}))); document.body.append(box); }
+        box.querySelector(".yt-label").textContent = "♪ " + (label || "Now playing");
+        box.classList.add("on");
+        let settled = false; const ok = r => { if (!settled){ settled = true; resolve(r); } };
+        onErr = () => { this.stop(0); toast("This YouTube video can’t be played here (the owner may have blocked embedding). Using the built-in music instead."); ok(false); };
+        const go = p => { try{ p.setVolume(0); p.playVideo(); fadeTo(vol || 85, 1500); }catch(e){} ok(true); };
+        if (player && player.loadVideoById){
+          if (curId === v.id){ try{ player.seekTo(v.start, true); }catch(e){} go(player); }
+          else { curId = v.id; try{ player.loadVideoById({videoId:v.id, startSeconds:v.start}); }catch(e){} go(player); }
+          return;
+        }
+        curId = v.id;
+        player = new YT.Player("ytm-player", {width:"320", height:"180", videoId:v.id,
+          playerVars:{start:v.start, autoplay:1, controls:0, rel:0, playsinline:1, modestbranding:1, iv_load_policy:3, fs:0, disablekb:1},
+          events:{onReady: e => go(e.target), onError: () => onErr && onErr()}});
+        setTimeout(() => ok(true), 4000);
+      })).catch(() => { toast("Couldn’t reach YouTube. Using the built-in music instead."); return false; });
+    },
+    stop(ms){
+      if (!player) { if (box) box.classList.remove("on"); return; }
+      const end = () => { try{ player.pauseVideo(); }catch(e){} if (box) box.classList.remove("on"); };
+      if (!ms) { clearInterval(fadeTimer); end(); return; }
+      fadeTo(0, ms, end);
+    },
+    get playing(){ return !!(box && box.classList.contains("on")); }
   };
 })();
 
@@ -968,12 +1053,15 @@ function viewDraw(pin){
     const src = el("div", {class:"ld-seg", role:"radiogroup", "aria-label":"Draw from"},
       el("label", null, el("input", {type:"radio", name:"src", value:"REGISTERED", checked: st.source !== "RANGE"}), el("span", {text:"Registered numbers only"})),
       el("label", null, el("input", {type:"radio", name:"src", value:"RANGE", checked: st.source === "RANGE"}), el("span", {text:"Every number in the range"})));
+    const wm = el("input", {type:"text", value:String(st.winnerMusic || ""), placeholder:"https://www.youtube.com/watch?v=…", "aria-label":"Winner music YouTube link"});
+    const im = el("input", {type:"text", value:String(st.introMusic || ""), placeholder:"https://www.youtube.com/watch?v=…", "aria-label":"Intro music YouTube link"});
+    const test = (inp, label) => el("button", {class:"btn", type:"button", text:"▶ Test 10 s", onclick:() => { if (!YTM.valid(inp.value)){ toast("Paste a YouTube link first."); return; } Sound.mode("intro", 1); YTM.play(inp.value, label).then(okk => { if (okk) setTimeout(() => { YTM.stop(1200); render(); }, 10000); else render(); }); }});
     const vid = el("input", {type:"text", value:String(st.introVideo || ""), placeholder:"e.g. intro.mp4 (leave empty for the built-in intro)", "aria-label":"Intro video"});
     const save = el("button", {class:"btn primary", type:"button", text:"Save draw settings"});
     save.addEventListener("click", async () => {
       save.disabled = true;
       try{
-        S = await call("apiSaveDrawSettings", pin, {from:from.value, to:to.value, duration:dlg.querySelector("input[name=dur]:checked").value, source:dlg.querySelector("input[name=src]:checked").value, introVideo:vid.value});
+        S = await call("apiSaveDrawSettings", pin, {from:from.value, to:to.value, duration:dlg.querySelector("input[name=dur]:checked").value, source:dlg.querySelector("input[name=src]:checked").value, introVideo:vid.value, winnerMusic:wm.value, introMusic:im.value});
         render(); toast("Draw settings saved."); renderSettings();
       }catch(e){ toast(errText(e)); save.disabled = false; }
     });
@@ -984,6 +1072,10 @@ function viewDraw(pin){
       el("h3", {text:"Spin time"}), dur,
       el("h3", {text:"Draw from"}), src,
       el("p", {class:"muted small", text:"“Registered numbers only” is recommended: only people who scanned the QR code and registered can win."}),
+      el("h3", {text:"Your own music from YouTube (optional)"}),
+      el("p", {class:"muted small", text:"Paste a YouTube link. Add &t=45 at the end to start 45 seconds in (for example at the chorus). The official YouTube player shows in a small corner window while it plays. Some music videos block playing on other websites; if so, the built-in music plays instead. Leave empty to use the built-in music."}),
+      el("p", {class:"small", style:"margin:.6rem 0 .2rem;font-weight:700", text:"Winner music (while the winner walks up to collect)"}), el("div", {class:"row", style:"margin-top:0"}, wm, test(wm, "Winner music")),
+      el("p", {class:"small", style:"margin:.6rem 0 .2rem;font-weight:700", text:"Intro music (during “Are you ready?”)"}), el("div", {class:"row", style:"margin-top:0"}, im, test(im, "Intro music")),
       el("h3", {text:"Intro before the draw"}),
       el("p", {class:"muted small", text:"Press “🎬 Play intro” (or I) to show “ARE YOU READY? … LUCKY DRAW! … 3, 2, 1, LET’S GO!”. To use your own video instead, upload an MP4 next to index.html on GitHub (for example intro.mp4) and type its name here."}),
       vid,
@@ -1028,6 +1120,7 @@ function viewDraw(pin){
   document.addEventListener("fullscreenchange", paintTools);
 
   const pending = () => S && S.winners.find(w => w.status === "Called");
+  let ytFor = null, ytTimer = null, ytFailed = false, revealedJustNow = false;
   function currentPrize(){ if (!S) return null; const open = S.prizes.filter(p => p.remaining > 0); return open.find(p => p.name === chosen) || open[0] || null; }
   /* prize level → 1 normal, 2 big, 3 grand */
   function tierOf(name){
@@ -1082,6 +1175,7 @@ function viewDraw(pin){
     function end(){
       if (!introOn) return; introOn = false;
       timers.forEach(clearTimeout); document.removeEventListener("keydown", onKey, true);
+      if (S && S.settings && S.settings.introMusic) YTM.stop(1800);
       ov.classList.add("out"); setTimeout(() => { ov.remove(); render(); }, 600);
     }
     function onKey(e){ if (e.key === "Escape" || e.code === "Space" || e.key === "Enter"){ e.preventDefault(); e.stopPropagation(); end(); } }
@@ -1098,6 +1192,9 @@ function viewDraw(pin){
     }
     animated();
     function animated(){
+      const ytIntro = S && S.settings && S.settings.introMusic;
+      if (ytIntro) YTM.play(ytIntro, "Intro music", 100).then(okk => { if (!okk) Sound.introTrack(); });
+      else Sound.introTrack();
       introOn = true;
       const word = el("div", {class:"intro-word", "aria-live":"assertive"});
       ov.innerHTML = "";
@@ -1132,9 +1229,19 @@ function viewDraw(pin){
   function render(){
     if (!S) return;
     const p = pending(), cur = currentPrize();
-    if (busy) Sound.mode("draw", cur ? tierOf(cur.name) : 1);
-    else if (p) Sound.mode("win", tierOf(p.prize));
-    else Sound.mode("wait", cur ? tierOf(cur.name) : 1);
+    const ytWin = S.settings && S.settings.winnerMusic;
+    if (busy){ Sound.mode("draw", cur ? tierOf(cur.name) : 1); }
+    else if (p){
+      if (ytWin && !ytFailed){
+        Sound.mode("draw", tierOf(p.prize));                  /* built-in music off: YouTube takes over */
+        if (ytFor !== p.id){ ytFor = p.id; clearTimeout(ytTimer);
+          ytTimer = setTimeout(() => { if (pending() && pending().id === ytFor) YTM.play(ytWin, "Winner music").then(okk => { if (!okk){ ytFailed = true; render(); } }); }, revealedJustNow ? (tierOf(p.prize) >= 3 ? 5000 : 3600) : 300); }
+      } else Sound.mode("win", tierOf(p.prize));
+    } else {
+      if (ytFor){ ytFor = null; clearTimeout(ytTimer); YTM.stop(1500); }
+      Sound.mode("wait", cur ? tierOf(cur.name) : 1);
+    }
+    revealedJustNow = false;
     panel.classList.toggle("grand", !!p && tierOf(p.prize) >= 3);
     sel.innerHTML = "";
     S.prizes.forEach(x => { const o = el("option", {value:x.name, text:x.name + " (" + x.remaining + " of " + x.qty + " left)"}); if (x.remaining <= 0) o.disabled = true; sel.append(o); });
@@ -1193,7 +1300,7 @@ function viewDraw(pin){
       if (t >= 1 && (res || err)){
         if (err){ busy = false; Sound.stop(); handle(err); refresh(); return; }
         const won = (res.state.winners.find(w => w.status === "Called") || {}).luckyNo;
-        lockDigits(String(won), tr, () => { busy = false; S = res.state; render(); num.className = "ld-num pop" + (tr >= 3 ? " grandnum" : ""); Sound.win(tr); revealFx(tr); });
+        lockDigits(String(won), tr, () => { busy = false; S = res.state; revealedJustNow = true; render(); num.className = "ld-num pop" + (tr >= 3 ? " grandnum" : ""); Sound.win(tr); revealFx(tr); });
         return;
       }
       num.textContent = String(src[Math.floor(Math.random() * src.length)]); Sound.tick(tr);
