@@ -370,6 +370,129 @@ body.dashmode .feed li{padding:.45rem 0;font-size:.9rem}
 .nom-txt small{color:var(--muted);font-size:.78rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nom-tick{flex:none;width:1.6rem;height:1.6rem;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-weight:800;color:transparent}
 .nom[aria-checked="true"] .nom-tick{background:var(--gold);border-color:var(--gold);color:var(--on-gold)}
+/* royal icons and tagline */
+.royal{display:inline-block;line-height:0;filter:drop-shadow(0 4px 14px rgba(242,207,115,.45))}
+.royal svg{width:100%;height:auto;display:block}
+.royal.sm{width:1.7rem;vertical-align:middle;filter:drop-shadow(0 2px 6px rgba(242,207,115,.4))}
+.royal-pair{display:flex;justify-content:center;align-items:flex-end;gap:.8rem}
+.royal-pair .royal{width:3.4rem}
+.royal-pair.sm{display:inline-flex;gap:.3rem;vertical-align:middle}
+.royal-pair.sm .royal{width:1.5rem}
+.vote-crowns{margin:0 0 .4rem}
+.vote-crowns.big .royal{width:4.6rem;animation:float 2.4s ease-in-out infinite alternate}
+.vote-crowns.big .royal + .royal{animation-delay:.6s}
+.poster-crowns{margin:.8rem 0 .3rem}
+.poster-crowns .royal{width:4rem}
+.vote-cat{display:flex;align-items:center;gap:.5rem}
+.bd-tag{display:flex;align-items:center;justify-content:center;gap:.7rem;margin:.35rem 0 .6rem}
+.bd-text{font-family:var(--serif);font-style:italic;font-weight:600;font-size:clamp(1.1rem,3.5vw,1.6rem);letter-spacing:.02em;white-space:nowrap;
+  background:linear-gradient(90deg,#F2CF73,#FFF3C4 45%,#E0228A 75%,#F2CF73);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 5s linear infinite}
+.bd-line{flex:0 1 3.5rem;height:1px;position:relative;background:linear-gradient(90deg,transparent,var(--gold))}
+.bd-line.r{background:linear-gradient(270deg,transparent,var(--gold))}
+.bd-line::after{content:"";position:absolute;right:-3px;top:-3px;width:7px;height:7px;background:var(--gold);transform:rotate(45deg)}
+.bd-line.r::after{right:auto;left:-3px}
+.ld-head .bd-tag{margin:.4vh 0 0}
+.ld-head .bd-text{font-size:clamp(1rem,1.8vw,1.8rem)}
+.aw-card .royal.aw-crown{width:clamp(4rem,10vh,7rem);font-size:0}
+.royal.aw-crown.big{width:clamp(6rem,16vh,11rem);margin:0 auto 2vh;display:block}
+.royal.cele-crown{width:clamp(6rem,16vh,11rem);font-size:0;display:block;margin:0 auto}
+/* awards winner celebration */
+.awc{position:fixed;inset:0;z-index:50;display:grid;place-items:center;overflow:hidden;animation:introIn .4s ease both}
+.awc.out{animation:celeOut .7s ease both}
+.awc.queen{background:radial-gradient(ellipse 65% 60% at 50% 45%,#6d1f6e 0%,#2c0d45 55%,#0a0418 100%)}
+.awc.king{background:radial-gradient(ellipse 65% 60% at 50% 45%,#23307e 0%,#170d47 55%,#05041a 100%)}
+.awc-spot{position:absolute;top:-12vh;width:34vw;height:135vh;pointer-events:none;mix-blend-mode:screen;filter:blur(10px);transform-origin:50% 0;
+  background:linear-gradient(180deg,rgba(255,250,230,.45),rgba(255,250,230,.08) 60%,transparent 85%);clip-path:polygon(44% 0,56% 0,100% 100%,0 100%)}
+.awc-spot.l{left:2vw;animation:sweepL 5s ease-in-out infinite alternate}
+.awc-spot.r{right:2vw;animation:sweepR 5s ease-in-out infinite alternate}
+@keyframes sweepL{from{transform:rotate(-28deg)}to{transform:rotate(14deg)}}
+@keyframes sweepR{from{transform:rotate(28deg)}to{transform:rotate(-14deg)}}
+.awc-stage{position:relative;z-index:2;text-align:center;padding:0 4vw;max-width:96vw}
+.awc-crownwrap{position:relative;display:inline-block;margin-bottom:1vh}
+.awc-burst{position:absolute;left:50%;top:55%;width:42vmin;height:42vmin;transform:translate(-50%,-50%);border-radius:50%;animation:burstPulse 1.8s ease-in-out infinite alternate}
+.awc.queen .awc-burst{background:radial-gradient(circle,rgba(255,120,200,.75),rgba(255,61,154,.25) 40%,transparent 70%)}
+.awc.king .awc-burst{background:radial-gradient(circle,rgba(127,178,255,.75),rgba(74,99,224,.25) 40%,transparent 70%)}
+@keyframes burstPulse{from{transform:translate(-50%,-50%) scale(.85);opacity:.7}to{transform:translate(-50%,-50%) scale(1.15);opacity:1}}
+.royal.awc-crown{position:relative;width:clamp(7rem,19vh,13rem);filter:drop-shadow(0 10px 30px rgba(0,0,0,.5)) drop-shadow(0 0 30px rgba(255,230,160,.6));animation:crownDrop 1s cubic-bezier(.2,1.5,.4,1) both,float 2.6s 1.1s ease-in-out infinite alternate}
+@keyframes crownDrop{from{transform:translateY(-70vh) rotate(-25deg) scale(.6)}to{transform:none}}
+.awc-title{margin:0;font-family:var(--display);font-weight:800;letter-spacing:.16em;font-size:clamp(1.7rem,5vw,4.4rem);line-height:1.1}
+.awc-title span{display:inline-block;opacity:0;animation:letter .6s cubic-bezier(.2,1.6,.4,1) forwards,shimmer 4s 1.5s linear infinite;background-size:300% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.awc.queen .awc-title span{background-image:linear-gradient(90deg,#FF7AC6,#FFE08A,#C38BFF,#FF7AC6);filter:drop-shadow(0 0 18px rgba(255,61,154,.55))}
+.awc.king .awc-title span{background-image:linear-gradient(90deg,#7FB2FF,#FFE08A,#9F7BFF,#7FB2FF);filter:drop-shadow(0 0 18px rgba(74,99,224,.6))}
+.awc-tie{margin:.8vh 0 0;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#FFE08A;font-size:clamp(1rem,2.4vh,1.6rem)}
+.awc-people{display:flex;justify-content:center;gap:4vw;flex-wrap:wrap;margin-top:1.6vh}
+.awc-person{opacity:0;animation:nameIn 1s cubic-bezier(.2,1.3,.4,1) forwards}
+@keyframes nameIn{from{opacity:0;transform:scale(1.8);filter:blur(10px)}to{opacity:1;transform:none;filter:none}}
+.awc-name{margin:0;font-family:var(--display);font-weight:800;line-height:1.05;font-size:clamp(3rem,10.5vh,8.5rem)}
+.awc-people.tie .awc-name{font-size:clamp(2.2rem,7vh,5.5rem)}
+.awc-name span{background:linear-gradient(110deg,#FFF3C4 0%,#ffffff 30%,#F2CF73 55%,#FFF3C4 80%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 3s 1.8s linear infinite}
+.awc.queen .awc-name span{filter:drop-shadow(0 0 26px rgba(255,61,154,.7)) drop-shadow(0 4px 0 rgba(90,0,50,.35))}
+.awc.king .awc-name span{filter:drop-shadow(0 0 26px rgba(74,130,255,.75)) drop-shadow(0 4px 0 rgba(10,20,80,.35))}
+.awc-chips{display:flex;justify-content:center;flex-wrap:wrap;gap:.7rem;margin-top:1.4vh}
+.awc-chips.votes{opacity:0;animation:fadeUp .7s 1.8s ease forwards}
+.awc-chip{display:inline-flex;align-items:center;gap:.5rem;padding:.45rem 1.1rem;border-radius:999px;font-weight:700;font-size:clamp(1rem,2.4vh,1.6rem);backdrop-filter:blur(4px)}
+.awc-chip i{font-style:normal}
+.awc-chip.id{background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.55);color:#fff}
+.awc.queen .awc-chip.dept{background:rgba(255,61,154,.2);border:1.5px solid #FF7AC6;color:#FFD6EC}
+.awc.king .awc-chip.dept{background:rgba(74,99,224,.25);border:1.5px solid #7FB2FF;color:#DCE7FF}
+.awc-chip.votes{background:rgba(242,207,115,.16);border:1.5px solid var(--gold);color:#FFE7A6}
+.awc-cta{display:inline-block;margin:2.2vh 0 0;padding:.6rem 1.6rem;border-radius:999px;font-weight:800;letter-spacing:.06em;font-size:clamp(1rem,2.4vh,1.5rem);color:#2b1250;
+  background:linear-gradient(180deg,#FFF3C4,#F2CF73 55%,#D9A441);box-shadow:0 10px 30px -10px rgba(242,207,115,.9);opacity:0;animation:fadeUp .7s 2s ease forwards}
+@media (prefers-reduced-motion:reduce){ .awc-spot,.awc-burst,.royal.awc-crown,.awc-name span{animation:none} .awc-title span,.awc-person,.awc-chips.votes,.awc-cta{animation:fadeUp .3s ease forwards} }
+/* blinking sparkles */
+.tw-layer{position:absolute;inset:0;pointer-events:none;z-index:1}
+.tw{position:absolute;transform:translate(-50%,-50%) scale(0);background:currentColor;opacity:0;
+  clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%);filter:drop-shadow(0 0 6px currentColor);animation:twinkle 1.6s ease-in-out infinite}
+.tw.big{filter:drop-shadow(0 0 12px currentColor)}
+@keyframes twinkle{0%,100%{opacity:0;transform:translate(-50%,-50%) scale(.2) rotate(0)}45%{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(45deg)}60%{opacity:.9;transform:translate(-50%,-50%) scale(.85) rotate(60deg)}}
+/* reveal: "The King of the Night is…" */
+.awr-title{margin:1.2vh 0 0;font-family:var(--display);font-weight:800;text-transform:uppercase;letter-spacing:.06em;line-height:1.15;font-size:clamp(1.6rem,4.4vw,4rem)}
+.awr-w{display:inline-block;margin:0 .22em;opacity:0;animation:wordUp .7s cubic-bezier(.2,1.4,.4,1) forwards,shimmer 4s 1.2s linear infinite;background-size:300% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.awr.queen .awr-w{background-image:linear-gradient(90deg,#FF7AC6,#FFE08A,#C38BFF,#FF7AC6);filter:drop-shadow(0 0 16px rgba(255,61,154,.5))}
+.awr.king .awr-w{background-image:linear-gradient(90deg,#7FB2FF,#FFE08A,#9F7BFF,#7FB2FF);filter:drop-shadow(0 0 16px rgba(74,130,255,.55))}
+@keyframes wordUp{from{opacity:0;transform:translateY(30px) scale(.8);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+.royal.awr-crown{position:relative;width:clamp(5.5rem,14vh,10rem);filter:drop-shadow(0 0 30px rgba(255,230,160,.7));animation:crownDrop .9s cubic-bezier(.2,1.5,.4,1) both,float 2.2s 1s ease-in-out infinite alternate}
+.awr-rollwrap{margin-top:3vh;min-height:1.2em;font-size:clamp(2.6rem,9vw,8rem)}
+.awr .aw-roll{margin:0;font-size:inherit;background:linear-gradient(180deg,#ffffff,#FFF3C4 40%,#F2CF73);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.awr.queen .aw-roll{filter:drop-shadow(0 0 24px rgba(255,61,154,.75))}
+.awr.king .aw-roll{filter:drop-shadow(0 0 24px rgba(74,130,255,.8))}
+.aw-roll.tick{animation:rollBlink .18s ease-out}
+@keyframes rollBlink{0%{opacity:.35;transform:scale(1.08)}100%{opacity:1;transform:none}}
+/* winner: light flash + spinning halo behind the crown */
+.awc-flash{position:absolute;inset:0;z-index:4;pointer-events:none;background:radial-gradient(circle at 50% 40%,#fff 0%,rgba(255,243,196,.8) 25%,transparent 65%);animation:flash 1.2s ease-out forwards}
+.awc-halo{position:absolute;left:50%;top:55%;width:34vmin;height:34vmin;transform:translate(-50%,-50%);border-radius:50%;
+  background:conic-gradient(from 0deg,transparent,rgba(255,243,196,.85),transparent 25%,rgba(255,255,255,.7),transparent 50%,rgba(255,243,196,.85),transparent 75%,rgba(255,255,255,.7),transparent);
+  -webkit-mask:radial-gradient(circle,transparent 52%,#000 54%,#000 58%,transparent 60%);mask:radial-gradient(circle,transparent 52%,#000 54%,#000 58%,transparent 60%);animation:haloSpin 3s linear infinite}
+@keyframes haloSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.awc .awc-name span{animation:shimmer 3s 1.8s linear infinite,nameBlink 2.4s 2s ease-in-out infinite}
+@keyframes nameBlink{0%,100%{opacity:1}50%{opacity:.82}}
+@media (prefers-reduced-motion:reduce){ .tw,.awc-halo,.awr-w,.awc .awc-name span{animation:none!important;opacity:1} }
+/* stage music controls */
+.mc{position:absolute;left:1.5vw;bottom:2vh;z-index:3;display:flex;gap:.5rem;opacity:.55;transition:opacity .2s}
+.mc:hover,.mc:focus-within{opacity:1}
+.mc.fixed{position:fixed;z-index:44;left:1.2vw;bottom:1.6vh}
+body:not(.drawmode) .mc.fixed{display:none}
+.mc-btn{background:rgba(14,8,34,.65);border:1px solid var(--line);color:var(--ink);border-radius:999px;padding:.45rem .9rem;font-weight:600;font-size:.85rem;cursor:pointer}
+.mc-btn:disabled{opacity:.4;cursor:default}
+/* nominee showcase */
+.awn-kick{margin:.6vh 0 0;color:var(--muted);font-weight:700;letter-spacing:.3em;text-transform:uppercase;font-size:clamp(.85rem,1.8vh,1.2rem)}
+.royal.awn-crown{width:clamp(4.5rem,11vh,8rem);animation:crownDrop .9s cubic-bezier(.2,1.5,.4,1) both,float 2.6s 1s ease-in-out infinite alternate}
+.awn-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:1.6vw;margin:3vh auto 0;max-width:90vw}
+.awn-card{width:clamp(11rem,17vw,18rem);padding:2.2vh 1vw;border-radius:22px;text-align:center;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.25);backdrop-filter:blur(6px);
+  box-shadow:0 20px 50px -20px rgba(0,0,0,.7);animation:cardIn .8s cubic-bezier(.2,1.4,.4,1) both}
+.awn.queen .awn-card{border-color:rgba(255,122,198,.55)}
+.awn.king .awn-card{border-color:rgba(127,178,255,.55)}
+@keyframes cardIn{from{opacity:0;transform:translateY(40px) scale(.7);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
+.awn-av{display:grid;place-items:center;margin:0 auto 1.2vh;width:clamp(4.5rem,11vh,7.5rem);aspect-ratio:1;border-radius:50%;font-family:var(--display);font-weight:800;color:#fff;font-size:clamp(1.6rem,4vh,2.8rem);box-shadow:0 0 0 3px rgba(242,207,115,.7),0 0 40px rgba(242,207,115,.35)}
+.awn-av.queen{background:radial-gradient(circle at 35% 30%,#ff6fb5,#8B3FC1 70%)}
+.awn-av.king{background:radial-gradient(circle at 35% 30%,#8fa6ff,#3a2a9a 70%)}
+.awn-name{margin:0;font-family:var(--display);font-weight:800;color:#fff;font-size:clamp(1.1rem,2.8vh,2rem);line-height:1.15}
+.awn-meta{margin:.5vh 0 0;color:var(--muted);font-weight:600;font-size:clamp(.8rem,1.7vh,1.1rem)}
+.awn-grid.many .awn-card{width:clamp(9rem,13vw,14rem);padding:1.6vh .8vw}
+.awn-go{margin-top:3.5vh;min-width:min(28rem,80vw);font-size:clamp(1rem,1.6vw,1.4rem);padding:clamp(.9rem,2.2vh,1.3rem) 2rem;opacity:0;pointer-events:none;transform:translateY(16px);transition:opacity .5s,transform .5s}
+.awn-go.show{opacity:1;pointer-events:auto;transform:none;animation:goPulse 1.6s 1s ease-in-out infinite}
+.aw-btns{display:flex;flex-wrap:wrap;justify-content:center;gap:.8vw;margin-top:1vh;width:100%}
+.aw-btns .ld-btn{min-width:min(16rem,45%);margin:0}
 /* awards screen */
 .aw-body{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;gap:2vw;max-width:1600px;width:100%;margin:0 auto}
 .aw-card{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:1vh;padding:2.5vh 2vw;border-radius:28px;border:1px solid var(--line);
@@ -388,7 +511,7 @@ body.dashmode .feed li{padding:.45rem 0;font-size:.9rem}
 .aw-name:empty,.aw-meta:empty{display:none}
 .aw-meta{margin:0;color:var(--muted);font-weight:600;font-size:clamp(.9rem,2vh,1.3rem)}
 .aw-count{margin:0;color:var(--muted);font-size:clamp(.75rem,1.5vh,1rem)}
-.aw-card .ld-btn{min-width:min(22rem,80%);margin-top:1vh}
+.aw-card .ld-btn{min-width:min(16rem,45%)}
 .aw-strip{display:flex;align-items:center;justify-content:center;gap:1.4vw;margin:1.2vh auto 0;padding:1vh 1.4vw;border:1px solid var(--line);border-radius:18px;background:rgba(14,8,34,.7);max-width:1000px}
 .aw-strip.closed .aw-qr,.aw-strip.closed .aw-url{display:none}
 .aw-qr{width:clamp(70px,12vh,120px);height:auto;background:#fff;border-radius:10px;padding:4px}
@@ -407,6 +530,58 @@ body.dashmode .feed li{padding:.45rem 0;font-size:.9rem}
 .db-top3{margin:0;padding-left:1.2rem}
 .db-top3 li{display:flex;justify-content:space-between;gap:.6rem;padding:.2rem 0}
 .db-top3 li b{color:var(--gold)}
+/* dashboard: menu, tidy layout, downloads */
+.db-menu{display:grid;grid-template-columns:repeat(auto-fit,minmax(10.5rem,1fr));gap:.6rem;margin:0 0 1rem}
+.db-link{display:flex;align-items:center;gap:.6rem;padding:.65rem .8rem;border-radius:14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);text-decoration:none;transition:border-color .15s,transform .15s}
+.db-link:hover{border-color:var(--gold);transform:translateY(-2px)}
+.db-link-i{font-size:1.4rem;line-height:1}
+.db-link b{display:block;font-size:.9rem}
+.db-link small{display:block;color:var(--muted);font-size:.72rem}
+.dashmode .db-top{grid-template-columns:minmax(12rem,.7fr) minmax(12rem,.7fr) 2fr}
+.db-total-num.sm{font-size:clamp(2.4rem,4.5vw,3.8rem)}
+.db-dl{margin-top:1rem;padding:1rem 1.1rem}
+.db-dl h2{font-size:1rem;margin:0}
+.db-dl .muted{margin:.2rem 0 .7rem}
+.db-dl-row{display:flex;flex-wrap:wrap;gap:.6rem}
+@media (min-width:1200px){ .db-menu{grid-template-columns:repeat(7,minmax(0,1fr))} .db-link{flex-direction:column;text-align:center;gap:.3rem;padding:.7rem .5rem} }
+.dashmode .db-orgs{grid-template-columns:1fr 1fr}
+body.dashmode .bgart{position:fixed}
+@media (max-width:1100px){ .dashmode .db-top{grid-template-columns:1fr 1fr} .dashmode .db-orgs{grid-column:1/-1} }
+/* dashboard v3: compact totals, organisation bar, ranked departments */
+.dashmode .db-top{grid-template-columns:minmax(11rem,.55fr) minmax(11rem,.55fr) 1.9fr;gap:.8rem}
+.dashmode .db-total{padding:.8rem 1rem;justify-content:flex-start}
+.dashmode .db-total-num{font-size:clamp(2rem,3.4vw,2.9rem)!important;margin:.2rem 0 .1rem}
+.db-tl{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+.db-tl .db-live{margin:0;font-size:.72rem}
+.dashmode .db-sub{font-size:.7rem}
+.dashmode .db-orgs{display:block}
+.org-stack{display:flex;height:12px;border-radius:999px;overflow:hidden;margin:.55rem 0 .7rem;background:rgba(255,255,255,.06)}
+.org-stack i{display:block;height:100%;transition:flex .6s}
+.org-stack i + i{border-left:2px solid rgba(14,8,34,.8)}
+.org-legend{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:.35rem 1.2rem}
+.org-legend li{display:flex;align-items:center;gap:.5rem;font-size:.84rem;min-width:0}
+.org-dot{flex:none;width:.7rem;height:.7rem;border-radius:3px}
+.org-name{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink)}
+.org-legend b{color:var(--gold);font-variant-numeric:tabular-nums}
+.org-legend small{color:var(--muted);width:2.6rem;text-align:right;font-variant-numeric:tabular-nums}
+.db-depts{display:flex;flex-direction:column;gap:.15rem}
+.drow{display:grid;grid-template-columns:1.6rem 1fr 2.4rem;align-items:center;gap:.6rem;padding:.45rem .2rem;border-bottom:1px solid rgba(255,255,255,.06)}
+.drow:last-child{border-bottom:0}
+.drank{width:1.5rem;height:1.5rem;border-radius:50%;display:grid;place-items:center;font-size:.72rem;font-weight:800;background:rgba(255,255,255,.08);color:var(--muted)}
+.drow:nth-child(1) .drank{background:linear-gradient(180deg,#FFF3C4,#D9A441);color:#2b1250}
+.drow:nth-child(2) .drank{background:linear-gradient(180deg,#f4f4f8,#a9aab8);color:#2b1250}
+.drow:nth-child(3) .drank{background:linear-gradient(180deg,#f6c9a0,#b06d3c);color:#2b1250}
+.dmain{min-width:0}
+.dname2{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dtrack{height:4px;border-radius:999px;background:rgba(255,255,255,.07);margin-top:.3rem;overflow:hidden}
+.dtrack i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#F2CF73,#FF7AC6);transition:width .6s}
+.dcount{text-align:right;font-weight:800;color:var(--gold);font-variant-numeric:tabular-nums}
+.dpct{text-align:right;color:var(--muted);font-size:.78rem;font-variant-numeric:tabular-nums}
+@media (max-width:1100px){ .dashmode .db-top{grid-template-columns:1fr 1fr} .db-orgcard{grid-column:1/-1} }
+/* registration desk: staff / guest switch */
+.who-seg{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;padding:.3rem;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid var(--line);margin-bottom:.4rem}
+.who-seg button{font:inherit;font-weight:700;font-size:.88rem;padding:.55rem .4rem;border-radius:9px;border:0;background:transparent;color:var(--muted);cursor:pointer}
+.who-seg button[aria-checked="true"]{background:linear-gradient(180deg,#FFF3C4,#F2CF73 55%,#D9A441);color:#2b1250}
 /* winner celebration */
 .cele{position:fixed;inset:0;z-index:50;display:grid;place-items:center;overflow:hidden;background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(90,40,150,.9) 0%,rgba(22,10,50,.97) 55%,rgba(4,2,12,.99) 100%);animation:introIn .35s ease both}
 .cele-stage::before{content:"";position:absolute;left:50%;top:50%;width:90vmin;height:90vmin;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(242,207,115,.28),rgba(242,207,115,0) 60%);z-index:-1;animation:glow 1.6s ease-in-out infinite alternate}
@@ -491,6 +666,52 @@ body.dashmode .feed li{padding:.45rem 0;font-size:.9rem}
 .intro-skip:hover{opacity:1}
 .intro-video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
 @media (prefers-reduced-motion:reduce){ .intro-beams,.intro-glow{animation:none} .intro-word.in,.intro-word.shake.in{animation:fadeUp .3s ease both} }
+/* ===== one look across all screens: the gala artwork under a tinted overlay ===== */
+.ld-start,.intro{background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(59,26,110,.62) 0%,rgba(22,14,51,.86) 60%,rgba(7,4,15,.94) 100%),var(--art) center/cover no-repeat}
+.cele{background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(90,40,150,.7) 0%,rgba(22,10,50,.9) 55%,rgba(4,2,12,.96) 100%),var(--art) center/cover no-repeat}
+.awc.queen{background:radial-gradient(ellipse 65% 60% at 50% 45%,rgba(109,31,110,.72) 0%,rgba(44,13,69,.9) 55%,rgba(10,4,24,.96) 100%),var(--art) center/cover no-repeat}
+.awc.king{background:radial-gradient(ellipse 65% 60% at 50% 45%,rgba(35,48,126,.72) 0%,rgba(23,13,71,.9) 55%,rgba(5,4,26,.96) 100%),var(--art) center/cover no-repeat}
+/* ===== colourful titles ===== */
+.ld-start-title{background:linear-gradient(90deg,#FFF3C4 0%,#FFD36E 20%,#FF9AD0 40%,#D9B4FF 55%,#FFD36E 75%,#FFF3C4 100%)!important;background-size:250% 100%!important;
+  -webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;animation:fadeUp .9s .7s ease both,shimmer 6s 1.6s linear infinite!important;
+  filter:drop-shadow(0 0 30px rgba(255,120,200,.45))!important}
+.intro-word.gold{background:linear-gradient(90deg,#FFE08A,#F59E2B 25%,#FF3D9A 50%,#C38BFF 75%,#FFE08A)!important;background-size:250% 100%!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;filter:drop-shadow(0 0 30px rgba(255,61,154,.45))!important}
+.ld .ld-title span{background:linear-gradient(90deg,#FFE08A,#F59E2B 30%,#FF7AC6 55%,#C38BFF 80%,#FFE08A);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 8s linear infinite}
+.ld .ld-title .dot{-webkit-text-fill-color:var(--rose)}
+/* date and venue are not needed on the big screens at the venue (kept on registration and posters) */
+.ld-start-when{display:none}
+.ld:not(.aw) .ld-when{display:none}
+.ld-start-btns{margin-top:4vh}
+/* ===== King & Queen cards: tidy, aligned, colourful ===== */
+.aw-card{justify-content:flex-start;padding-top:3vh}
+.aw-card .royal.aw-crown{width:clamp(5.5rem,14vh,9rem);margin-bottom:.4vh;animation:float 2.6s ease-in-out infinite alternate}
+.aw-card.queen .royal.aw-crown{filter:drop-shadow(0 6px 18px rgba(0,0,0,.45)) drop-shadow(0 0 26px rgba(255,61,154,.55))}
+.aw-card.king .royal.aw-crown{filter:drop-shadow(0 6px 18px rgba(0,0,0,.45)) drop-shadow(0 0 26px rgba(74,130,255,.6))}
+.aw-label{font-size:clamp(1.3rem,2.8vw,2.8rem);letter-spacing:.1em;line-height:1.1;background-size:250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 5s linear infinite}
+.aw-card.queen .aw-label{background-image:linear-gradient(90deg,#FF7AC6,#FFE08A 35%,#C38BFF 70%,#FF7AC6);filter:drop-shadow(0 0 14px rgba(255,61,154,.45))}
+.aw-card.king .aw-label{background-image:linear-gradient(90deg,#7FB2FF,#FFE08A 35%,#9F7BFF 70%,#7FB2FF);filter:drop-shadow(0 0 14px rgba(74,130,255,.5))}
+.aw-card .aw-btns{margin-top:auto;padding-top:1.4vh}
+.aw .ld-title span{background:linear-gradient(90deg,#FF7AC6,#FFE08A 35%,#7FB2FF 70%,#FF7AC6);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 7s linear infinite}
+.aw-card{gap:.8vh;padding:2.2vh 1.5vw 2vh}
+.aw-card .royal.aw-crown{width:clamp(4.5rem,11vh,7.5rem)}
+.aw-label{font-size:clamp(1.1rem,2.3vw,2.4rem);white-space:nowrap}
+.aw-orb{width:clamp(6rem,17vh,11rem);font-size:clamp(2.6rem,8vh,6rem)}
+.aw-btns{flex-wrap:nowrap;gap:.8vw}
+.aw-btns .ld-btn{min-width:0!important;flex:1 1 0;padding:clamp(.6rem,1.6vh,1rem) .8rem;font-size:clamp(.75rem,1vw,1rem);letter-spacing:.12em}
+.aw-card{justify-content:center}
+.aw-card .aw-btns{margin-top:2vh}
+.aw-btns .ld-btn{white-space:nowrap;letter-spacing:.08em}
+.awc-spot{background:linear-gradient(180deg,rgba(255,250,230,.22),rgba(255,250,230,.05) 55%,transparent 80%);filter:blur(16px)}
+@keyframes rollBlink{0%{filter:brightness(1.6);transform:scale(1.05)}100%{filter:brightness(1);transform:none}}
+.aw-card .royal.aw-crown{width:clamp(6.5rem,16vh,10.5rem)}
+.vote-crowns .royal{width:4.4rem}
+.poster-crowns .royal{width:5rem}
+.royal-one{display:inline-flex;flex-direction:column;align-items:center;gap:.15rem}
+.royal-tag{font-size:.62rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;line-height:1}
+.royal-tag.king{color:#9DBBFF}
+.royal-tag.queen{color:#FF9AD0}
+.royal-pair.sm .royal-tag{display:none}
+.vote-crowns .royal-tag,.poster-crowns .royal-tag{font-size:.7rem}
 @media (max-width:820px){ .grid{grid-template-columns:1fr} }
 @media print{ body{padding:0;-webkit-print-color-adjust:exact;print-color-adjust:exact} body::after{display:none} .brand,.noprint,.toast,.demobar,.demonote{display:none!important} .poster{max-width:none} }
 @media (prefers-reduced-motion:reduce){ .pop{animation:none} .toast{transition:none} }
@@ -541,6 +762,8 @@ window.__startApp = function(){
 "use strict";
 if (BOOT.demo){ const dm = document.createElement("div"); dm.className = "demo-badge"; dm.textContent = "DEMO"; dm.title = "Demo version with sample data"; document.body.append(dm); }
 const B = BOOT, app = document.getElementById("app"), KEY = "ghg-simple-reg-v1";
+/* link to another page: ?page=… on the real site, #… in the Claude preview */
+function pageUrl(p){ return window.__PREVIEW ? B.appUrl + "#" + (p || "form") : B.appUrl + (p ? "?page=" + p : ""); }
 function el(tag, attrs, ...kids){
   const e = document.createElement(tag);
   if (attrs) for (const k in attrs){
@@ -594,7 +817,7 @@ function viewForm(){
     el("option", {value:"", text:"Choose your organisation"}),
     (B.orgs || []).map(o => el("option", {value:o, text:o})));
   const phone = el("input", {type:"tel", id:"phone", inputmode:"tel", autocomplete:"tel", placeholder:"e.g. 012-345 6789"});
-  const sid = el("input", {type:"text", id:"sid", autocomplete:"off", autocapitalize:"characters", placeholder: B.staffIdRequired ? "e.g. UOC1234" : "Leave blank if you’re a guest"});
+  const sid = el("input", {type:"text", id:"sid", autocomplete:"off", autocapitalize:"characters", placeholder: B.staffIdRequired ? "e.g. UOC1234 or MG1234" : "Leave blank if you’re a guest"});
   let dept;
   if (B.departments && B.departments.length){
     dept = el("select", {id:"dept", required:true},
@@ -608,18 +831,48 @@ function viewForm(){
   if (dept.tagName === "SELECT") dept.addEventListener("change", () => { other.hidden = dept.value !== "__other"; if (!other.hidden) other.focus(); });
   const msg = el("p", {class:"msg", role:"status"});
   const btn = el("button", {class:"btn primary big", type:"submit", text:"Register and get my number"});
+  /* registration desk only: switch between a staff member and an outside guest (no staff ID) */
+  const desk = B.view === "kiosk";
+  let guest = false;
+  const company = el("input", {type:"text", id:"company", autocomplete:"organization", placeholder:"e.g. Mövenpick, Ministry of Higher Education, partner company"});
+  const staffBits = [el("label", {class:"f", for:"sid", text: B.staffIdRequired ? "Staff ID" : "Staff ID (optional)"}), sid,
+    el("label", {class:"f", for:"org", text:"Organisation"}), org, el("label", {class:"f", for:"dept", text:"Department"}), dept, other];
+  const guestBits = [el("label", {class:"f", for:"company", text:"Company / organisation (optional)"}), company];
+  const phoneLabel = el("label", {class:"f", for:"phone", text: B.phoneRequired ? "Phone number" : "Phone number (optional)"});
+  const who = desk ? el("div", {class:"who-seg", role:"radiogroup", "aria-label":"Who is registering"},
+    el("button", {type:"button", role:"radio", "aria-checked":"true", text:"👔 Staff"}),
+    el("button", {type:"button", role:"radio", "aria-checked":"false", text:"🎟 Guest (no staff ID)"})) : null;
+  function setGuest(g){
+    guest = g;
+    if (who) who.querySelectorAll("button").forEach((b, i) => b.setAttribute("aria-checked", String(i === (g ? 1 : 0))));
+    staffBits.forEach(n => n.hidden = g); if (!g) other.hidden = dept.value !== "__other";
+    guestBits.forEach(n => n.hidden = !g);
+    phoneLabel.textContent = g ? "Phone number (optional)" : (B.phoneRequired ? "Phone number" : "Phone number (optional)");
+    msg.textContent = ""; name.focus();
+  }
+  if (who) who.querySelectorAll("button").forEach((b, i) => b.addEventListener("click", () => setGuest(i === 1)));
   const form = el("form", {novalidate:true},
+    who,
     el("label", {class:"f", for:"name", text:"Full name"}), name,
-    el("label", {class:"f", for:"sid", text: B.staffIdRequired ? "Staff ID" : "Staff ID (optional)"}), sid,
-    el("label", {class:"f", for:"phone", text: B.phoneRequired ? "Phone number" : "Phone number (optional)"}), phone,
-    el("label", {class:"f", for:"org", text:"Organisation"}), org,
-    el("label", {class:"f", for:"dept", text:"Department"}), dept, other,
+    staffBits, guestBits,
+    phoneLabel, phone,
     msg, btn);
+  guestBits.forEach(n => n.hidden = true);
   form.addEventListener("submit", async e => {
     e.preventDefault();
     const n = name.value.trim(), d = (dept.value === "__other" ? other.value : dept.value).trim();
     const sv = sid.value.trim();
     if (!n){ msg.textContent = "Please enter your full name."; name.focus(); return; }
+    if (guest){
+      const pv = phone.value.trim(), pd = pv.replace(/\D/g, "");
+      if (pd && (pd.length < 9 || pd.length > 15)){ msg.textContent = "Please check the phone number."; phone.focus(); return; }
+      btn.disabled = true; btn.textContent = "Registering"; msg.textContent = "";
+      try{
+        const r = await call("apiRegister", {name:n, guest:true, company:company.value, phone:pv, deviceId:"", pin:sessionStorage.getItem("ghg-pin") || ""});
+        viewResult(r, r.status === "already" ? "Already registered." : "Guest registered. Enjoy the evening!", true);
+      }catch(err){ msg.textContent = errText(err); btn.disabled = false; btn.textContent = "Register and get my number"; }
+      return;
+    }
     if (B.staffIdRequired && !sv){ msg.textContent = "Please enter your staff ID."; sid.focus(); return; }
     const pv = phone.value.trim(), pd = pv.replace(/\D/g, "");
     if (B.phoneRequired && !pd){ msg.textContent = "Please enter your phone number."; phone.focus(); return; }
@@ -658,7 +911,7 @@ function viewResult(r, headline, fresh){
     card.append(next);
     kioskTimer = setInterval(() => { left--; next.textContent = "Next person (" + left + ")"; if (left <= 0){ clearInterval(kioskTimer); viewForm(); } }, 1000);
   } else {
-    if (B.votingOpen) app.append(el("p", {class:"center", style:"margin:.9rem 0 0"}, el("a", {class:"btn primary", href:B.appUrl + "?page=vote", text:"👑 Vote for King & Queen of the Night"})));
+    if (B.votingOpen) app.append(el("p", {class:"center", style:"margin:.9rem 0 0"}, el("a", {class:"btn primary", href:pageUrl("vote"), text:"👑 Vote for King & Queen of the Night"})));
     app.append(el("p", {class:"muted small center", text:"Each person registers once, on their own phone. Need help? Please go to the registration counter."}));
   }
 }
@@ -688,43 +941,106 @@ function viewDashboard(){
   const deptList = el("div", {class:"db-depts"});
   const deptCount = el("span", {class:"db-pill"});
   const feed = el("ul", {class:"feed"});
-  const copyBtn = el("button", {class:"btn primary", type:"button", text:"Copy lucky draw list"});
-  copyBtn.addEventListener("click", async () => {
+  /* ----- downloads (CSV opens in Excel) ----- */
+  const pinNow = () => sessionStorage.getItem("ghg-pin");
+  function saveCsv(name, table){
+    const csv = "\ufeff" + table.map(r => r.map(v => '"' + String(v == null ? "" : v).replace(/"/g, '""') + '"').join(",")).join("\r\n");
+    const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], {type:"text/csv"})); a.download = name; document.body.append(a); a.click(); a.remove();
+  }
+  const stamp = () => new Date().toISOString().slice(0, 10);
+  async function dlRegistrations(){
     if (!rows.length){ toast("Nobody has registered yet."); return; }
-    const txt = ["Lucky No\tName\tStaff ID\tDepartment"].concat(rows.map(r => [r.luckyNo, r.name, r.staffId || "", r.dept].join("\t"))).join("\n");
-    let ok = false;
-    try{ await navigator.clipboard.writeText(txt); ok = true; }
-    catch(e){ const ta = document.createElement("textarea"); ta.value = txt; document.body.append(ta); ta.select(); try{ ok = document.execCommand("copy"); }catch(_){} ta.remove(); }
-    toast(ok ? rows.length + " numbers copied." : "Copy didn’t work here. Use Download list instead.");
-  });
-  const dlBtn = el("button", {class:"btn", type:"button", text:"Download list (CSV)"});
-  dlBtn.addEventListener("click", () => {
-    if (!rows.length){ toast("Nobody has registered yet."); return; }
-    const csv = "\ufeff" + [["Lucky No","Name","Staff ID","Phone","Organisation","Department","Registered at"]].concat(rows.map(r => [r.luckyNo, r.name, r.staffId || "", r.phone || "", r.org || "", r.dept, r.time]))
-      .map(r => r.map(v => '"' + String(v).replace(/"/g, '""') + '"').join(",")).join("\r\n");
-    const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], {type:"text/csv"})); a.download = "Global-Harmony-Gala-registrations.csv"; document.body.append(a); a.click(); a.remove();
-  });
-  const drawLink = el("a", {class:"btn", href:B.appUrl + "?page=draw", target:"_blank", rel:"noopener", text:"Open lucky draw"});
-  const awLink = el("a", {class:"btn", href:B.appUrl + "?page=awards", target:"_blank", rel:"noopener", text:"👑 Open King & Queen awards"});
+    const orgs = {}, depts = {}; rows.forEach(r => { orgs[r.org || "Other"] = (orgs[r.org || "Other"] || 0) + 1; depts[r.dept || "Other"] = (depts[r.dept || "Other"] || 0) + 1; });
+    saveCsv("Gala-registrations-" + stamp() + ".csv",
+      [["TOTAL REGISTERED", rows.length], [], ["BY ORGANISATION", "Total"]].concat(Object.entries(orgs).sort((a, b) => b[1] - a[1]))
+      .concat([[], ["BY DEPARTMENT", "Total"]]).concat(Object.entries(depts).sort((a, b) => b[1] - a[1]))
+      .concat([[], ["ALL REGISTRATIONS"], ["Lucky No", "Name", "Staff ID", "Phone", "Organisation", "Department", "Registered at"]])
+      .concat(rows.map(r => [r.luckyNo, r.name, r.staffId || "", r.phone || "", r.org || "", r.dept, r.time])));
+  }
+  async function dlVotes(){
+    try{
+      const v = await call("apiAwardsState", pinNow()), list = await call("apiVoteRows", pinNow());
+      if (!list.length){ toast("No votes yet."); return; }
+      const t = [["BEST DRESSED VOTING RESULTS"], ["Guests who voted", v.voters], []];
+      CAT_ORDER.forEach(cat => { const ns = v.nominees.filter(n => n.cat === cat).sort((a, b) => b.votes - a.votes);
+        t.push([v.labels[cat].toUpperCase(), "Total votes: " + v.perCat[cat]], ["Rank", "Nominee", "Staff ID", "Department", "Votes"]);
+        ns.forEach((n, i) => t.push([i + 1, n.name, n.staffId || "", n.dept || "", n.votes])); t.push([]); });
+      t.push(["ALL VOTES"], ["Voted at", "Voter staff ID", "Voter name", "Award", "Voted for"]);
+      list.forEach(x => t.push([x.time, x.voterId, x.voter, v.labels[x.cat] || x.cat, x.nominee]));
+      saveCsv("Gala-best-dressed-votes-" + stamp() + ".csv", t);
+    }catch(e){ toast(errText(e)); }
+  }
+  /* who registered and who voted: totals, by organisation, and one line per staff member */
+  async function dlRegVote(){
+    try{
+      if (!rows.length){ toast("Nobody has registered yet."); return; }
+      const list = await call("apiVoteRows", pinNow());
+      const key = v => String(v || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
+      const voted = {}; let openVotes = 0;
+      list.forEach(x => { if (x.voterId === "(open vote)"){ openVotes++; return; } const k = key(x.voterId); (voted[k] = voted[k] || {})[x.cat] = x.nominee; });
+      const regKeys = new Set(rows.map(r => key(r.staffId)));
+      const votedReg = rows.filter(r => voted[key(r.staffId)]).length;
+      const orgs = {}; rows.forEach(r => { const o = r.org || "Other"; orgs[o] = orgs[o] || [0, 0]; orgs[o][0]++; if (voted[key(r.staffId)]) orgs[o][1]++; });
+      const t = [["GLOBAL HARMONY GALA · REGISTRATION & VOTING SUMMARY"], ["Downloaded", new Date().toLocaleString()], [],
+        ["Total staff registered", rows.length], ["Total staff voted (Best Dressed)", votedReg], ["Registered but not voted", rows.length - votedReg]];
+      if (openVotes) t.push(["Open votes (not linked to a staff ID)", openVotes]);
+      t.push([], ["BY ORGANISATION", "Registered", "Voted"]);
+      Object.entries(orgs).sort((a, b) => b[1][0] - a[1][0]).forEach(([o, v]) => t.push([o, v[0], v[1]]));
+      t.push([], ["ALL REGISTERED STAFF"], ["No", "Name", "Staff ID", "Organisation", "Department", "Lucky No", "Voted?", "Voted for Queen", "Voted for King"]);
+      rows.slice().sort((a, b) => a.name.localeCompare(b.name)).forEach((r, i) => { const v = voted[key(r.staffId)] || {};
+        t.push([i + 1, r.name, r.staffId || "", r.org || "", r.dept || "", r.luckyNo, (v.QUEEN || v.KING) ? "Yes" : "No", v.QUEEN || "", v.KING || ""]); });
+      saveCsv("Gala-registered-and-voted-" + stamp() + ".csv", t);
+    }catch(e){ toast(errText(e)); }
+  }
+  async function dlDraw(){
+    try{
+      const d = await call("apiDrawState", pinNow());
+      const w = d.winners.filter(x => x.status !== "Removed");
+      if (!w.length){ toast("No lucky draw results yet."); return; }
+      saveCsv("Gala-lucky-draw-winners-" + stamp() + ".csv", [["Prize", "Lucky No", "Name", "Staff ID", "Organisation", "Department", "Status"]]
+        .concat(w.map(x => [x.prize, x.luckyNo, x.name || "", x.staffId || "", x.org || "", x.dept || "", x.status === "Called" ? "Being called" : x.status === "No-show" ? "Not present" : x.status])));
+    }catch(e){ toast(errText(e)); }
+  }
   const voteBox = el("div");
+  const voteNum = el("span", {class:"db-total-num sm", text:"0"});
+  const go = (icon, text, page, note) => el("a", {class:"db-link", href:pageUrl(page), target:"_blank", rel:"noopener"},
+    el("span", {class:"db-link-i", "aria-hidden":"true", text:icon}), el("span", null, el("b", {text:text}), el("small", {text:note})));
+  const menu = el("nav", {class:"db-menu", "aria-label":"Event pages"},
+    go("📝", "Registration", "", "What the QR opens"),
+    go("🧾", "Registration desk", "kiosk", "Tablet at the counter"),
+    go("🎰", "Lucky draw", "draw", "Big screen"),
+    go("👑", "King & Queen", "awards", "Big screen"),
+    go("🗳", "Voting page", "vote", "What the voting QR opens"),
+    go("🖼", "Registration poster", "poster", "QR to print"),
+    go("🖼", "Voting poster", "vote-poster", "QR to print"));
+  const dlCard = el("div", {class:"card db-dl"},
+    el("h2", {text:"Download reports"}),
+    el("p", {class:"muted small", text:"Excel-ready CSV files. Download after registration and voting close."}),
+    el("div", {class:"db-dl-row"},
+      el("button", {class:"btn primary", type:"button", text:"⬇ Registrations & totals", onclick:dlRegistrations}),
+      el("button", {class:"btn", type:"button", text:"⬇ Staff registered & voted", onclick:dlRegVote}),
+      el("button", {class:"btn", type:"button", text:"⬇ Best Dressed votes", onclick:dlVotes}),
+      el("button", {class:"btn", type:"button", text:"⬇ Lucky draw winners", onclick:dlDraw})));
   app.append(
+    menu,
     el("section", {class:"db-top"},
-      el("div", {class:"db-total"}, el("p", {class:"db-label", text:"Total registered"}), totalNum, live, lastAt),
-      orgBox),
-    el("div", {class:"row noprint db-actions"}, drawLink, awLink, copyBtn, dlBtn),
+      el("div", {class:"db-total"}, el("div", {class:"db-tl"}, el("p", {class:"db-label", text:"Total registered"}), live), totalNum, lastAt),
+      el("div", {class:"db-total"}, el("p", {class:"db-label", text:"Best Dressed voters"}), voteNum, el("p", {class:"db-sub", text:"guests have voted"})),
+      el("div", {class:"db-total db-orgcard"}, orgBox)),
+    dlCard,
     el("div", {class:"grid db-grid"},
       el("div", {class:"card"}, el("div", {class:"db-head"}, el("h2", {text:"By department"}), deptCount), deptList),
       el("div", {class:"card"}, el("h2", {text:"Just registered"}), feed)),
-    el("div", {class:"card db-vote"}, el("div", {class:"db-head"}, el("h2", {text:"👑 Best Dressed voting"})), voteBox));
+    el("div", {class:"card db-vote"}, el("div", {class:"db-head"}, el("h2", {class:"vote-cat"}, royalPair("sm"), el("span", {text:"Best Dressed voting"}))), voteBox));
   function bump(node){ node.classList.remove("db-bump"); void node.offsetWidth; node.classList.add("db-bump"); }
   async function loadVotes(){
     try{
       const v = await call("apiAwardsState", sessionStorage.getItem("ghg-pin"));
-      voteBox.innerHTML = "";
+      voteBox.innerHTML = ""; voteNum.textContent = String(v.voters);
       voteBox.append(el("p", {class:"muted small", style:"margin:0 0 .6rem"}, el("b", {style:"color:" + (v.open ? "var(--ok)" : "var(--warn)"), text: v.open ? "● Voting open" : "● Voting closed"}), " · " + v.voters + " guests voted"));
       const g = el("div", {class:"grid", style:"margin-top:0"});
       CAT_ORDER.forEach(cat => { const list = v.nominees.filter(n => n.cat === cat).sort((a, b) => b.votes - a.votes).slice(0, 3);
-        g.append(el("div", null, el("p", {style:"margin:0 0 .3rem;font-weight:800;color:var(--gold)", text:(cat === "QUEEN" ? "👸 " : "🤴 ") + v.labels[cat] + " · " + v.perCat[cat] + " votes"}),
+        g.append(el("div", null, el("p", {class:"vote-cat", style:"margin:0 0 .3rem"}, royalIcon(cat, "sm"), el("span", {text:v.labels[cat] + " · " + v.perCat[cat] + " votes"})),
           list.length ? el("ol", {class:"db-top3"}, list.map(n => el("li", null, el("span", {text:n.name}), el("b", {text:String(n.votes)})))) : el("p", {class:"muted small", text:"No nominees yet."}))); });
       voteBox.append(g);
     }catch(e){}
@@ -742,17 +1058,26 @@ function viewDashboard(){
       const orgs = (B.orgs && B.orgs.length ? B.orgs : []).slice();
       rows.forEach(r => { if (r.org && orgs.indexOf(r.org) < 0) orgs.push(r.org); });
       orgBox.innerHTML = "";
-      orgs.forEach((o, i) => { const n = rows.filter(r => r.org === o).length;
-        orgBox.append(el("div", {class:"db-org"}, el("span", {class:"db-org-n", text:String(n)}), el("span", {class:"db-org-name", text:o}),
-          el("span", {class:"db-org-bar"}, el("i", {style:"width:" + (total ? n / total * 100 : 0) + "%;background:var(" + hues[i % hues.length] + ")"})))); });
+      const oc = ["#B57BFF", "#F59E2B", "#FF3D9A", "#4A8BFF", "#7EE0B8"];
+      const stack = el("div", {class:"org-stack", role:"img", "aria-label":"Registrations by organisation"});
+      const legend = el("ul", {class:"org-legend"});
+      orgs.forEach((o, i) => { const n = rows.filter(r => r.org === o).length, pct = total ? Math.round(n / total * 100) : 0;
+        if (n) stack.append(el("i", {style:"flex:" + n + ";background:" + oc[i % oc.length], title:o + ": " + n}));
+        legend.append(el("li", null, el("span", {class:"org-dot", style:"background:" + oc[i % oc.length]}), el("span", {class:"org-name", text:o, title:o}),
+          el("b", {text:String(n)}))); });
+      if (!total) stack.append(el("i", {style:"flex:1;background:rgba(255,255,255,.08)"}));
+      orgBox.append(el("p", {class:"db-label", text:"By organisation"}), stack, legend);
       /* by department: every department with at least one registration */
       const by = {}; rows.forEach(r => { const k = r.dept || "Other"; by[k] = (by[k] || 0) + 1; });
       const list = Object.entries(by).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])), max = list.length ? list[0][1] : 1;
       deptCount.textContent = list.length + " department" + (list.length === 1 ? "" : "s");
       deptList.innerHTML = "";
       if (!list.length) deptList.append(el("p", {class:"muted", text:"Nobody yet."}));
-      list.forEach(([k, v], i) => { deptList.append(el("div", {class:"dept"}, el("span", {class:"dname", text:k, title:k}),
-        el("div", {class:"track"}, el("div", {class:"fill", style:"width:" + (v / max * 100) + "%;background:var(" + hues[i % hues.length] + ")"})), el("span", {class:"dnum", text:String(v)}))); });
+      list.forEach(([k, v], i) => { const pct = total ? Math.round(v / total * 100) : 0;
+        deptList.append(el("div", {class:"drow"},
+          el("span", {class:"drank", text:String(i + 1)}),
+          el("div", {class:"dmain"}, el("span", {class:"dname2", text:k, title:k}), el("div", {class:"dtrack"}, el("i", {style:"width:" + (v / max * 100) + "%"}))),
+          el("span", {class:"dcount", text:String(v)}))); });
       /* latest */
       feed.innerHTML = "";
       const latest = rows.slice().reverse().slice(0, 12);
@@ -788,7 +1113,7 @@ function staffGate(title, sub, next){
    Tiers:  1 normal · 2 big prize · 3 grand prize                                                     */
 const Sound = (function(){
   let ctx = null, master, musicBus, musicGain, fxGain, noiseBuf, timer = null, nextT = 0, s16 = 0;
-  let song = null, mode = "wait", tier = 1, pendingStart = null;
+  let song = null, mode = "wait", tier = 1, pendingStart = null, duckF = 1;
   const get = (k, d) => { try{ const v = localStorage.getItem("ghg-" + k); return v === null ? d : v; }catch(e){ return d; } };
   const put = (k, v) => { try{ localStorage.setItem("ghg-" + k, String(v)); }catch(e){} };
   let musicOn = get("music", "1") === "1", fxOn = get("fx", "1") === "1";
@@ -883,6 +1208,18 @@ const Sound = (function(){
         const m = this.mel.find(x => x[1] === pos); if (m && bar % 2 === 0) brass([N(m[0] + (bar === 2 ? 2 : 0))], t, .22, .05, M);
         if (bar === 3 && pos === 12) brass(ch[1].map(N), t, .5, .04, M);
       } },
+    /* finalists walking up: fashion-show catwalk groove, 124 BPM, Fm – Db – Ab – Eb */
+    runway: { bpm:124, bars:4, prog:[[41,[65,68,72]],[37,[61,65,68]],[44,[63,68,72]],[39,[63,67,70]]],
+      play(t, i){ const M = musicGain, bar = Math.floor(i / 16) % 4, pos = i % 16, ch = this.prog[bar];
+        if (pos % 4 === 0) kick(t, .95, M);
+        if (pos === 4 || pos === 12){ clap(t, .3, M); nz(t, .03, .2, M, "highpass", 3500, 2); }
+        hat(t, pos % 4 === 2 ? .15 : .04, pos % 4 === 2, M);
+        if (pos % 2 === 1) osc("sawtooth", N(ch[0] - 12 + (pos === 15 ? 12 : 0)), t, .16, .17, M, {cut:420, q:8});
+        if ([3, 6, 11, 14].indexOf(pos) >= 0) saws(ch[1].map(N), t, .12, .013, M, 2600);
+        if (bar % 2 === 1 && [0, 2, 3, 7, 10].indexOf(pos) >= 0) pluck(N(ch[1][[2, 1, 2, 0, 1][[0, 2, 3, 7, 10].indexOf(pos)]] + 12), t, .045, M);
+        if (bar === 3 && pos === 8) nz(t, 60 / this.bpm * 2, .12, M, "bandpass", 400, 1.4, 0, {to:6000, ramp:true});
+        if (bar === 0 && pos === 0 && i > 0) crash(t, .16, M);
+      } },
     /* grand prize winner: same victory party, bigger: taiko, choir, octave brass */
     win_epic: { bpm:132, bars:4,
       play(t, i){ const M = musicGain, bar = Math.floor(i / 16) % 4, pos = i % 16, w = SONGS.win, ch = w.prog[bar];
@@ -963,7 +1300,7 @@ const Sound = (function(){
     const go = () => { song = name; nextT = ctx.currentTime + .08; s16 = 0; clearInterval(timer); timer = setInterval(scheduler, 25); busTo(1, fade || 1.2); };
     if (timer){ busTo(0, .35); clearInterval(timer); timer = null; pendingStart = setTimeout(go, 380); } else go();
   }
-  function songFor(){ return mode === "wait" ? (tier >= 3 ? "wait_epic" : "wait") : mode === "win" ? (tier >= 3 ? "win_epic" : "win") : null; }
+  function songFor(){ return mode === "wait" ? (tier >= 3 ? "wait_epic" : "wait") : mode === "win" ? (tier >= 3 ? "win_epic" : "win") : mode === "runway" ? "runway" : null; }
   function apply(delay){
     if (!ctx) return;
     const want = songFor();
@@ -978,7 +1315,9 @@ const Sound = (function(){
     unlock(){ if (!init()) return; if (musicOn && !timer && !pendingStart) apply(0); },
     toggleMusic(){ musicOn = !musicOn; put("music", musicOn ? 1 : 0); if (musicOn) apply(0); else { stopSong(.5); song = null; } return musicOn; },
     toggleFx(){ fxOn = !fxOn; put("fx", fxOn ? 1 : 0); return fxOn; },
-    setMusicVol(v){ musicVol = v; put("musicvol", v); if (ctx) musicGain.gain.setTargetAtTime(v, ctx.currentTime, .05); },
+    setMusicVol(v){ musicVol = v; put("musicvol", v); if (ctx) musicGain.gain.setTargetAtTime(v * duckF, ctx.currentTime, .05); },
+    /* softer music while someone is speaking on stage: 1 = normal, 0.25 = soft */
+    duck(f){ duckF = f; if (ctx) musicGain.gain.setTargetAtTime(musicVol * f, ctx.currentTime, .25); },
     setFxVol(v){ fxVol = v; put("fxvol", v); if (ctx) fxGain.gain.setTargetAtTime(v, ctx.currentTime, .05); },
     /* m: "wait" | "draw" | "win" | "intro";  tr: 1 normal, 2 big, 3 grand */
     mode(m, tr){
@@ -1126,13 +1465,14 @@ const YTM = (function(){
       if (!ms) { clearInterval(fadeTimer); end(); return; }
       fadeTo(0, ms, end);
     },
+    setVol(v){ try{ if (player && player.setVolume){ clearInterval(fadeTimer); player.setVolume(Math.round(v)); } }catch(e){} },
     get playing(){ return !!(box && box.classList.contains("on")); }
   };
 })();
 
 /* ---------- your own music: MP3 file (sound only) or YouTube link (small player window) ---------- */
 const MUSIC = (function(){
-  let audio = null, fadeT = null;
+  let audio = null, fadeT = null, base = .9, ytBase = 90;
   const isFile = u => /^([\w\-. \/]+|https:\/\/[^\s"'<>]+)\.(mp3|m4a|aac|ogg|wav)(#t=\d+)?$/i.test(String(u || "").trim());
   function fade(a, to, ms, then){
     clearInterval(fadeT); const from = a.volume, steps = Math.max(1, Math.round(ms / 60)); let k = 0;
@@ -1145,12 +1485,14 @@ const MUSIC = (function(){
       u = String(u || "").trim();
       if (isFile(u)){
         if (audio){ try{ audio.pause(); }catch(e){} }
-        audio = new Audio(u); audio.loop = !!loop; audio.volume = 0; audio.preload = "auto";
-        return audio.play().then(() => { fade(audio, (vol || 90) / 100, 1200); return true; })
+        audio = new Audio(u); audio.loop = !!loop; audio.volume = 0; audio.preload = "auto"; base = (vol || 90) / 100;
+        return audio.play().then(() => { fade(audio, base, 1200); return true; })
           .catch(() => { toast("Couldn’t play the music file “" + u + "”. Check the file name on GitHub. Using the built-in music instead."); return false; });
       }
+      ytBase = vol || 85;
       return YTM.play(u, label, vol);
     },
+    duck(f){ if (audio){ clearInterval(fadeT); fade(audio, Math.min(1, base * f), 500); } YTM.setVol(ytBase * f); },
     stop(ms){
       if (audio){ const a = audio; audio = null; if (!ms){ clearInterval(fadeT); a.pause(); } else fade(a, 0, ms, () => a.pause()); }
       YTM.stop(ms);
@@ -1159,12 +1501,13 @@ const MUSIC = (function(){
 })();
 
   /* twinkling stars, shooting stars, fireworks with star-shaped sparks and falling gold glitter */
-function celebrationSky(ov, cv, tr){
+function celebrationSky(ov, cv, tr, petalKind, calm){
   const cx = cv.getContext("2d"), dpr = devicePixelRatio || 1, W = innerWidth, H = innerHeight;
   cv.width = W * dpr; cv.height = H * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0);
   const cols = ["#F2CF73", "#FFF3C4", "#E0228A", "#F59E2B", "#B57BFF", "#6E95EE", "#7EE0B8", "#ffffff"];
   const stars = Array.from({length:tr >= 3 ? 200 : 140}, () => ({x:Math.random() * W, y:Math.random() * H, r:.6 + Math.random() * 1.8, ph:Math.random() * 6.3, sp:.02 + Math.random() * .05}));
-  let rockets = [], sparks = [], glitter = [], shooters = [], last = 0, lastShoot = 0, t0 = performance.now();
+    let rockets = [], sparks = [], glitter = [], shooters = [], petals = [], last = 0, lastShoot = 0, t0 = performance.now();
+    const petalCols = petalKind === "QUEEN" ? ["#FF7AC6", "#FF3D9A", "#FFC1E3", "#E0228A", "#F2CF73"] : ["#7FB2FF", "#4A63E0", "#F2CF73", "#FFF3C4", "#B57BFF"];
   const every = tr >= 3 ? 260 : tr === 2 ? 380 : 520;
   function star(x, y, r, rot){ cx.beginPath(); for (let i = 0; i < 10; i++){ const a = rot + i * Math.PI / 5, rr = i % 2 ? r * .45 : r; cx.lineTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr); } cx.closePath(); cx.fill(); }
   function sparkle(x, y, r){ cx.beginPath(); cx.moveTo(x, y - r); cx.lineTo(x + r * .22, y - r * .22); cx.lineTo(x + r, y); cx.lineTo(x + r * .22, y + r * .22); cx.lineTo(x, y + r); cx.lineTo(x - r * .22, y + r * .22); cx.lineTo(x - r, y); cx.lineTo(x - r * .22, y - r * .22); cx.closePath(); cx.fill(); }
@@ -1185,7 +1528,7 @@ function celebrationSky(ov, cv, tr){
       cx.globalAlpha = Math.max(0, 1 - s.life / 60); cx.strokeStyle = g; cx.lineWidth = 2.5; cx.beginPath(); cx.moveTo(s.x, s.y); cx.lineTo(s.x - s.vx * 9, s.y - s.vy * 9); cx.stroke(); });
     shooters = shooters.filter(s => s.life < 60);
     /* fireworks */
-    if (now - last > every && now - t0 < (tr >= 3 ? 8200 : 6200)){ last = now; launch(); if (tr >= 3 && Math.random() < .5) launch(); }
+      if (!calm && now - last > every && now - t0 < (tr >= 3 ? 8200 : 6200)){ last = now; launch(); if (tr >= 3 && Math.random() < .5) launch(); }
     rockets.forEach(r => { r.y += r.vy; r.vy *= .985; cx.globalAlpha = 1; cx.fillStyle = r.c; cx.beginPath(); cx.arc(r.x, r.y, 2.5, 0, 7); cx.fill();
       cx.globalAlpha = .4; cx.fillRect(r.x - 1, r.y, 2, 18); if (r.y <= r.ty || r.vy > -1.2){ r.done = true; burst(r); } });
     rockets = rockets.filter(r => !r.done);
@@ -1196,11 +1539,37 @@ function celebrationSky(ov, cv, tr){
     /* gold glitter rain */
     if (glitter.length < (tr >= 3 ? 160 : 80)) glitter.push({x:Math.random() * W, y:-10, vy:1 + Math.random() * 2, vx:(Math.random() - .5) * .6, r:2 + Math.random() * 3, rot:Math.random() * 6, c:Math.random() < .7 ? "#F2CF73" : "#FFF3C4"});
     glitter.forEach(g => { g.y += g.vy; g.x += g.vx + Math.sin(g.y / 30) * .3; g.rot += .08; cx.globalAlpha = .9; cx.fillStyle = g.c; cx.save(); cx.translate(g.x, g.y); cx.rotate(g.rot); cx.fillRect(-g.r / 2, -g.r / 4, g.r, g.r / 2); cx.restore(); });
-    glitter = glitter.filter(g => g.y < H + 20);
+      glitter = glitter.filter(g => g.y < H + 20);
+      if (petalKind){
+        if (petals.length < 70 && Math.random() < .5) petals.push({x:Math.random() * W, y:-20, vy:1.2 + Math.random() * 1.6, sw:Math.random() * 6.3, r:6 + Math.random() * 8, rot:Math.random() * 6.3, vr:(Math.random() - .5) * .08, c:petalCols[Math.floor(Math.random() * petalCols.length)]});
+        petals.forEach(p => { p.y += p.vy; p.sw += .03; p.x += Math.sin(p.sw) * 1.2; p.rot += p.vr; const flip = Math.abs(Math.cos(p.sw * 1.7));
+          cx.save(); cx.translate(p.x, p.y); cx.rotate(p.rot); cx.globalAlpha = .9; cx.fillStyle = p.c; cx.beginPath();
+          if (petalKind === "QUEEN") cx.ellipse(0, 0, p.r * .55, p.r * flip + 1, 0, 0, 7); else cx.rect(-p.r * .25, -p.r * flip - 1, p.r * .5, (p.r * flip + 1) * 2);
+          cx.fill(); cx.restore(); });
+        petals = petals.filter(p => p.y < H + 30);
+      }
     cx.globalAlpha = 1;
     requestAnimationFrame(frame);
   })(performance.now());
 }
+
+/* ---------- royal icons: King crown and Queen crown (gold SVG) ---------- */
+let _icoN = 0;
+const ROYAL_SVG = {KING: "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 140 112\"><defs>\n<linearGradient id=\"IDXh\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"0\">\n <stop offset=\"0\" stop-color=\"#6B430E\"/><stop offset=\".12\" stop-color=\"#B9852B\"/><stop offset=\".3\" stop-color=\"#F6D77E\"/><stop offset=\".42\" stop-color=\"#FFF6D2\"/>\n <stop offset=\".55\" stop-color=\"#E9B94F\"/><stop offset=\".75\" stop-color=\"#C08A2E\"/><stop offset=\".9\" stop-color=\"#8D5C17\"/><stop offset=\"1\" stop-color=\"#5E3A0B\"/></linearGradient>\n<linearGradient id=\"IDXv\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n <stop offset=\"0\" stop-color=\"#FFF3C8\"/><stop offset=\".25\" stop-color=\"#F3CB66\"/><stop offset=\".6\" stop-color=\"#C98F2F\"/><stop offset=\"1\" stop-color=\"#7A4E12\"/></linearGradient>\n<linearGradient id=\"IDXin\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#5A3608\"/><stop offset=\"1\" stop-color=\"#A6721F\"/></linearGradient>\n<radialGradient id=\"IDXb\" cx=\".35\" cy=\".3\" r=\".75\"><stop offset=\"0\" stop-color=\"#FFFBE6\"/><stop offset=\".35\" stop-color=\"#F2C860\"/><stop offset=\"1\" stop-color=\"#7A4E12\"/></radialGradient>\n<linearGradient id=\"IDXd\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#FFFFFF\"/><stop offset=\".35\" stop-color=\"#E4F1FF\"/><stop offset=\".55\" stop-color=\"#A9C3DC\"/><stop offset=\".75\" stop-color=\"#F4FAFF\"/><stop offset=\"1\" stop-color=\"#7F98B2\"/></linearGradient>\n<radialGradient id=\"IDXr\" cx=\".35\" cy=\".3\" r=\".8\"><stop offset=\"0\" stop-color=\"#FFC2CC\"/><stop offset=\".35\" stop-color=\"#E0213F\"/><stop offset=\"1\" stop-color=\"#5A0013\"/></radialGradient>\n<radialGradient id=\"IDXs\" cx=\".35\" cy=\".3\" r=\".8\"><stop offset=\"0\" stop-color=\"#CFE0FF\"/><stop offset=\".35\" stop-color=\"#2554D8\"/><stop offset=\"1\" stop-color=\"#0A1A5A\"/></radialGradient>\n<filter id=\"IDXsh\" x=\"-10%\" y=\"-10%\" width=\"120%\" height=\"130%\"><feDropShadow dx=\"0\" dy=\"2\" stdDeviation=\"1.6\" flood-color=\"#2a1500\" flood-opacity=\".45\"/></filter>\n</defs><g filter=\"url(#IDXsh)\"><path d=\"M16 70 Q70 58 124 70 L124 74 Q70 64 16 74 Z\" fill=\"url(#IDXin)\"/><path d=\"M14 76 L14 66 Q70 56 126 66 L126 76 Q70 66 14 76 Z\" fill=\"url(#IDXv)\" stroke=\"#6B430E\" stroke-width=\".7\"/><path d=\"M18 47.519999999999996 C21.6 52.56 22.32 58.32 19.8 63.36 L16.2 63.36 C13.68 58.32 14.4 52.56 18 47.519999999999996 Z M19.8 62.64 C24.48 54.72 30.240000000000002 56.16 28.799999999999997 61.2 C27.36 64.08 24.48 62.64 25.2 60.480000000000004 C23.04 61.92 21.6 64.8 19.8 66.24 Z M16.2 62.64 C11.52 54.72 5.76 56.16 7.200000000000001 61.2 C8.64 64.08 11.52 62.64 10.8 60.480000000000004 C12.96 61.92 14.4 64.8 16.2 66.24 Z M14.4 64.8 L21.6 64.8 L20.88 67.68 L15.120000000000001 67.68 Z M16.128 67.68 L19.872 67.68 L20.592 72 L15.408 72 Z\" fill=\"url(#IDXv)\" stroke=\"#6B430E\" stroke-width=\".7\" stroke-linejoin=\"round\"/><path d=\"M18 47.519999999999996 C21.6 52.56 22.32 58.32 19.8 63.36 L16.2 63.36 C13.68 58.32 14.4 52.56 18 47.519999999999996 Z M19.8 62.64 C24.48 54.72 30.240000000000002 56.16 28.799999999999997 61.2 C27.36 64.08 24.48 62.64 25.2 60.480000000000004 C23.04 61.92 21.6 64.8 19.8 66.24 Z M16.2 62.64 C11.52 54.72 5.76 56.16 7.200000000000001 61.2 C8.64 64.08 11.52 62.64 10.8 60.480000000000004 C12.96 61.92 14.4 64.8 16.2 66.24 Z M14.4 64.8 L21.6 64.8 L20.88 67.68 L15.120000000000001 67.68 Z M16.128 67.68 L19.872 67.68 L20.592 72 L15.408 72 Z\" fill=\"url(#IDXh)\" opacity=\".45\"/><path d=\"M17.136 50.400000000000006 C16.2 54.0 16.128 58.32 16.992 61.2\" stroke=\"#FFF6D2\" stroke-width=\"0.79\" fill=\"none\" stroke-linecap=\"round\" opacity=\".9\"/><path d=\"M122 47.519999999999996 C125.6 52.56 126.32 58.32 123.8 63.36 L120.2 63.36 C117.68 58.32 118.4 52.56 122 47.519999999999996 Z M123.8 62.64 C128.48 54.72 134.24 56.16 132.8 61.2 C131.36 64.08 128.48 62.64 129.2 60.480000000000004 C127.04 61.92 125.6 64.8 123.8 66.24 Z M120.2 62.64 C115.52 54.72 109.76 56.16 111.2 61.2 C112.64 64.08 115.52 62.64 114.8 60.480000000000004 C116.96 61.92 118.4 64.8 120.2 66.24 Z M118.4 64.8 L125.6 64.8 L124.88 67.68 L119.12 67.68 Z M120.128 67.68 L123.872 67.68 L124.592 72 L119.408 72 Z\" fill=\"url(#IDXv)\" stroke=\"#6B430E\" stroke-width=\".7\" stroke-linejoin=\"round\"/><path d=\"M122 47.519999999999996 C125.6 52.56 126.32 58.32 123.8 63.36 L120.2 63.36 C117.68 58.32 118.4 52.56 122 47.519999999999996 Z M123.8 62.64 C128.48 54.72 134.24 56.16 132.8 61.2 C131.36 64.08 128.48 62.64 129.2 60.480000000000004 C127.04 61.92 125.6 64.8 123.8 66.24 Z M120.2 62.64 C115.52 54.72 109.76 56.16 111.2 61.2 C112.64 64.08 115.52 62.64 114.8 60.480000000000004 C116.96 61.92 118.4 64.8 120.2 66.24 Z M118.4 64.8 L125.6 64.8 L124.88 67.68 L119.12 67.68 Z M120.128 67.68 L123.872 67.68 L124.592 72 L119.408 72 Z\" fill=\"url(#IDXh)\" opacity=\".45\"/><path d=\"M121.136 50.400000000000006 C120.2 54.0 120.128 58.32 120.992 61.2\" stroke=\"#FFF6D2\" stroke-width=\"0.79\" fill=\"none\" stroke-linecap=\"round\" opacity=\".9\"/><path d=\"M44 35.4 C48.5 41.7 49.4 48.9 46.25 55.2 L41.75 55.2 C38.6 48.9 39.5 41.7 44 35.4 Z M46.25 54.3 C52.1 44.4 59.3 46.2 57.5 52.5 C55.7 56.1 52.1 54.3 53.0 51.6 C50.3 53.4 48.5 57.0 46.25 58.8 Z M41.75 54.3 C35.9 44.4 28.7 46.2 30.5 52.5 C32.3 56.1 35.9 54.3 35.0 51.6 C37.7 53.4 39.5 57.0 41.75 58.8 Z M39.5 57.0 L48.5 57.0 L47.6 60.6 L40.4 60.6 Z M41.66 60.6 L46.34 60.6 L47.24 66 L40.76 66 Z\" fill=\"url(#IDXv)\" stroke=\"#6B430E\" stroke-width=\".7\" stroke-linejoin=\"round\"/><path d=\"M44 35.4 C48.5 41.7 49.4 48.9 46.25 55.2 L41.75 55.2 C38.6 48.9 39.5 41.7 44 35.4 Z M46.25 54.3 C52.1 44.4 59.3 46.2 57.5 52.5 C55.7 56.1 52.1 54.3 53.0 51.6 C50.3 53.4 48.5 57.0 46.25 58.8 Z M41.75 54.3 C35.9 44.4 28.7 46.2 30.5 52.5 C32.3 56.1 35.9 54.3 35.0 51.6 C37.7 53.4 39.5 57.0 41.75 58.8 Z M39.5 57.0 L48.5 57.0 L47.6 60.6 L40.4 60.6 Z M41.66 60.6 L46.34 60.6 L47.24 66 L40.76 66 Z\" fill=\"url(#IDXh)\" opacity=\".45\"/><path d=\"M42.92 39.0 C41.75 43.5 41.66 48.9 42.74 52.5\" stroke=\"#FFF6D2\" stroke-width=\"0.99\" fill=\"none\" stroke-linecap=\"round\" opacity=\".9\"/><path d=\"M96 35.4 C100.5 41.7 101.4 48.9 98.25 55.2 L93.75 55.2 C90.6 48.9 91.5 41.7 96 35.4 Z M98.25 54.3 C104.1 44.4 111.3 46.2 109.5 52.5 C107.7 56.1 104.1 54.3 105.0 51.6 C102.3 53.4 100.5 57.0 98.25 58.8 Z M93.75 54.3 C87.9 44.4 80.7 46.2 82.5 52.5 C84.3 56.1 87.9 54.3 87.0 51.6 C89.7 53.4 91.5 57.0 93.75 58.8 Z M91.5 57.0 L100.5 57.0 L99.6 60.6 L92.4 60.6 Z M93.66 60.6 L98.34 60.6 L99.24 66 L92.76 66 Z\" fill=\"url(#IDXv)\" stroke=\"#6B430E\" stroke-width=\".7\" stroke-linejoin=\"round\"/><path d=\"M96 35.4 C100.5 41.7 101.4 48.9 98.25 55.2 L93.75 55.2 C90.6 48.9 91.5 41.7 96 35.4 Z M98.25 54.3 C104.1 44.4 111.3 46.2 109.5 52.5 C107.7 56.1 104.1 54.3 105.0 51.6 C102.3 53.4 100.5 57.0 98.25 58.8 Z M93.75 54.3 C87.9 44.4 80.7 46.2 82.5 52.5 C84.3 56.1 87.9 54.3 87.0 51.6 C89.7 53.4 91.5 57.0 93.75 58.8 Z M91.5 57.0 L100.5 57.0 L99.6 60.6 L92.4 60.6 Z M93.66 60.6 L98.34 60.6 L99.24 66 L92.76 66 Z\" fill=\"url(#IDXh)\" opacity=\".45\"/><path d=\"M94.92 39.0 C93.75 43.5 93.66 48.9 94.74 52.5\" stroke=\"#FFF6D2\" stroke-width=\"0.99\" fill=\"none\" stroke-linecap=\"round\" opacity=\".9\"/><path d=\"M70 24.919999999999995 C75.6 32.76 76.72 41.72 72.8 49.56 L67.2 49.56 C63.28 41.72 64.4 32.76 70 24.919999999999995 Z M72.8 48.44 C80.08 36.12 89.04 38.36 86.8 46.2 C84.56 50.68 80.08 48.44 81.2 45.08 C77.84 47.32 75.6 51.8 72.8 54.04 Z M67.2 48.44 C59.92 36.12 50.959999999999994 38.36 53.2 46.2 C55.44 50.68 59.92 48.44 58.8 45.08 C62.16 47.32 64.4 51.8 67.2 54.04 Z M64.4 51.8 L75.6 51.8 L74.48 56.28 L65.52 56.28 Z M67.088 56.28 L72.912 56.28 L74.032 63 L65.968 63 Z\" fill=\"url(#IDXv)\" stroke=\"#6B430E\" stroke-width=\".7\" stroke-linejoin=\"round\"/><path d=\"M70 24.919999999999995 C75.6 32.76 76.72 41.72 72.8 49.56 L67.2 49.56 C63.28 41.72 64.4 32.76 70 24.919999999999995 Z M72.8 48.44 C80.08 36.12 89.04 38.36 86.8 46.2 C84.56 50.68 80.08 48.44 81.2 45.08 C77.84 47.32 75.6 51.8 72.8 54.04 Z M67.2 48.44 C59.92 36.12 50.959999999999994 38.36 53.2 46.2 C55.44 50.68 59.92 48.44 58.8 45.08 C62.16 47.32 64.4 51.8 67.2 54.04 Z M64.4 51.8 L75.6 51.8 L74.48 56.28 L65.52 56.28 Z M67.088 56.28 L72.912 56.28 L74.032 63 L65.968 63 Z\" fill=\"url(#IDXh)\" opacity=\".45\"/><path d=\"M68.656 29.4 C67.2 35.0 67.088 41.72 68.432 46.2\" stroke=\"#FFF6D2\" stroke-width=\"1.23\" fill=\"none\" stroke-linecap=\"round\" opacity=\".9\"/><circle cx=\"31\" cy=\"62\" r=\"2.6\" fill=\"url(#IDXb)\"/><circle cx=\"57\" cy=\"58\" r=\"2.6\" fill=\"url(#IDXb)\"/><circle cx=\"83\" cy=\"58\" r=\"2.6\" fill=\"url(#IDXb)\"/><circle cx=\"109\" cy=\"62\" r=\"2.6\" fill=\"url(#IDXb)\"/><path d=\"M12 74 Q70 88 128 74 L128 98 Q70 112 12 98 Z\" fill=\"url(#IDXh)\" stroke=\"#5E3A0B\" stroke-width=\".8\"/><path d=\"M13 77 Q70 91 127 77\" stroke=\"#FFF6D2\" stroke-width=\"1.3\" fill=\"none\" opacity=\".85\"/><path d=\"M13 95 Q70 109 127 95\" stroke=\"#5E3A0B\" stroke-width=\"1\" fill=\"none\" opacity=\".6\"/><circle cx=\"13.0\" cy=\"79.0\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"16.8\" cy=\"79.9\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"20.6\" cy=\"80.7\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"24.4\" cy=\"81.5\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"28.2\" cy=\"82.2\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"32.0\" cy=\"82.9\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"35.8\" cy=\"83.5\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"39.6\" cy=\"84.0\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"43.4\" cy=\"84.5\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"47.2\" cy=\"84.9\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"51.0\" cy=\"85.2\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"54.8\" cy=\"85.5\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"58.6\" cy=\"85.7\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"62.4\" cy=\"85.9\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"66.2\" cy=\"86.0\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"70.0\" cy=\"86.0\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"73.8\" cy=\"86.0\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"77.6\" cy=\"85.9\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"81.4\" cy=\"85.7\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"85.2\" cy=\"85.5\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"89.0\" cy=\"85.2\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"92.8\" cy=\"84.9\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"96.6\" cy=\"84.5\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"100.4\" cy=\"84.0\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"104.2\" cy=\"83.5\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"108.0\" cy=\"82.9\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"111.8\" cy=\"82.2\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"115.6\" cy=\"81.5\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"119.4\" cy=\"80.7\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"123.2\" cy=\"79.9\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"127.0\" cy=\"79.0\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"13.0\" cy=\"93.0\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"16.8\" cy=\"93.9\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"20.6\" cy=\"94.7\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"24.4\" cy=\"95.5\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"28.2\" cy=\"96.2\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"32.0\" cy=\"96.9\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"35.8\" cy=\"97.5\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"39.6\" cy=\"98.0\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"43.4\" cy=\"98.5\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"47.2\" cy=\"98.9\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"51.0\" cy=\"99.2\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"54.8\" cy=\"99.5\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"58.6\" cy=\"99.7\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"62.4\" cy=\"99.9\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"66.2\" cy=\"100.0\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"70.0\" cy=\"100.0\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"73.8\" cy=\"100.0\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"77.6\" cy=\"99.9\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"81.4\" cy=\"99.7\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"85.2\" cy=\"99.5\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"89.0\" cy=\"99.2\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"92.8\" cy=\"98.9\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"96.6\" cy=\"98.5\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"100.4\" cy=\"98.0\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"104.2\" cy=\"97.5\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"108.0\" cy=\"96.9\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"111.8\" cy=\"96.2\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"115.6\" cy=\"95.5\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"119.4\" cy=\"94.7\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"123.2\" cy=\"93.9\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"127.0\" cy=\"93.0\" r=\".9\" fill=\"#FFF3C4\" opacity=\".9\"/><circle cx=\"21.3\" cy=\"88.1\" r=\"3.4\" fill=\"url(#IDXb)\" stroke=\"#6B430E\" stroke-width=\".4\"/><ellipse cx=\"37.5\" cy=\"90.8\" rx=\"4.4\" ry=\"3.6\" fill=\"url(#IDXr)\" stroke=\"#C99A3A\" stroke-width=\"1.4\"/><circle cx=\"36.1\" cy=\"89.6\" r=\"1\" fill=\"#fff\" opacity=\".85\"/><circle cx=\"53.8\" cy=\"92.5\" r=\"3.4\" fill=\"url(#IDXb)\" stroke=\"#6B430E\" stroke-width=\".4\"/><ellipse cx=\"70.0\" cy=\"93.0\" rx=\"5.2\" ry=\"4.2\" fill=\"url(#IDXs)\" stroke=\"#C99A3A\" stroke-width=\"1.4\"/><circle cx=\"68.6\" cy=\"91.8\" r=\"1\" fill=\"#fff\" opacity=\".85\"/><circle cx=\"86.2\" cy=\"92.5\" r=\"3.4\" fill=\"url(#IDXb)\" stroke=\"#6B430E\" stroke-width=\".4\"/><ellipse cx=\"102.5\" cy=\"90.8\" rx=\"4.4\" ry=\"3.6\" fill=\"url(#IDXr)\" stroke=\"#C99A3A\" stroke-width=\"1.4\"/><circle cx=\"101.1\" cy=\"89.6\" r=\"1\" fill=\"#fff\" opacity=\".85\"/><circle cx=\"118.7\" cy=\"88.1\" r=\"3.4\" fill=\"url(#IDXb)\" stroke=\"#6B430E\" stroke-width=\".4\"/></g></svg>",
+  QUEEN: "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 140 112\"><defs>\n<linearGradient id=\"IDXh\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"0\">\n <stop offset=\"0\" stop-color=\"#6B430E\"/><stop offset=\".12\" stop-color=\"#B9852B\"/><stop offset=\".3\" stop-color=\"#F6D77E\"/><stop offset=\".42\" stop-color=\"#FFF6D2\"/>\n <stop offset=\".55\" stop-color=\"#E9B94F\"/><stop offset=\".75\" stop-color=\"#C08A2E\"/><stop offset=\".9\" stop-color=\"#8D5C17\"/><stop offset=\"1\" stop-color=\"#5E3A0B\"/></linearGradient>\n<linearGradient id=\"IDXv\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n <stop offset=\"0\" stop-color=\"#FFF3C8\"/><stop offset=\".25\" stop-color=\"#F3CB66\"/><stop offset=\".6\" stop-color=\"#C98F2F\"/><stop offset=\"1\" stop-color=\"#7A4E12\"/></linearGradient>\n<linearGradient id=\"IDXin\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#5A3608\"/><stop offset=\"1\" stop-color=\"#A6721F\"/></linearGradient>\n<radialGradient id=\"IDXb\" cx=\".35\" cy=\".3\" r=\".75\"><stop offset=\"0\" stop-color=\"#FFFBE6\"/><stop offset=\".35\" stop-color=\"#F2C860\"/><stop offset=\"1\" stop-color=\"#7A4E12\"/></radialGradient>\n<linearGradient id=\"IDXd\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#FFFFFF\"/><stop offset=\".35\" stop-color=\"#E4F1FF\"/><stop offset=\".55\" stop-color=\"#A9C3DC\"/><stop offset=\".75\" stop-color=\"#F4FAFF\"/><stop offset=\"1\" stop-color=\"#7F98B2\"/></linearGradient>\n<radialGradient id=\"IDXr\" cx=\".35\" cy=\".3\" r=\".8\"><stop offset=\"0\" stop-color=\"#FFC2CC\"/><stop offset=\".35\" stop-color=\"#E0213F\"/><stop offset=\"1\" stop-color=\"#5A0013\"/></radialGradient>\n<radialGradient id=\"IDXs\" cx=\".35\" cy=\".3\" r=\".8\"><stop offset=\"0\" stop-color=\"#CFE0FF\"/><stop offset=\".35\" stop-color=\"#2554D8\"/><stop offset=\"1\" stop-color=\"#0A1A5A\"/></radialGradient>\n<filter id=\"IDXsh\" x=\"-10%\" y=\"-10%\" width=\"120%\" height=\"130%\"><feDropShadow dx=\"0\" dy=\"2\" stdDeviation=\"1.6\" flood-color=\"#2a1500\" flood-opacity=\".45\"/></filter>\n</defs><g filter=\"url(#IDXsh)\"><path d=\"M16 78 Q70 66 124 78 L124 82 Q70 72 16 82 Z\" fill=\"url(#IDXin)\"/><path d=\"M14 84 L13 44 Q27 66 41 38 Q55 64 70 26 Q85 64 99 38 Q113 66 127 44 L126 84 Q70 96 14 84 Z\" fill=\"url(#IDXv)\" stroke=\"#6B430E\" stroke-width=\".8\"/><path d=\"M14 84 L13 44 Q27 66 41 38 Q55 64 70 26 Q85 64 99 38 Q113 66 127 44 L126 84 Q70 96 14 84 Z\" fill=\"url(#IDXh)\" opacity=\".55\"/><circle cx=\"16.5\" cy=\"53.7\" r=\"1.25\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"20.0\" cy=\"56.9\" r=\"1.25\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"23.5\" cy=\"58.5\" r=\"1.25\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"27.0\" cy=\"58.5\" r=\"1.25\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"30.5\" cy=\"57.0\" r=\"1.25\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"34.0\" cy=\"53.9\" r=\"1.25\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"37.5\" cy=\"49.2\" r=\"1.25\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"44.5\" cy=\"48.5\" r=\"1.25\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"48.1\" cy=\"52.0\" r=\"1.25\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"51.6\" cy=\"53.5\" r=\"1.25\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"55.2\" cy=\"53.0\" r=\"1.25\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"58.9\" cy=\"50.5\" r=\"1.25\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"62.6\" cy=\"46.0\" r=\"1.25\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"66.3\" cy=\"39.5\" r=\"1.25\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"73.7\" cy=\"39.5\" r=\"1.25\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"77.4\" cy=\"46.0\" r=\"1.25\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"81.1\" cy=\"50.5\" r=\"1.25\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"84.8\" cy=\"53.0\" r=\"1.25\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"88.4\" cy=\"53.5\" r=\"1.25\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"91.9\" cy=\"52.0\" r=\"1.25\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"95.5\" cy=\"48.5\" r=\"1.25\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"102.5\" cy=\"49.2\" r=\"1.25\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"106.0\" cy=\"53.9\" r=\"1.25\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"109.5\" cy=\"57.0\" r=\"1.25\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"113.0\" cy=\"58.5\" r=\"1.25\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"116.5\" cy=\"58.5\" r=\"1.25\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"120.0\" cy=\"56.9\" r=\"1.25\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"123.5\" cy=\"53.7\" r=\"1.25\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><path d=\"M27 59.5 C31.4 65.35 31.0 71.85 27 72.5 C23.0 71.85 22.6 65.35 27 59.5 Z\" fill=\"url(#IDXd)\" stroke=\"#8C6A2A\" stroke-width=\".7\"/><path d=\"M27 60.5 L27 71.5\" stroke=\"#fff\" stroke-width=\".5\" opacity=\".6\"/><path d=\"M25.4 65.35 C25.24 67.95 26.04 69.9 26.6 70.55\" stroke=\"#fff\" stroke-width=\"1\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M55 57.5 C59.4 63.35 59.0 69.85 55 70.5 C51.0 69.85 50.6 63.35 55 57.5 Z\" fill=\"url(#IDXd)\" stroke=\"#8C6A2A\" stroke-width=\".7\"/><path d=\"M55 58.5 L55 69.5\" stroke=\"#fff\" stroke-width=\".5\" opacity=\".6\"/><path d=\"M53.4 63.35 C53.24 65.95 54.04 67.9 54.6 68.55\" stroke=\"#fff\" stroke-width=\"1\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M85 57.5 C89.4 63.35 89.0 69.85 85 70.5 C81.0 69.85 80.6 63.35 85 57.5 Z\" fill=\"url(#IDXd)\" stroke=\"#8C6A2A\" stroke-width=\".7\"/><path d=\"M85 58.5 L85 69.5\" stroke=\"#fff\" stroke-width=\".5\" opacity=\".6\"/><path d=\"M83.4 63.35 C83.24 65.95 84.04 67.9 84.6 68.55\" stroke=\"#fff\" stroke-width=\"1\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M113 59.5 C117.4 65.35 117.0 71.85 113 72.5 C109.0 71.85 108.6 65.35 113 59.5 Z\" fill=\"url(#IDXd)\" stroke=\"#8C6A2A\" stroke-width=\".7\"/><path d=\"M113 60.5 L113 71.5\" stroke=\"#fff\" stroke-width=\".5\" opacity=\".6\"/><path d=\"M111.4 65.35 C111.24 67.95 112.04 69.9 112.6 70.55\" stroke=\"#fff\" stroke-width=\"1\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M41 23.5 L49.5 34 L41 44.5 L32.5 34 Z\" fill=\"url(#IDXv)\" stroke=\"#6B430E\" stroke-width=\".7\"/><path d=\"M41 26.5 L46.5 34 L41 41.5 L35.5 34 Z\" fill=\"url(#IDXd)\" stroke=\"#8C6A2A\" stroke-width=\".6\"/><path d=\"M41 26.5 L41 41.5 M35.5 34 L46.5 34\" stroke=\"#ffffff\" stroke-width=\".5\" opacity=\".7\"/><path d=\"M39.02 31.0 L41 28.3\" stroke=\"#fff\" stroke-width=\".9\" stroke-linecap=\"round\"/><circle cx=\"41\" cy=\"21.5\" r=\"1.4\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"51.5\" cy=\"34\" r=\"1.4\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"30.5\" cy=\"34\" r=\"1.4\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><path d=\"M99 23.5 L107.5 34 L99 44.5 L90.5 34 Z\" fill=\"url(#IDXv)\" stroke=\"#6B430E\" stroke-width=\".7\"/><path d=\"M99 26.5 L104.5 34 L99 41.5 L93.5 34 Z\" fill=\"url(#IDXd)\" stroke=\"#8C6A2A\" stroke-width=\".6\"/><path d=\"M99 26.5 L99 41.5 M93.5 34 L104.5 34\" stroke=\"#ffffff\" stroke-width=\".5\" opacity=\".7\"/><path d=\"M97.02 31.0 L99 28.3\" stroke=\"#fff\" stroke-width=\".9\" stroke-linecap=\"round\"/><circle cx=\"99\" cy=\"21.5\" r=\"1.4\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"109.5\" cy=\"34\" r=\"1.4\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"88.5\" cy=\"34\" r=\"1.4\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><path d=\"M70 9.0 L80.0 22 L70 35.0 L60.0 22 Z\" fill=\"url(#IDXv)\" stroke=\"#6B430E\" stroke-width=\".7\"/><path d=\"M70 12.0 L77.0 22 L70 32.0 L63.0 22 Z\" fill=\"url(#IDXd)\" stroke=\"#8C6A2A\" stroke-width=\".6\"/><path d=\"M70 12.0 L70 32.0 M63.0 22 L77.0 22\" stroke=\"#ffffff\" stroke-width=\".5\" opacity=\".7\"/><path d=\"M67.48 18.0 L70 14.4\" stroke=\"#fff\" stroke-width=\".9\" stroke-linecap=\"round\"/><circle cx=\"70\" cy=\"7.0\" r=\"1.4\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"82.0\" cy=\"22\" r=\"1.4\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"58.0\" cy=\"22\" r=\"1.4\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><path d=\"M13 31.5 L20.0 40 L13 48.5 L6.0 40 Z\" fill=\"url(#IDXv)\" stroke=\"#6B430E\" stroke-width=\".7\"/><path d=\"M13 34.5 L17.0 40 L13 45.5 L9.0 40 Z\" fill=\"url(#IDXd)\" stroke=\"#8C6A2A\" stroke-width=\".6\"/><path d=\"M13 34.5 L13 45.5 M9.0 40 L17.0 40\" stroke=\"#ffffff\" stroke-width=\".5\" opacity=\".7\"/><path d=\"M11.56 37.8 L13 35.82\" stroke=\"#fff\" stroke-width=\".9\" stroke-linecap=\"round\"/><circle cx=\"13\" cy=\"29.5\" r=\"1.4\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"22.0\" cy=\"40\" r=\"1.4\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"4.0\" cy=\"40\" r=\"1.4\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><path d=\"M127 31.5 L134.0 40 L127 48.5 L120.0 40 Z\" fill=\"url(#IDXv)\" stroke=\"#6B430E\" stroke-width=\".7\"/><path d=\"M127 34.5 L131.0 40 L127 45.5 L123.0 40 Z\" fill=\"url(#IDXd)\" stroke=\"#8C6A2A\" stroke-width=\".6\"/><path d=\"M127 34.5 L127 45.5 M123.0 40 L131.0 40\" stroke=\"#ffffff\" stroke-width=\".5\" opacity=\".7\"/><path d=\"M125.56 37.8 L127 35.82\" stroke=\"#fff\" stroke-width=\".9\" stroke-linecap=\"round\"/><circle cx=\"127\" cy=\"29.5\" r=\"1.4\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"136.0\" cy=\"40\" r=\"1.4\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><circle cx=\"118.0\" cy=\"40\" r=\"1.4\" fill=\"#FFFDF3\" stroke=\"#B9852B\" stroke-width=\".3\"/><rect x=\"40\" y=\"21\" width=\"2\" height=\"5\" fill=\"url(#IDXh)\"/><circle cx=\"41\" cy=\"18\" r=\"3.6\" fill=\"url(#IDXb)\"/><rect x=\"98\" y=\"21\" width=\"2\" height=\"5\" fill=\"url(#IDXh)\"/><circle cx=\"99\" cy=\"18\" r=\"3.6\" fill=\"url(#IDXb)\"/><rect x=\"12\" y=\"30\" width=\"2\" height=\"5\" fill=\"url(#IDXh)\"/><circle cx=\"13\" cy=\"27\" r=\"3.6\" fill=\"url(#IDXb)\"/><rect x=\"126\" y=\"30\" width=\"2\" height=\"5\" fill=\"url(#IDXh)\"/><circle cx=\"127\" cy=\"27\" r=\"3.6\" fill=\"url(#IDXb)\"/><rect x=\"69\" y=\"0\" width=\"2.4\" height=\"9\" rx=\"1\" fill=\"url(#IDXh)\"/><rect x=\"65.6\" y=\"2.6\" width=\"9.2\" height=\"2.4\" rx=\"1\" fill=\"url(#IDXh)\"/><circle cx=\"70.2\" cy=\"3.8\" r=\"1.1\" fill=\"#fff\"/><path d=\"M13 82 Q70 96 127 82 L127 96 Q70 110 13 96 Z\" fill=\"url(#IDXh)\" stroke=\"#5E3A0B\" stroke-width=\".8\"/><path d=\"M14 84.5 Q70 98.5 126 84.5\" stroke=\"#FFF6D2\" stroke-width=\"1.2\" fill=\"none\" opacity=\".8\"/><circle cx=\"13.0\" cy=\"88.5\" r=\"2.4\" fill=\"url(#IDXd)\" stroke=\"#9B6A1E\" stroke-width=\".3\"/><circle cx=\"17.1\" cy=\"89.5\" r=\"1.5\" fill=\"#FFFDF3\" stroke=\"#9B6A1E\" stroke-width=\".3\"/><circle cx=\"21.1\" cy=\"90.4\" r=\"1.5\" fill=\"#FFFDF3\" stroke=\"#9B6A1E\" stroke-width=\".3\"/><circle cx=\"25.2\" cy=\"91.2\" r=\"1.5\" fill=\"#FFFDF3\" stroke=\"#9B6A1E\" stroke-width=\".3\"/><circle cx=\"29.3\" cy=\"91.9\" r=\"2.4\" fill=\"url(#IDXd)\" stroke=\"#9B6A1E\" stroke-width=\".3\"/><circle cx=\"33.4\" cy=\"92.6\" r=\"1.5\" fill=\"#FFFDF3\" stroke=\"#9B6A1E\" stroke-width=\".3\"/><circle cx=\"37.4\" cy=\"93.2\" r=\"1.5\" fill=\"#FFFDF3\" stroke=\"#9B6A1E\" stroke-width=\".3\"/><circle cx=\"41.5\" cy=\"93.8\" r=\"1.5\" fill=\"#FFFDF3\" stroke=\"#9B6A1E\" stroke-width=\".3\"/><circle cx=\"45.6\" cy=\"94.2\" r=\"2.4\" fill=\"url(#IDXd)\" stroke=\"#9B6A1E\" stroke-width=\".3\"/><circle cx=\"49.6\" cy=\"94.6\" r=\"1.5\" fill=\"#FFFDF3\" stroke=\"#9B6A1E\" stroke-width=\".3\"/><circle cx=\"53.7\" cy=\"94.9\" r=\"1.5\" fill=\"#FFFDF3\" stroke=\"#9B6A1E\" stroke-width=\".3\"/><circle cx=\"57.8\" cy=\"95.2\" r=\"1.5\" fill=\"#FFFDF3\" stroke=\"#9B6A1E\" stroke-width=\".3\"/><circle cx=\"61.9\" cy=\"95.4\" r=\"2.4\" fill=\"url(#IDXd)\" stroke=\"#9B6A1E\" stroke-width=\".3\"/><circle cx=\"65.9\" cy=\"95.5\" r=\"1.5\" fill=\"#FFFDF3\" stroke=\"#9B6A1E\" stroke-width=\".3\"/><circle cx=\"70.0\" cy=\"95.5\" r=\"1.5\" fill=\"#FFFDF3\" stroke=\"#9B6A1E\" stroke-width=\".3\"/><circle cx=\"74.1\" cy=\"95.5\" r=\"1.5\" fill=\"#FFFDF3\" stroke=\"#9B6A1E\" stroke-width=\".3\"/><circle cx=\"78.1\" cy=\"95.4\" r=\"2.4\" fill=\"url(#IDXd)\" stroke=\"#9B6A1E\" stroke-width=\".3\"/><circle cx=\"82.2\" cy=\"95.2\" r=\"1.5\" fill=\"#FFFDF3\" stroke=\"#9B6A1E\" stroke-width=\".3\"/><circle cx=\"86.3\" cy=\"94.9\" r=\"1.5\" fill=\"#FFFDF3\" stroke=\"#9B6A1E\" stroke-width=\".3\"/><circle cx=\"90.4\" cy=\"94.6\" r=\"1.5\" fill=\"#FFFDF3\" stroke=\"#9B6A1E\" stroke-width=\".3\"/><circle cx=\"94.4\" cy=\"94.2\" r=\"2.4\" fill=\"url(#IDXd)\" stroke=\"#9B6A1E\" stroke-width=\".3\"/><circle cx=\"98.5\" cy=\"93.8\" r=\"1.5\" fill=\"#FFFDF3\" stroke=\"#9B6A1E\" stroke-width=\".3\"/><circle cx=\"102.6\" cy=\"93.2\" r=\"1.5\" fill=\"#FFFDF3\" stroke=\"#9B6A1E\" stroke-width=\".3\"/><circle cx=\"106.6\" cy=\"92.6\" r=\"1.5\" fill=\"#FFFDF3\" stroke=\"#9B6A1E\" stroke-width=\".3\"/><circle cx=\"110.7\" cy=\"91.9\" r=\"2.4\" fill=\"url(#IDXd)\" stroke=\"#9B6A1E\" stroke-width=\".3\"/><circle cx=\"114.8\" cy=\"91.2\" r=\"1.5\" fill=\"#FFFDF3\" stroke=\"#9B6A1E\" stroke-width=\".3\"/><circle cx=\"118.9\" cy=\"90.4\" r=\"1.5\" fill=\"#FFFDF3\" stroke=\"#9B6A1E\" stroke-width=\".3\"/><circle cx=\"122.9\" cy=\"89.5\" r=\"1.5\" fill=\"#FFFDF3\" stroke=\"#9B6A1E\" stroke-width=\".3\"/><circle cx=\"127.0\" cy=\"88.5\" r=\"2.4\" fill=\"url(#IDXd)\" stroke=\"#9B6A1E\" stroke-width=\".3\"/></g></svg>"};
+function royalIcon(cat, cls){
+  const span = document.createElement("span");
+  span.className = "royal " + (cls || "");
+  span.setAttribute("aria-hidden", "true");
+  span.innerHTML = ROYAL_SVG[cat === "QUEEN" ? "QUEEN" : "KING"].replace(/IDX/g, "rg" + (++_icoN));
+  return span;
+}
+/* King on the left, Queen on the right (same order as "King & Queen"), each with a small label */
+function royalPair(cls){
+  const one = cat => el("span", {class:"royal-one"}, royalIcon(cat), el("small", {class:"royal-tag " + cat.toLowerCase(), text: cat === "KING" ? "King" : "Queen"}));
+  return el("span", {class:"royal-pair " + (cls || "")}, one("KING"), one("QUEEN"));
+}
+function bdTag(text){ return el("p", {class:"bd-tag"}, el("span", {class:"bd-line", "aria-hidden":"true"}), el("span", {class:"bd-text", text:text || "Best Dressed of the Evening"}), el("span", {class:"bd-line r", "aria-hidden":"true"})); }
 
 /* ===================== Best Dressed voting: King & Queen of the Night ===================== */
 const CAT_ORDER = ["QUEEN", "KING"];
@@ -1213,30 +1582,37 @@ function viewVote(){
   const vkey = "ghg-voted";
   const votedLocal = () => { try{ return JSON.parse(localStorage.getItem(vkey)) || {}; }catch(e){ return {}; } };
   let cfg = null, voter = null;
+  const devId = () => { let d = ""; try{ d = localStorage.getItem("ghg-device") || ""; if (!d){ d = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(36).slice(2)); localStorage.setItem("ghg-device", d); } }catch(e){} return d; };
   call("apiVoteConfig").then(c => { cfg = c; step1(); }).catch(e => { clear(); app.append(el("div", {class:"card center"}, el("p", {class:"msg", text:errText(e)}))); });
-  function closedCard(t, sub){ clear(); app.append(el("div", {class:"card center vote-card"}, el("div", {class:"vote-crown", text:"👑"}), el("h2", {text:t}), el("p", {class:"muted", text:sub}))); }
+  function closedCard(t, sub){ clear(); app.append(el("div", {class:"card center vote-card"}, royalPair("vote-crowns"), el("h2", {text:t}), bdTag(), el("p", {class:"muted", text:sub}))); }
   function step1(){
     if (!cfg.open) return closedCard("Best Dressed voting", "Voting isn’t open right now. Please check back when the emcee announces it.");
     if (!cfg.nominees.length) return closedCard("Best Dressed voting", "The nominees haven’t been announced yet. Please check back soon.");
     const done = votedLocal(); if (done.QUEEN && done.KING) return thanks(done.name);
+    if (cfg.check === "OPEN"){
+      clear(); app.append(el("div", {class:"card center"}, el("p", {class:"muted", text:"Loading…"})));
+      call("apiVoteCheck", {deviceId:devId()}).then(r => { voter = {staffId:"", phone4:"", name:"", voted:r.voted}; if (r.voted.QUEEN && r.voted.KING) return thanks("", true); step2(); })
+        .catch(err => { clear(); app.append(el("div", {class:"card center"}, el("p", {class:"msg", text:errText(err)}))); });
+      return;
+    }
     clear();
     let mem = null; try{ mem = JSON.parse(localStorage.getItem("ghg-simple-reg-v1")); }catch(e){}
-    const sid = el("input", {type:"text", id:"vsid", autocapitalize:"characters", autocomplete:"off", placeholder:"e.g. UOC1234", value:(mem && mem.staffId) || ""});
+    const sid = el("input", {type:"text", id:"vsid", autocapitalize:"characters", autocomplete:"off", placeholder:"e.g. UOC1234 or MG1234", value:(mem && mem.staffId) || ""});
     const ph = el("input", {type:"tel", id:"vph", inputmode:"numeric", maxlength:"4", autocomplete:"off", placeholder:"e.g. 6789"});
     const msg = el("p", {class:"msg", role:"status"});
     const btn = el("button", {class:"btn primary big", type:"submit", text:"Continue"});
     const f = el("form", {novalidate:true},
       el("label", {class:"f", for:"vsid", text:"Your staff ID"}), sid,
-      el("label", {class:"f", for:"vph", text:"Last 4 digits of the phone number you registered with"}), ph, msg, btn);
+      cfg.check === "FULL" ? el("label", {class:"f", for:"vph", text:"Last 4 digits of the phone number you registered with"}) : null, cfg.check === "FULL" ? ph : null, msg, btn);
     f.addEventListener("submit", async e => { e.preventDefault(); msg.textContent = "";
       if (!sid.value.trim()){ msg.textContent = "Please enter your staff ID."; sid.focus(); return; }
       btn.disabled = true; btn.textContent = "Checking…";
-      try{ const r = await call("apiVoteCheck", {staffId:sid.value, phone4:ph.value}); voter = {staffId:sid.value, phone4:ph.value, name:r.name, voted:r.voted};
+      try{ const r = await call("apiVoteCheck", {staffId:sid.value, phone4:ph.value, deviceId:devId()}); voter = {staffId:sid.value, phone4:ph.value, name:r.name, voted:r.voted};
         if (r.voted.QUEEN && r.voted.KING) return thanks(r.name, true); step2(); }
       catch(err){ msg.textContent = errText(err); btn.disabled = false; btn.textContent = "Continue"; } });
-    app.append(el("div", {class:"card vote-card"}, el("div", {class:"vote-crown", text:"👑"}),
-      el("h2", {class:"center", text:"Vote for King & Queen"}),
-      el("p", {class:"muted small center", text:"Best dressed of the night. One vote per person for each award."}), f));
+    app.append(el("div", {class:"card vote-card"}, royalPair("vote-crowns"),
+      el("h2", {class:"center", text:"Vote for King & Queen"}), bdTag(),
+      el("p", {class:"muted small center", text:"One vote per person for each award."}), f));
   }
   function step2(){
     clear();
@@ -1245,7 +1621,7 @@ function viewVote(){
     const msg = el("p", {class:"msg", role:"status"});
     const sections = CAT_ORDER.map(cat => {
       const list = cfg.nominees.filter(n => n.cat === cat);
-      const head = el("h3", {class:"vote-cat", text:(cat === "QUEEN" ? "👸 " : "🤴 ") + cfg.labels[cat]});
+      const head = el("h3", {class:"vote-cat"}, royalIcon(cat, "sm"), el("span", {text:cfg.labels[cat]}));
       if (voter.voted[cat]) return el("section", {class:"vote-sec"}, head, el("p", {class:"vote-done", text:"✓ You’ve already voted for this award."}));
       if (!list.length) return el("section", {class:"vote-sec"}, head, el("p", {class:"muted small", text:"No nominees yet."}));
       const grid = el("div", {class:"nom-grid", role:"radiogroup", "aria-label":cfg.labels[cat]});
@@ -1263,19 +1639,20 @@ function viewVote(){
       if (!Object.keys(pick).length) return;
       submit.disabled = true; submit.textContent = "Sending your vote…"; msg.textContent = "";
       try{
-        let dev = ""; try{ dev = localStorage.getItem("ghg-device") || ""; if (!dev){ dev = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(36).slice(2)); localStorage.setItem("ghg-device", dev); } }catch(e){}
+        const dev = devId();
         const r = await call("apiVote", {staffId:voter.staffId, phone4:voter.phone4, queen:pick.QUEEN || "", king:pick.KING || "", deviceId:dev});
         const done = votedLocal(); done.name = r.name; CAT_ORDER.forEach(c => { if (r.result[c] || voter.voted[c]) done[c] = true; }); try{ localStorage.setItem(vkey, JSON.stringify(done)); }catch(e){}
         thanks(r.name);
       }catch(err){ msg.textContent = errText(err); submit.disabled = false; submit.textContent = "Submit my vote"; }
     });
     app.append(el("div", {class:"card vote-card"},
-      el("p", {class:"muted small center", style:"margin:0", text:"Voting as"}), el("p", {class:"center", style:"margin:.1rem 0 .6rem;font-weight:800;font-size:1.1rem", text:voter.name}),
+      voter.name ? el("p", {class:"muted small center", style:"margin:0", text:"Voting as"}) : el("h2", {class:"center", text:"Vote for King & Queen"}),
+      voter.name ? el("p", {class:"center", style:"margin:.1rem 0 .6rem;font-weight:800;font-size:1.1rem", text:voter.name}) : bdTag(),
       sections, msg, submit));
   }
   function thanks(name, already){
     clear();
-    app.append(el("div", {class:"card center vote-card"}, el("div", {class:"vote-crown big", text:"👑"}),
+    app.append(el("div", {class:"card center vote-card"}, royalPair("vote-crowns big"),
       el("h2", {text: already ? "You’ve already voted" : "Thank you for voting!"}),
       name ? el("p", {style:"font-weight:700;margin:.2rem 0", text:name}) : null,
       el("p", {class:"muted", text:"The King and Queen of the Night will be announced on stage. Stay tuned!"})));
@@ -1285,24 +1662,52 @@ function viewVote(){
 /* ---------- voting poster ---------- */
 function viewVotePoster(){
   clear(); document.body.classList.add("postermode");
-  const url = B.appUrl + "?page=vote";
+  const url = pageUrl("vote");
   const q = qrcode(0, "M"); q.addData(url); q.make();
   const n = q.getModuleCount(), cell = 14, size = (n + 8) * cell, c = document.createElement("canvas");
   c.width = c.height = size; const g = c.getContext("2d"); g.fillStyle = "#fff"; g.fillRect(0, 0, size, size); g.fillStyle = "#000";
   for (let r = 0; r < n; r++) for (let k = 0; k < n; k++) if (q.isDark(r, k)) g.fillRect((k + 4) * cell, (r + 4) * cell, cell, cell);
   app.append(el("div", {class:"poster"},
     el("p", {class:"kick", style:"letter-spacing:.3em;font-weight:700;color:var(--gold);text-transform:uppercase;margin:0", text:"Annual Dinner 2027 · Global Harmony Gala"}),
-    el("div", {style:"font-size:3rem;line-height:1;margin:.6rem 0 .2rem", text:"👑"}),
+    royalPair("poster-crowns"),
     el("p", {class:"cta", style:"margin:0", text:"Vote for"}),
     el("h2", {style:"font-size:1.6rem;margin:.1rem 0 0", text:"King & Queen of the Night"}),
-    el("p", {class:"muted", style:"margin:.2rem 0 0", text:"Best dressed of the evening"}),
+    bdTag(),
     el("img", {class:"qr", src:c.toDataURL("image/png"), alt:"QR code to vote for King and Queen"}),
     el("ol", null,
       el("li", null, el("b", {text:"1"}), "Scan QR Code"),
       el("li", null, el("b", {text:"2"}), "Enter your staff ID"),
       el("li", null, el("b", {text:"3"}), "Pick your King & Queen")),
-    el("p", {class:"fine", text:"One vote per person for each award."})),
-    el("div", {class:"row noprint", style:"justify-content:center"}, el("button", {class:"btn primary", type:"button", text:"Print poster", onclick:() => window.print()})));
+    el("p", {class:"fine", text:"One vote per person for each award."})));
+}
+
+/* ---------- blinking sparkles for the King & Queen screens ---------- */
+function twinkles(cat, n){
+  const box = el("div", {class:"tw-layer", "aria-hidden":"true"});
+  const cols = cat === "QUEEN" ? ["#FFF3C4", "#FF7AC6", "#ffffff", "#F2CF73", "#C38BFF"] : ["#FFF3C4", "#7FB2FF", "#ffffff", "#F2CF73", "#B57BFF"];
+  for (let i = 0; i < n; i++){
+    const sz = 6 + Math.random() * 22, big = sz > 20;
+    box.append(el("span", {class:"tw" + (big ? " big" : ""), style:"left:" + (Math.random() * 100).toFixed(1) + "%;top:" + (Math.random() * 100).toFixed(1) + "%;width:" + sz.toFixed(0) + "px;height:" + sz.toFixed(0) + "px;color:" + cols[i % cols.length] +
+      ";animation-delay:" + (Math.random() * 2.5).toFixed(2) + "s;animation-duration:" + (1 + Math.random() * 1.6).toFixed(2) + "s"}));
+  }
+  return box;
+}
+
+/* ---------- music controls for stage moments: L = softer / louder, M = stop / play ---------- */
+function musicCtl(start){
+  let soft = false, stopped = false;
+  const bSoft = el("button", {class:"mc-btn", type:"button"}), bStop = el("button", {class:"mc-btn", type:"button"});
+  const paint = () => { bSoft.textContent = soft ? "🔊 Louder (L)" : "🔉 Softer (L)"; bStop.textContent = stopped ? "▶ Play music (M)" : "⏹ Stop music (M)"; bSoft.disabled = stopped; };
+  const setSoft = v => { soft = v; Sound.duck(v ? .22 : 1); MUSIC.duck(v ? .22 : 1); paint(); };
+  const toggleSoft = () => { if (!stopped) setSoft(!soft); };
+  const toggleStop = () => { stopped = !stopped; if (stopped){ setSoft(false); Sound.mode("intro", 1); MUSIC.stop(900); } else { setSoft(false); start(); } paint(); };
+  bSoft.addEventListener("click", toggleSoft); bStop.addEventListener("click", toggleStop); paint();
+  return {
+    el: el("div", {class:"mc", role:"group", "aria-label":"Music controls"}, bSoft, bStop),
+    key(e){ if (e.key === "l" || e.key === "L"){ toggleSoft(); return true; } if (e.key === "m" || e.key === "M"){ toggleStop(); return true; } return false; },
+    reset(){ Sound.duck(1); MUSIC.duck(1); },
+    get stopped(){ return stopped; }
+  };
 }
 
 /* ---------- awards screen (staff PIN, for the big screen) ---------- */
@@ -1316,14 +1721,15 @@ function viewAwards(pin){
     const name = el("p", {class:"aw-name"}), meta = el("p", {class:"aw-meta"}), label = el("p", {class:"aw-label"}), count = el("p", {class:"aw-count"});
     const orb = el("div", {class:"aw-orb " + cat.toLowerCase()}, el("span", {text:"?"}));
     const btn = el("button", {class:"ld-btn gold", type:"button", onclick:() => reveal(cat)});
-    cards[cat] = {name, meta, label, count, orb, btn, box: el("div", {class:"aw-card " + cat.toLowerCase()}, el("div", {class:"aw-crown", text: cat === "QUEEN" ? "👸" : "🤴"}), label, orb, name, meta, count, btn)};
+    const callBtn = el("button", {class:"ld-btn", type:"button", text:"🎤 Call the nominees", onclick:() => showNominees(cat)});
+    cards[cat] = {name, meta, label, count, orb, btn, callBtn, box: el("div", {class:"aw-card " + cat.toLowerCase()}, royalIcon(cat, "aw-crown"), label, orb, name, meta, count, el("div", {class:"aw-btns"}, callBtn, btn))};
   });
   const qrImg = el("img", {class:"aw-qr", alt:"QR code to vote"});
   const status = el("p", {class:"aw-status"});
-  const strip = el("div", {class:"aw-strip"}, qrImg, el("div", null, status, el("p", {class:"aw-url", text:(B.appUrl + "?page=vote").replace(/^https?:\/\//, "")})));
+  const strip = el("div", {class:"aw-strip"}, qrImg, el("div", null, status, el("p", {class:"aw-url", text:(pageUrl("vote")).replace(/^https?:\/\//, "")})));
   const head = el("header", {class:"ld-head"},
     el("img", {class:"ld-logos", src:LOGOS, alt:"Cyberjaya Education Group Berhad, University of Cyberjaya, Cyberjaya College Central, SMR HR Group"}),
-    el("h1", {class:"ld-title"}, el("span", null, "Best Dressed ", el("span", {class:"dot", text:"•"}), " King & Queen")),
+    el("h1", {class:"ld-title"}, el("span", null, "King & Queen of the Night")), bdTag(),
     el("p", {class:"ld-when"}, "Annual Dinner 2027", el("span", {class:"sep", text:"•"}), "Global Harmony Gala"));
   /* dock */
   const dlg = el("dialog", {class:"ld-dlg"});
@@ -1333,7 +1739,7 @@ function viewAwards(pin){
       el("button", {class:"ld-tool gold", type:"button", text:"⛶ Full screen", onclick:fullscreen}),
       el("button", {class:"ld-tool", type:"button", text:"⚙ Awards settings", onclick:() => { dock.classList.remove("open"); openSettings("nominees"); }}),
       el("button", {class:"ld-tool", type:"button", text:"📊 Live results", onclick:() => { dock.classList.remove("open"); openSettings("results"); }}),
-      el("p", {class:"ld-keys", text:"Keys: Q reveal Queen · K reveal King · F full screen"})), dockBtn);
+      el("p", {class:"ld-keys", text:"Keys: 1 / 2 call Queen / King finalists · Q / K reveal · F full screen"})), dockBtn);
   dockBtn.addEventListener("click", e => { e.stopPropagation(); Sound.unlock(); dock.classList.toggle("open"); });
   document.addEventListener("click", e => { if (!dock.contains(e.target)) dock.classList.remove("open"); });
   app.append(el("div", {class:"ld aw"}, head, el("section", {class:"aw-body"}, cards.QUEEN.box, cards.KING.box), strip), dock, dlg);
@@ -1345,6 +1751,14 @@ function viewAwards(pin){
     const top = list.length ? list[0].votes : 0;
     return {list, top, winners: top > 0 ? list.filter(n => n.votes === top) : []};
   }
+  /* top N by votes (ties at the cut-off are included), in alphabetical order so the ranking stays secret */
+  function finalists(cat){
+    const L = leaders(cat), k = A.finalists || 0, voted = L.list.filter(n => n.votes > 0);
+    if (!voted.length) return [];
+    const cut = k > 0 && voted.length > k ? voted[k - 1].votes : 0;
+    return voted.filter(n => n.votes >= cut).sort((a, b) => a.name.localeCompare(b.name));
+  }
+  const callText = () => "🎤 Call the " + (A && A.finalists ? "top " + A.finalists : "nominees");
   function render(){
     if (!A) return;
     CAT_ORDER.forEach(cat => {
@@ -1352,18 +1766,64 @@ function viewAwards(pin){
       c.label.textContent = A.labels[cat];
       c.count.textContent = A.perCat[cat] + " vote" + (A.perCat[cat] === 1 ? "" : "s") + " · " + L.list.length + " nominee" + (L.list.length === 1 ? "" : "s");
       const r = revealed[cat];
-      if (r){ c.box.classList.add("done"); c.orb.innerHTML = ""; c.orb.append(el("span", {text:initials(r.names[0])})); c.name.textContent = r.names.join(" & "); c.meta.textContent = r.tie ? "It’s a tie! · " + r.votes + " votes each" : [r.dept, r.votes + " votes"].filter(Boolean).join(" · "); c.btn.textContent = "↺ Reveal again"; }
+      if (r){ c.box.classList.add("done"); c.orb.innerHTML = ""; c.orb.append(el("span", {text:initials(r.names[0])})); c.name.textContent = r.names.join(" & "); c.meta.textContent = r.tie ? "It’s a tie! · " + r.votes + " votes each" : [r.staffId, r.dept, r.votes + " votes"].filter(Boolean).join(" · "); c.btn.textContent = "↺ Reveal again"; }
       else { c.box.classList.remove("done"); c.orb.innerHTML = "<span>?</span>"; c.name.textContent = ""; c.meta.textContent = ""; c.btn.textContent = "👑 Reveal the " + (cat === "QUEEN" ? "Queen" : "King"); }
       c.btn.disabled = !L.winners.length;
+      c.callBtn.disabled = !L.winners.length; c.callBtn.textContent = callText();
     });
     status.innerHTML = "";
     status.append(A.open ? el("span", {class:"aw-live"}, el("i"), "Voting is OPEN · scan to vote") : el("span", {class:"aw-closed", text:"Voting is closed"}),
       el("span", {class:"aw-tot", text:" · " + A.voters + " guest" + (A.voters === 1 ? "" : "s") + " voted"}));
     strip.classList.toggle("closed", !A.open);
-    if (!qrImg.src){ const q = qrcode(0, "M"); q.addData(B.appUrl + "?page=vote"); q.make(); qrImg.src = q.createDataURL(6, 2); }
+    if (!qrImg.src){ const q = qrcode(0, "M"); q.addData(pageUrl("vote")); q.make(); qrImg.src = q.createDataURL(6, 2); }
     if (dlg.open) renderSettings();
   }
   async function refresh(){ try{ A = await call("apiAwardsState", pin); render(); }catch(e){ if (/PIN/i.test(errText(e))){ sessionStorage.removeItem("ghg-pin"); location.reload(); } else toast(errText(e)); } }
+
+  /* ----- call the nominees to the stage (no votes shown), then reveal from there ----- */
+  let showing = false;
+  async function showNominees(cat){
+    if (showing || revealing || !A) return; Sound.unlock();
+    await refresh();
+    if (!leaders(cat).winners.length){ toast("No votes yet for this award."); return; }
+    if (A.open && confirm("Voting is still open. Close voting now and call the finalists?")){ try{ A = await call("apiSetVoting", pin, false); render(); }catch(e){ toast(errText(e)); } }
+    const list = finalists(cat);
+    showing = true;
+    const label = A.labels[cat], timers = [];
+    const startMusic = () => { if (A.finalMusic){ Sound.mode("intro", 1); MUSIC.play(A.finalMusic, "Finalists music", 90, true).then(ok => { if (!ok && showing) Sound.mode("runway", 1); }); } else Sound.mode("runway", 1); };
+    const mc = musicCtl(startMusic);
+    const close = (toReveal) => { if (!ov.isConnected) return; timers.forEach(clearTimeout); document.removeEventListener("keydown", key, true); ov.classList.add("out"); setTimeout(() => ov.remove(), 600); showing = false;
+      mc.reset(); MUSIC.stop(toReveal ? 500 : 1200); if (!toReveal) Sound.mode("wait", 3); };
+    const go = () => { close(true); setTimeout(() => reveal(cat), 650); };
+    const key = e => { if (mc.key(e)){ e.preventDefault(); e.stopPropagation(); return; }
+      if (e.key === "Escape"){ e.preventDefault(); e.stopPropagation(); close(false); } else if (e.key === "Enter"){ e.preventDefault(); e.stopPropagation(); go(); } };
+    const grid = el("div", {class:"awn-grid" + (list.length > 6 ? " many" : "")});
+    const revealBtn = el("button", {class:"ld-btn gold awn-go", type:"button", text:"👑 Reveal the " + label, onclick:go});
+    const ov = el("div", {class:"awc awn " + cat.toLowerCase(), role:"dialog", "aria-label":"Nominees for " + label},
+      el("canvas", {class:"cele-sky", "aria-hidden":"true"}),
+      el("div", {class:"awc-spot l", "aria-hidden":"true"}), el("div", {class:"awc-spot r", "aria-hidden":"true"}),
+      twinkles(cat, 34),
+      el("div", {class:"awc-stage"},
+        royalIcon(cat, "awn-crown"),
+        el("p", {class:"awn-kick", text: A.finalists && list.length === A.finalists ? "Top " + A.finalists + " finalists for" : "The finalists for"}),
+        el("p", {class:"awc-title"}, label.toUpperCase().split("").map((c, i) => el("span", {style:"animation-delay:" + (0.2 + i * 0.035) + "s", text: c === " " ? "\u00a0" : c}))),
+        grid, revealBtn),
+      mc.el,
+      el("button", {class:"intro-skip", type:"button", text:"Close", onclick:() => close(false)}));
+    document.addEventListener("keydown", key, true);
+    document.body.append(ov);
+    celebrationSky(ov, ov.querySelector(".cele-sky"), 1);
+    /* music while the finalists walk up: your MP3 / YouTube, or the built-in catwalk groove */
+    startMusic();
+    list.forEach((n, i) => timers.push(setTimeout(() => {
+      grid.append(el("div", {class:"awn-card"},
+        el("span", {class:"awn-av " + cat.toLowerCase(), text:initials(n.name)}),
+        el("p", {class:"awn-name", text:n.name}),
+        el("p", {class:"awn-meta", text:[n.staffId, n.dept].filter(Boolean).join(" · ")})));
+      Sound.lock(true, 2);
+    }, 1400 + i * 900)));
+    timers.push(setTimeout(() => revealBtn.classList.add("show"), 1400 + list.length * 900 + 300));
+  }
 
   /* ----- the reveal ----- */
   let revealing = false;
@@ -1374,46 +1834,58 @@ function viewAwards(pin){
     if (!L.winners.length){ toast("No votes yet for this award."); return; }
     if (A.open && confirm("Voting is still open. Close voting now and reveal the winner?")){ try{ A = await call("apiSetVoting", pin, false); render(); }catch(e){ toast(errText(e)); } }
     revealing = true;
-    const label = A.labels[cat], names = L.list.map(n => n.name);
-    const ov = el("div", {class:"intro aw-reveal", role:"dialog", "aria-label":"Award reveal"});
-    const big = el("div", {class:"intro-word small", text:"And the " + label + " is…"});
+    const fin = finalists(cat), label = A.labels[cat], names = (fin.length ? fin : L.list).map(n => n.name);
     const roll = el("div", {class:"aw-roll", "aria-live":"off"});
-    ov.append(el("div", {class:"intro-beams", "aria-hidden":"true"}), el("div", {class:"intro-glow", "aria-hidden":"true"}), el("div", {class:"intro-stage"}, el("div", {class:"aw-crown big", text:"👑"}), big, roll));
-    document.body.append(ov); void big.offsetWidth; big.classList.add("in");
+    const words = ("The " + label + " is…").split(" ");
+    const ov = el("div", {class:"awc awr " + cat.toLowerCase(), role:"dialog", "aria-label":"The " + label + " is…"},
+      el("canvas", {class:"cele-sky", "aria-hidden":"true"}),
+      el("div", {class:"awc-spot l", "aria-hidden":"true"}), el("div", {class:"awc-spot r", "aria-hidden":"true"}),
+      twinkles(cat, 46),
+      el("div", {class:"awc-stage"},
+        el("div", {class:"awc-crownwrap"}, el("div", {class:"awc-burst", "aria-hidden":"true"}), royalIcon(cat, "awr-crown")),
+        el("p", {class:"awr-title", "aria-hidden":"true"}, words.map((w, i) => el("span", {class:"awr-w", style:"animation-delay:" + (0.25 + i * 0.12) + "s", text:w}))),
+        el("div", {class:"awr-rollwrap"}, roll)));
+    document.body.append(ov);
+    celebrationSky(ov, ov.querySelector(".cele-sky"), 1, null, true);
     const secs = 7; Sound.roll(secs, 3);
     const start = performance.now();
     (function spin(){
       const t = (performance.now() - start) / (secs * 1000);
       if (t >= 1){ ov.remove(); winnerScreen(cat, L); return; }
       roll.textContent = names[Math.floor(Math.random() * names.length)];
+      roll.classList.remove("tick"); void roll.offsetWidth; roll.classList.add("tick");
       setTimeout(spin, 60 + 340 * Math.pow(t, 2.4));
     })();
   }
   function winnerScreen(cat, L){
     const w = L.winners, tie = w.length > 1, label = A.labels[cat];
-    revealed[cat] = {names:w.map(x => x.name), dept: tie ? "" : w[0].dept, votes:L.top, tie}; saveRev(); render();
+    revealed[cat] = {names:w.map(x => x.name), staffId: tie ? "" : (w[0].staffId || ""), dept: tie ? "" : w[0].dept, votes:L.top, tie}; saveRev(); render();
     const title = label.toUpperCase();
-    const close = () => { if (!ov.isConnected) return; ov.classList.add("out"); MUSIC.stop(1500); Sound.mode("wait", 3); document.removeEventListener("keydown", key, true); setTimeout(() => ov.remove(), 700); revealing = false; };
-    const key = e => { if (["Escape", "Enter", " "].indexOf(e.key) >= 0){ e.preventDefault(); e.stopPropagation(); close(); } };
-    const ov = el("div", {class:"cele grand aw-win", role:"dialog", "aria-label":title},
-      el("canvas", {class:"cele-sky", "aria-hidden":"true"}), el("div", {class:"cele-ring", "aria-hidden":"true"}),
-      el("div", {class:"cele-stage"},
-        el("div", {class:"cele-crown", "aria-hidden":"true", text:"👑"}),
-        el("p", {class:"cele-title", "aria-label":title}, title.split("").map((c, i) => el("span", {style:"animation-delay:" + (0.3 + i * 0.045) + "s", text: c === " " ? "\u00a0" : c}))),
-        tie ? el("p", {class:"aw-tie", text:"It’s a tie!"}) : null,
-        el("div", {class:"cele-num aw-winname"}, el("span", {text:w.map(x => x.name).join(" & ")})),
-        el("p", {class:"cele-meta", text: tie ? L.top + " votes each" : [w[0].dept, L.top + " votes"].filter(Boolean).join(" · ")}),
-        el("p", {class:"cele-prize", text:"Please come up to the stage"})),
+    const startMusic = () => { if (A.music) MUSIC.play(A.music, "Award music", 90, true).then(ok => { if (!ok) Sound.mode("win", 3); }); else Sound.mode("win", 3); };
+    const mc = musicCtl(startMusic);
+    const close = () => { if (!ov.isConnected) return; ov.classList.add("out"); mc.reset(); MUSIC.stop(1500); Sound.mode("wait", 3); document.removeEventListener("keydown", key, true); setTimeout(() => ov.remove(), 700); revealing = false; };
+    const key = e => { if (mc.key(e)){ e.preventDefault(); e.stopPropagation(); return; } if (["Escape", "Enter", " "].indexOf(e.key) >= 0){ e.preventDefault(); e.stopPropagation(); close(); } };
+    const chip = (cls, icon, text) => text ? el("span", {class:"awc-chip " + cls}, el("i", {"aria-hidden":"true", text:icon}), el("span", {text:text})) : null;
+    const people = w.map((x, i) => el("div", {class:"awc-person", style:"animation-delay:" + (1.1 + i * .25) + "s"},
+      el("h2", {class:"awc-name"}, el("span", {text:x.name})),
+      el("div", {class:"awc-chips"}, chip("id", "🪪", x.staffId), chip("dept", "🏛", x.dept))));
+    const ov = el("div", {class:"awc " + cat.toLowerCase(), role:"dialog", "aria-label":title + ": " + w.map(x => x.name).join(" and ")},
+      el("canvas", {class:"cele-sky", "aria-hidden":"true"}),
+      el("div", {class:"awc-spot l", "aria-hidden":"true"}), el("div", {class:"awc-spot r", "aria-hidden":"true"}),
+      twinkles(cat, 60), el("div", {class:"awc-flash", "aria-hidden":"true"}),
+      el("div", {class:"awc-stage"},
+        el("div", {class:"awc-crownwrap"}, el("div", {class:"awc-burst", "aria-hidden":"true"}), el("div", {class:"awc-halo", "aria-hidden":"true"}), royalIcon(cat, "awc-crown")),
+        el("p", {class:"awc-title", "aria-hidden":"true"}, title.split("").map((c, i) => el("span", {style:"animation-delay:" + (0.35 + i * 0.045) + "s", text: c === " " ? "\u00a0" : c}))),
+        tie ? el("p", {class:"awc-tie", text:"✨ It’s a tie! ✨"}) : null,
+        el("div", {class:"awc-people" + (tie ? " tie" : "")}, people),
+        el("p", {class:"awc-cta", text:"⭐ " + L.top + " vote" + (L.top === 1 ? "" : "s") + (tie ? " each" : "")})),
+      mc.el,
       el("button", {class:"intro-skip", type:"button", text:"Done ›", onclick:close}));
     document.addEventListener("keydown", key, true);
     document.body.append(ov);
-    celebrationSky(ov, ov.querySelector(".cele-sky"), 3);
+    celebrationSky(ov, ov.querySelector(".cele-sky"), 3, cat);
     Sound.win(3); confetti(); setTimeout(confetti, 1000);
-    setTimeout(() => {
-      if (!ov.isConnected) return;
-      if (A.music) MUSIC.play(A.music, "Award music", 90, true).then(ok => { if (!ok) Sound.mode("win", 3); });
-      else Sound.mode("win", 3);
-    }, 4500);
+    setTimeout(() => { if (ov.isConnected && !mc.stopped) startMusic(); }, 4500);
   }
 
   /* ----- settings dialog ----- */
@@ -1449,7 +1921,7 @@ function viewAwards(pin){
           tb.append(el("tr", null, el("td", null, nm), el("td", null, dp), el("td", {class:"muted small nowrap", text:n.votes ? n.votes + " votes" : ""}),
             el("td", null, el("button", {class:"btn mini", type:"button", text:"✕", "aria-label":"Remove nominee", onclick:() => { list.splice(i, 1); paint(); }}))));
         });
-        wrap.append(el("h3", {text:(cat === "QUEEN" ? "👸 " : "🤴 ") + A.labels[cat]}),
+        wrap.append(el("h3", {class:"vote-cat"}, royalIcon(cat, "sm"), el("span", {text:A.labels[cat]})),
           el("div", {class:"tablewrap"}, el("table", {class:"tbl"}, tb)),
           el("div", {class:"row"}, el("button", {class:"btn", type:"button", text:"+ Add nominee", onclick:() => { list.push({id:"", cat, name:"", staffId:"", dept:"", votes:0}); paint(); }})));
       });
@@ -1465,7 +1937,7 @@ function viewAwards(pin){
     const box = el("div");
     CAT_ORDER.forEach(cat => {
       const L = leaders(cat), max = Math.max(1, L.top);
-      box.append(el("h3", {text:(cat === "QUEEN" ? "👸 " : "🤴 ") + A.labels[cat] + " · " + A.perCat[cat] + " votes"}));
+      box.append(el("h3", {class:"vote-cat"}, royalIcon(cat, "sm"), el("span", {text:A.labels[cat] + " · " + A.perCat[cat] + " votes"})));
       if (!L.list.length) box.append(el("p", {class:"muted small", text:"No nominees yet."}));
       L.list.forEach((n, i) => box.append(el("div", {class:"dept"}, el("span", {class:"dname", text:(i === 0 && n.votes ? "👑 " : "") + n.name}),
         el("div", {class:"track"}, el("div", {class:"fill", style:"width:" + (n.votes / max * 100) + "%;background:var(" + (cat === "QUEEN" ? "--rose" : "--lapis") + ")"})), el("span", {class:"dnum", text:String(n.votes)}))));
@@ -1474,25 +1946,38 @@ function viewAwards(pin){
       el("div", {class:"row"}, el("button", {class:"btn", type:"button", text:"↻ Refresh", onclick:refresh})));
   }
   function votingPane(){
-    const link = B.appUrl + "?page=vote";
+    const link = pageUrl("vote");
     return el("div", null,
       el("h3", {text: A.open ? "Voting is OPEN" : "Voting is CLOSED"}),
       el("p", {class:"muted small", text:"Open voting when the nominees are announced, and close it just before the reveal. Revealing a winner also offers to close voting."}),
       el("div", {class:"row"}, el("button", {class:"btn primary", type:"button", text: A.open ? "Close voting" : "Open voting", onclick: async () => { try{ A = await call("apiSetVoting", pin, !A.open); render(); toast(A.open ? "Voting is open." : "Voting is closed."); }catch(e){ toast(errText(e)); } }})),
+      el("h3", {text:"Finalists called to the stage"}),
+      el("p", {class:"muted small", text:"“Call the top 3” shows only the nominees with the most votes (in alphabetical order, no vote counts), so the emcee can call them up before the reveal. Ties at the cut-off are all included."}),
+      el("div", {class:"ld-seg", role:"radiogroup", "aria-label":"Finalists"}, [[3, "Top 3"], [4, "Top 4"], [5, "Top 5"], [0, "All nominees"]].map(([v, t]) =>
+        el("label", null, el("input", {type:"radio", name:"fin", value:String(v), checked: (A.finalists || 0) === v, onchange: async () => { try{ A = await call("apiSaveAwardSettings", pin, {finalists:v}); render(); toast("Saved."); }catch(e){ toast(errText(e)); } }}), el("span", {text:t})))),
+      el("h3", {text:"Who can vote"}),
+      el("div", {class:"ld-seg", style:"flex-direction:column;align-items:stretch"},
+        [["FULL", "Registered staff: staff ID + last 4 phone digits (most secure)"], ["STAFFID", "Registered staff: staff ID only"], ["OPEN", "Open voting: anyone with the QR, one vote per phone"]]
+          .map(([v, t]) => el("label", null, el("input", {type:"radio", name:"vcheck", value:v, checked: A.check === v, onchange: async () => { try{ A = await call("apiSaveAwardSettings", pin, {check:v}); render(); toast("Saved."); }catch(e){ toast(errText(e)); } }}), el("span", {text:t})))),
       el("h3", {text:"Voting link and poster"}),
       el("p", {class:"small", style:"word-break:break-all", text:link}),
       el("div", {class:"row"},
         el("button", {class:"btn", type:"button", text:"Copy link", onclick:() => { try{ navigator.clipboard.writeText(link).then(() => toast("Link copied.")); }catch(e){ toast(link); } }}),
-        el("a", {class:"btn", href:B.appUrl + "?page=vote-poster", target:"_blank", rel:"noopener", text:"Open voting poster"})));
+        el("a", {class:"btn", href:pageUrl("vote-poster"), target:"_blank", rel:"noopener", text:"Open voting poster"})));
   }
   function musicPane(){
     const q = el("input", {type:"text", value:A.labels.QUEEN, "aria-label":"Queen award name"});
     const k = el("input", {type:"text", value:A.labels.KING, "aria-label":"King award name"});
     const m = el("input", {type:"text", value:A.music || "", placeholder:"awards.mp3  or  https://www.youtube.com/watch?v=…", "aria-label":"Award music"});
+    const fm = el("input", {type:"text", value:A.finalMusic || "", placeholder:"runway.mp3  or  https://www.youtube.com/watch?v=…", "aria-label":"Finalists music"});
+    const testBtn = inp => el("button", {class:"btn", type:"button", text:"▶ Test 10 s", onclick:() => { if (!MUSIC.valid(inp.value)){ toast("Type an MP3 file name or paste a YouTube link first."); return; } MUSIC.play(inp.value, "Music test").then(ok => { if (ok) setTimeout(() => MUSIC.stop(1200), 10000); }); }});
     const save = el("button", {class:"btn primary", type:"button", text:"Save"});
-    save.addEventListener("click", async () => { save.disabled = true; try{ A = await call("apiSaveAwardSettings", pin, {queen:q.value, king:k.value, music:m.value}); render(); toast("Saved."); renderSettings(); }catch(e){ toast(errText(e)); save.disabled = false; } });
+    save.addEventListener("click", async () => { save.disabled = true; try{ A = await call("apiSaveAwardSettings", pin, {queen:q.value, king:k.value, music:m.value, finalMusic:fm.value}); render(); toast("Saved."); renderSettings(); }catch(e){ toast(errText(e)); save.disabled = false; } });
     return el("div", null,
       el("h3", {text:"Award titles"}), el("p", {class:"small", style:"margin:.2rem 0", text:"Female award"}), q, el("p", {class:"small", style:"margin:.6rem 0 .2rem", text:"Male award"}), k,
+      el("h3", {text:"Music while the top finalists walk up to the stage"}),
+      el("p", {class:"muted small", text:"MP3 file next to index.html (sound only, e.g. runway.mp3) or a YouTube link. Empty = built-in catwalk music."}),
+      el("div", {class:"row", style:"margin-top:0"}, fm, testBtn(fm)),
       el("h3", {text:"Music while the winner walks up"}),
       el("p", {class:"muted small", text:"MP3 file next to index.html on GitHub (sound only, e.g. awards.mp3, add #t=30 to start 30 seconds in), or a YouTube link (shows a small player window). Empty = built-in epic victory music."}),
       el("div", {class:"row", style:"margin-top:0"}, m, el("button", {class:"btn", type:"button", text:"▶ Test 10 s", onclick:() => { if (!MUSIC.valid(m.value)){ toast("Type an MP3 file name or paste a YouTube link first."); return; } MUSIC.play(m.value, "Award music").then(ok => { if (ok) setTimeout(() => MUSIC.stop(1200), 10000); }); }})),
@@ -1511,8 +1996,9 @@ function viewAwards(pin){
   }
 
   document.addEventListener("keydown", e => {
-    const tag = (e.target.tagName || "").toLowerCase(); if (["input","select","textarea","button"].includes(tag) || dlg.open || revealing) return;
-    if (e.key === "q" || e.key === "Q") reveal("QUEEN"); else if (e.key === "k" || e.key === "K") reveal("KING"); else if (e.key === "f" || e.key === "F") fullscreen();
+    const tag = (e.target.tagName || "").toLowerCase(); if (["input","select","textarea","button"].includes(tag) || dlg.open || revealing || showing) return;
+    if (e.key === "1") showNominees("QUEEN"); else if (e.key === "2") showNominees("KING");
+    else if (e.key === "q" || e.key === "Q") reveal("QUEEN"); else if (e.key === "k" || e.key === "K") reveal("KING"); else if (e.key === "f" || e.key === "F") fullscreen();
   });
   document.addEventListener("pointerdown", () => { Sound.unlock(); Sound.mode("wait", 3); }, {once:true});
   refresh(); setInterval(() => { if (!revealing && !dlg.open) refresh(); }, 10000);
@@ -1547,7 +2033,7 @@ function viewDraw(pin){
       introBtn, fsBtn, musicBtn, el("label", {class:"ld-vol"}, el("span", {text:"Music"}), mVol),
       fxBtn, el("label", {class:"ld-vol"}, el("span", {text:"Effects"}), fVol),
       setBtn,
-      el("p", {class:"ld-keys", text:"Keys: I intro · Space draw · F full screen · M music · S settings"})),
+      el("p", {class:"ld-keys", text:"Keys: I intro · Space draw · L softer · M stop music · F full screen · S settings"})),
     dockBtn);
   function setDock(open){ dock.classList.toggle("open", open); dockBtn.setAttribute("aria-expanded", open); dockBtn.setAttribute("aria-label", open ? "Hide controls" : "Show controls"); }
   dockBtn.addEventListener("click", e => { e.stopPropagation(); Sound.unlock(); setDock(!dock.classList.contains("open")); });
@@ -1682,7 +2168,16 @@ function viewDraw(pin){
       el("p", {class:"muted small", text:"Phones that registered during testing will still show their old number. Ask testers to clear the site data in their browser, or test in incognito tabs."}));
   }
 
-  app.append(el("div", {class:"ld"}, head, body), dock, dlg);
+  /* emcee music controls: L = softer / louder, M = stop / play (only for this moment) */
+  let mcSoft = false, mcStop = false, lastPhase = "";
+  const mcSoftBtn = el("button", {class:"mc-btn", type:"button", onclick:() => toggleSoft()});
+  const mcStopBtn = el("button", {class:"mc-btn", type:"button", onclick:() => toggleQuiet()});
+  function applyQuiet(){ const f = mcStop ? 0 : mcSoft ? .22 : 1; Sound.duck(f); MUSIC.duck(f);
+    mcSoftBtn.textContent = mcSoft ? "🔊 Louder (L)" : "🔉 Softer (L)"; mcStopBtn.textContent = mcStop ? "▶ Play music (M)" : "⏹ Stop music (M)"; mcSoftBtn.disabled = mcStop; }
+  function toggleSoft(){ Sound.unlock(); if (mcStop) return; mcSoft = !mcSoft; applyQuiet(); toast(mcSoft ? "Music softer" : "Music back to normal"); }
+  function toggleQuiet(){ Sound.unlock(); mcStop = !mcStop; if (mcStop) mcSoft = false; applyQuiet(); toast(mcStop ? "Music stopped" : "Music playing"); }
+  app.append(el("div", {class:"ld"}, head, body), dock, dlg, el("div", {class:"mc fixed", role:"group", "aria-label":"Music controls"}, mcSoftBtn, mcStopBtn));
+  applyQuiet();
   paintTools();
   document.addEventListener("fullscreenchange", paintTools);
 
@@ -1847,6 +2342,9 @@ function viewDraw(pin){
   function render(){
     if (!S) return;
     const p = pending(), cur = currentPrize();
+    /* a new moment (drawing, a new winner, back to waiting) brings the music back to normal */
+    const phase = busy ? "draw" : (p ? "win-" + p.id : "wait");
+    if (phase !== lastPhase){ lastPhase = phase; if (mcSoft || mcStop){ mcSoft = false; mcStop = false; applyQuiet(); } }
     const ytWin = S.settings && S.settings.winnerMusic;
     if (busy){ Sound.mode("draw", cur ? tierOf(cur.name) : 1); }
     else if (p){
@@ -1946,7 +2444,8 @@ function viewDraw(pin){
     if (e.key === "Escape") setDock(false);
     if (e.code === "Space"){ e.preventDefault(); draw(); }
     else if (e.key === "f" || e.key === "F") fullscreen();
-    else if (e.key === "m" || e.key === "M"){ Sound.toggleMusic(); paintTools(); }
+    else if (e.key === "m" || e.key === "M") toggleQuiet();
+    else if (e.key === "l" || e.key === "L") toggleSoft();
     else if (e.key === "s" || e.key === "S") openSettings();
     else if (e.key === "i" || e.key === "I") playIntro();
   });
@@ -1985,9 +2484,7 @@ function viewPoster(){
       el("li", null, el("b", {text:"1"}), "Scan QR Code"),
       el("li", null, el("b", {text:"2"}), "Fill in your details"),
       el("li", null, el("b", {text:"3"}), "Get your lucky draw number")),
-    el("p", {class:"fine", text:"No sign-in needed. One registration per person."})),
-    el("div", {class:"row noprint", style:"justify-content:center"}, el("button", {class:"btn primary", type:"button", text:"Print poster", onclick:() => window.print()})),
-    el("p", {class:"muted small center noprint", text:"If printing doesn’t open, long-press or right-click the QR code to save the image."}));
+    el("p", {class:"fine", text:"No sign-in needed. One registration per person."})));
 }
 
 if (B.view === "dashboard") viewDashboard();
