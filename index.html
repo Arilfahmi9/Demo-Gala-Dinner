@@ -798,6 +798,20 @@ body.dashmode .bgart{position:fixed}
 .mtoggle:hover,.mtoggle:focus-visible{opacity:.95;background:rgba(14,8,34,.65)}
 .mtoggle.fixed{position:fixed;z-index:44}
 body:not(.drawmode) .mtoggle.fixed{display:none}
+/* stage keys S · L · F */
+.skeys{position:absolute;left:.6vw;bottom:1vh;z-index:60;display:flex;flex-direction:column;gap:.25rem;opacity:.16;transition:opacity .25s}
+.skeys:hover,.skeys:focus-within{opacity:1}
+.skeys.fixed{position:fixed;z-index:44}
+body:not(.drawmode) .skeys.fixed{display:none}
+.skey{width:1.55rem;height:1.55rem;border-radius:7px;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:.7rem;letter-spacing:0;cursor:pointer;
+  background:rgba(14,8,34,.35);border:1px solid rgba(255,255,255,.22);color:#fff}
+.skey:hover{background:rgba(14,8,34,.75);border-color:var(--gold);color:var(--gold)}
+.skey.on{background:rgba(242,207,115,.25);border-color:var(--gold);color:var(--gold)}
+.skey:disabled{opacity:.35}
+.mtoggle{display:none!important}
+/* celebration buttons: bottom-right, subtle */
+.cele-actions{position:absolute;right:1.5vw;bottom:2vh;z-index:5;display:flex;gap:.5rem}
+.cele-actions .intro-skip{position:static}
 /* posters: fit on one screen */
 .poster .qr.sm{width:min(50%,13rem)}
 .poster{padding-top:1.2rem;padding-bottom:1.2rem}
@@ -1546,7 +1560,7 @@ const Sound = (function(){
       if (m === mode && tr === tier) return;
       const fromDraw = mode === "draw"; mode = m; tier = tr;
       if (!ctx) return;
-      apply(m === "win" && fromDraw ? (tr >= 3 ? 5200 : tr === 2 ? 4200 : 3400) : 0);   /* let the winner fanfare play first */
+      apply(m === "win" && fromDraw ? (tr >= 3 ? 1800 : 1400) : 0);   /* music right after the number and CONGRATULATIONS */
     },
     hold(on){ this.mode(on ? "draw" : "wait", tier); },
     tick(tr){ if (!fxOn || !init()) return; const t = ctx.currentTime;
@@ -1694,6 +1708,7 @@ const YTM = (function(){
 /* ---------- your own music: MP3 file (sound only) or YouTube link (small player window) ---------- */
 const MUSIC = (function(){
   let audio = null, fadeT = null, base = .9, ytBase = 90;
+  const playing = new Set();   /* every MP3 still sounding, including one that is fading out */
   const isFile = u => /^([\w\-. \/]+|https:\/\/[^\s"'<>]+)\.(mp3|m4a|aac|ogg|wav)(#t=\d+)?$/i.test(String(u || "").trim());
   function fade(a, to, ms, then){
     clearInterval(fadeT); const from = a.volume, steps = Math.max(1, Math.round(ms / 60)); let k = 0;
@@ -1706,8 +1721,11 @@ const MUSIC = (function(){
       u = String(u || "").trim();
       if (isFile(u)){
         if (audio){ try{ audio.pause(); }catch(e){} }
-        audio = new Audio(u); audio.loop = !!loop; audio.volume = 0; audio.preload = "auto"; base = (vol || 90) / 100;
-        return audio.play().then(() => { fade(audio, base, 1200); return true; })
+        const pm = window.__PREVIEW_MP3 && window.__PREVIEW_MP3[u.split("#")[0]];
+        audio = new Audio(pm ? pm + (u.indexOf("#") >= 0 ? u.slice(u.indexOf("#")) : "") : u); audio.loop = !!loop; audio.volume = 0; audio.preload = "auto"; base = (vol || 90) / 100;
+        playing.add(audio);
+        let pr; try{ pr = audio.play(); }catch(e){ pr = Promise.reject(e); }
+        return (pr && pr.then ? pr : Promise.resolve()).then(() => { fade(audio, base, 1200); return true; })
           .catch(() => { toast("Couldn’t play the music file “" + u + "”. Check the file name on GitHub. Using the built-in music instead."); return false; });
       }
       ytBase = vol || 85;
@@ -1715,7 +1733,9 @@ const MUSIC = (function(){
     },
     duck(f){ if (audio){ clearInterval(fadeT); fade(audio, Math.min(1, base * f), 500); } YTM.setVol(ytBase * f); },
     stop(ms){
-      if (audio){ const a = audio; audio = null; if (!ms){ clearInterval(fadeT); a.pause(); } else fade(a, 0, ms, () => a.pause()); }
+      /* a quick stop (Draw winner) silences everything at once, including music that was already fading out */
+      if (!ms || ms <= 300){ clearInterval(fadeT); playing.forEach(a => { try{ a.pause(); }catch(e){} }); playing.clear(); audio = null; YTM.stop(0); return; }
+      if (audio){ const a = audio; audio = null; fade(a, 0, ms, () => { a.pause(); playing.delete(a); }); }
       YTM.stop(ms);
     }
   };
@@ -1894,18 +1914,33 @@ function twinkles(cat, n){
   return box;
 }
 
-/* ---------- music controls for stage moments: L = softer / louder, M = stop / play ---------- */
+/* ---------- stage keys: three see-through letter buttons, bottom-left. S stop/play music · L slow (softer) · F full screen ---------- */
+function goFull(){ const d = document, r = d.documentElement; if (d.fullscreenElement){ d.exitFullscreen && d.exitFullscreen(); return; } if (r.requestFullscreen) r.requestFullscreen().catch(() => {}); }
+function stageKeys(o){
+  const mk = (letter, title, fn) => el("button", {class:"skey", type:"button", title:title, "aria-label":title, text:letter, onclick:e => { e.stopPropagation(); fn(); }});
+  const bS = mk("S", "Stop / play music (S)", o.stop), bL = mk("L", "Slow: softer music (L)", o.slow), bF = mk("F", "Full screen (F)", goFull);
+  const box = el("div", {class:"skeys" + (o.fixed ? " fixed" : ""), role:"group", "aria-label":"Stage controls"}, bS, bL, bF);
+  return { el: box, paint(stopped, soft){ bS.classList.toggle("on", !!stopped); bL.classList.toggle("on", !!soft); bL.disabled = !!stopped; } };
+}
+/* your own MP3s: if a setting is empty, use winner.mp3 / intro.mp3 / runway.mp3 / awards.mp3 when that file is on the website */
+const _mp3Found = {};
+function mp3Default(name){
+  if (_mp3Found[name]) return _mp3Found[name];
+  if (window.__PREVIEW_MP3) return (_mp3Found[name] = Promise.resolve(window.__PREVIEW_MP3[name] ? name : ""));
+  if (!/^https?:/.test(location.protocol) || /script\.google/.test(location.host)) return (_mp3Found[name] = Promise.resolve(""));
+  return (_mp3Found[name] = fetch(name, {method:"HEAD", cache:"no-store"}).then(r => r.ok && /audio|mpeg|octet/.test(r.headers.get("content-type") || "audio") ? name : "").catch(() => ""));
+}
+
+/* ---------- music controls for stage moments: S = stop / play, L = slow (softer), F = full screen ---------- */
 function musicCtl(start){
   let soft = false, stopped = false;
-  const btn = el("button", {class:"mtoggle", type:"button"});
-  const paint = () => { btn.textContent = stopped ? "🔇" : "🔊"; btn.title = stopped ? "Play music (M)" : "Stop music (M)"; btn.setAttribute("aria-label", btn.title); };
-  const setSoft = v => { soft = v; Sound.duck(v ? .22 : 1); MUSIC.duck(v ? .22 : 1); };
+  const setSoft = v => { soft = v; Sound.duck(v ? .22 : 1); MUSIC.duck(v ? .22 : 1); keys.paint(stopped, soft); };
   const toggleSoft = () => { if (!stopped) setSoft(!soft); };
-  const toggleStop = () => { stopped = !stopped; if (stopped){ setSoft(false); Sound.mode("intro", 1); MUSIC.stop(900); } else { setSoft(false); start(); } paint(); };
-  btn.addEventListener("click", e => { e.stopPropagation(); toggleStop(); }); paint();
+  const toggleStop = () => { stopped = !stopped; if (stopped){ setSoft(false); Sound.mode("intro", 1); MUSIC.stop(900); } else { setSoft(false); start(); } keys.paint(stopped, soft); };
+  const keys = stageKeys({stop:toggleStop, slow:toggleSoft});
   return {
-    el: btn,
-    key(e){ if (e.key === "m" || e.key === "M"){ toggleStop(); return true; } if (e.key === "l" || e.key === "L"){ toggleSoft(); return true; } return false; },
+    el: keys.el,
+    key(e){ const k = (e.key || "").toLowerCase(); if (k === "s" || k === "m"){ toggleStop(); return true; } if (k === "l"){ toggleSoft(); return true; } if (k === "f"){ goFull(); return true; } return false; },
     reset(){ Sound.duck(1); MUSIC.duck(1); },
     get stopped(){ return stopped; }
   };
@@ -1915,6 +1950,8 @@ function musicCtl(start){
 function viewAwards(pin){
   document.body.classList.add("drawmode"); clear();
   let A = null, guests = [];
+  const autoAw = {runway:"", awards:""};
+  mp3Default("runway.mp3").then(v => autoAw.runway = v); mp3Default("awards.mp3").then(v => autoAw.awards = v);
   const revealed = (() => { try{ return JSON.parse(sessionStorage.getItem("ghg-revealed")) || {}; }catch(e){ return {}; } })();
   const saveRev = () => { try{ sessionStorage.setItem("ghg-revealed", JSON.stringify(revealed)); }catch(e){} };
   const cards = {};
@@ -1940,13 +1977,16 @@ function viewAwards(pin){
       el("button", {class:"ld-tool gold", type:"button", text:"⛶ Full screen", onclick:fullscreen}),
       el("button", {class:"ld-tool", type:"button", text:"⚙ Awards settings", onclick:() => { dock.classList.remove("open"); openSettings("nominees"); }}),
       el("button", {class:"ld-tool", type:"button", text:"📊 Live results", onclick:() => { dock.classList.remove("open"); openSettings("results"); }}),
-      el("p", {class:"ld-keys", text:"Keys: 1 / 2 call Queen / King finalists · Q / K reveal · F full screen"})), dockBtn);
+      el("p", {class:"ld-keys", text:"Keys: 1 / 2 call King / Queen finalists · K / Q reveal · S stop / play music · L slow · F full screen"})), dockBtn);
   dockBtn.addEventListener("click", e => { e.stopPropagation(); Sound.unlock(); dock.classList.toggle("open"); });
   document.addEventListener("click", e => { if (!dock.contains(e.target)) dock.classList.remove("open"); });
-  app.append(el("div", {class:"ld aw"}, head, el("section", {class:"aw-body"}, cards.KING.box, cards.QUEEN.box), strip), dock, dlg);
+  let awStop = false, awSoft = false;
+  const awKeys = stageKeys({fixed:true, stop:() => { Sound.unlock(); awStop = !awStop; if (awStop) awSoft = false; Sound.duck(awStop ? 0 : 1); awKeys.paint(awStop, awSoft); },
+    slow:() => { if (awStop) return; awSoft = !awSoft; Sound.duck(awSoft ? .22 : 1); awKeys.paint(awStop, awSoft); }});
+  app.append(el("div", {class:"ld aw"}, head, el("section", {class:"aw-body"}, cards.KING.box, cards.QUEEN.box), strip), dock, dlg, awKeys.el);
 
   function fullscreen(){ Sound.unlock(); const d = document, r = d.documentElement; if (d.fullscreenElement){ d.exitFullscreen && d.exitFullscreen(); return; }
-    if (r.requestFullscreen) r.requestFullscreen().catch(() => toast("Press F11 for full screen.")); else toast("Press F11 for full screen."); }
+    if (r.requestFullscreen) r.requestFullscreen().catch(() => {}); }
   function leaders(cat){
     const list = A.nominees.filter(n => n.cat === cat).sort((a, b) => b.votes - a.votes);
     const top = list.length ? list[0].votes : 0;
@@ -1991,7 +2031,8 @@ function viewAwards(pin){
     const list = finalists(cat);
     showing = true;
     const label = A.labels[cat], timers = [];
-    const startMusic = () => { if (A.finalMusic){ Sound.mode("intro", 1); MUSIC.play(A.finalMusic, "Finalists music", 90, true).then(ok => { if (!ok && showing) Sound.mode("runway", 1); }); } else Sound.mode("runway", 1); };
+    const fm = A.finalMusic || autoAw.runway;
+    const startMusic = () => { if (fm){ Sound.mode("intro", 1); MUSIC.play(fm, "Finalists music", 90, true).then(ok => { if (!ok && showing) Sound.mode("runway", 1); }); } else Sound.mode("runway", 1); };
     const mc = musicCtl(startMusic);
     const close = (toReveal) => { if (!ov.isConnected) return; timers.forEach(clearTimeout); document.removeEventListener("keydown", key, true); ov.classList.add("out"); setTimeout(() => ov.remove(), 600); showing = false;
       mc.reset(); MUSIC.stop(toReveal ? 500 : 1200); if (!toReveal) Sound.mode("wait", 3); };
@@ -2062,7 +2103,8 @@ function viewAwards(pin){
     const w = L.winners, tie = w.length > 1, label = A.labels[cat];
     revealed[cat] = {names:w.map(x => x.name), staffId: tie ? "" : (w[0].staffId || ""), dept: tie ? "" : w[0].dept, votes:L.top, tie}; saveRev(); render();
     const title = label.toUpperCase();
-    const startMusic = () => { if (A.music) MUSIC.play(A.music, "Award music", 90, true).then(ok => { if (!ok) Sound.mode("win", 3); }); else Sound.mode("win", 3); };
+    const am = A.music || autoAw.awards;
+    const startMusic = () => { if (am) MUSIC.play(am, "Award music", 90, true).then(ok => { if (!ok) Sound.mode("win", 3); }); else Sound.mode("win", 3); };
     const mc = musicCtl(startMusic);
     const close = () => { if (!ov.isConnected) return; ov.classList.add("out"); mc.reset(); MUSIC.stop(1500); Sound.mode("wait", 3); document.removeEventListener("keydown", key, true); setTimeout(() => ov.remove(), 700); revealing = false; };
     const key = e => { if (mc.key(e)){ e.preventDefault(); e.stopPropagation(); return; } if (["Escape", "Enter", " "].indexOf(e.key) >= 0){ e.preventDefault(); e.stopPropagation(); close(); } };
@@ -2086,7 +2128,7 @@ function viewAwards(pin){
     document.body.append(ov);
     celebrationSky(ov, ov.querySelector(".cele-sky"), 3, cat);
     Sound.win(3); confetti(); setTimeout(confetti, 1000);
-    setTimeout(() => { if (ov.isConnected && !mc.stopped) startMusic(); }, 4500);
+    setTimeout(() => { if (ov.isConnected && !mc.stopped) startMusic(); }, 1600);   /* music right after the name appears */
   }
 
   /* ----- settings dialog ----- */
@@ -2182,10 +2224,10 @@ function viewAwards(pin){
     return el("div", null,
       el("h3", {text:"Award titles"}), el("p", {class:"small", style:"margin:.2rem 0", text:"Female award"}), q, el("p", {class:"small", style:"margin:.6rem 0 .2rem", text:"Male award"}), k,
       el("h3", {text:"Music while the top finalists walk up to the stage"}),
-      el("p", {class:"muted small", text:"MP3 file next to index.html (sound only, e.g. runway.mp3) or a YouTube link. Empty = built-in catwalk music."}),
+      el("p", {class:"muted small", text:"MP3 file next to index.html (sound only, e.g. runway.mp3) or a YouTube link. Empty = runway.mp3 if it is on GitHub, otherwise built-in catwalk music."}),
       el("div", {class:"row", style:"margin-top:0"}, fm, testBtn(fm)),
       el("h3", {text:"Music while the winner walks up"}),
-      el("p", {class:"muted small", text:"MP3 file next to index.html on GitHub (sound only, e.g. awards.mp3, add #t=30 to start 30 seconds in), or a YouTube link (shows a small player window). Empty = built-in epic victory music."}),
+      el("p", {class:"muted small", text:"MP3 file next to index.html on GitHub (sound only, e.g. awards.mp3, add #t=30 to start 30 seconds in), or a YouTube link (shows a small player window). Empty = awards.mp3 if it is on GitHub, otherwise built-in epic victory music."}),
       el("div", {class:"row", style:"margin-top:0"}, m, el("button", {class:"btn", type:"button", text:"▶ Test 10 s", onclick:() => { if (!MUSIC.valid(m.value)){ toast("Type an MP3 file name or paste a YouTube link first."); return; } MUSIC.play(m.value, "Award music").then(ok => { if (ok) setTimeout(() => MUSIC.stop(1200), 10000); }); }})),
       el("div", {class:"row"}, save));
   }
@@ -2203,7 +2245,9 @@ function viewAwards(pin){
 
   document.addEventListener("keydown", e => {
     const tag = (e.target.tagName || "").toLowerCase(); if (["input","select","textarea","button"].includes(tag) || dlg.open || revealing || showing) return;
-    if (e.key === "1") showNominees("QUEEN"); else if (e.key === "2") showNominees("KING");
+    if (e.key === "s" || e.key === "S"){ awKeys.el.querySelector(".skey").click(); return; }
+    if (e.key === "l" || e.key === "L"){ awKeys.el.querySelectorAll(".skey")[1].click(); return; }
+    if (e.key === "1") showNominees("KING"); else if (e.key === "2") showNominees("QUEEN");
     else if (e.key === "q" || e.key === "Q") reveal("QUEEN"); else if (e.key === "k" || e.key === "K") reveal("KING"); else if (e.key === "f" || e.key === "F") fullscreen();
   });
   document.addEventListener("pointerdown", () => { Sound.unlock(); Sound.mode("wait", 3); }, {once:true});
@@ -2239,7 +2283,7 @@ function viewDraw(pin){
       introBtn, fsBtn, musicBtn, el("label", {class:"ld-vol"}, el("span", {text:"Music"}), mVol),
       fxBtn, el("label", {class:"ld-vol"}, el("span", {text:"Effects"}), fVol),
       setBtn,
-      el("p", {class:"ld-keys", text:"Keys: I intro · Space draw · M stop / play music · L softer · F full screen · S settings"})),
+      el("p", {class:"ld-keys", text:"Keys: Space draw · I intro · S stop / play music · L slow (softer) · F full screen"})),
     dockBtn);
   function setDock(open){ dock.classList.toggle("open", open); dockBtn.setAttribute("aria-expanded", open); dockBtn.setAttribute("aria-label", open ? "Hide controls" : "Show controls"); }
   dockBtn.addEventListener("click", e => { e.stopPropagation(); Sound.unlock(); setDock(!dock.classList.contains("open")); });
@@ -2341,7 +2385,7 @@ function viewDraw(pin){
               render(); toast(v ? "Guests are in the lucky draw." : "Lucky draw is now staff only."); renderSettings(); }catch(e){ toast(errText(e)); } }}),
           el("span", {text:t})))),
       el("h3", {text:"Your own music (optional)"}),
-      el("p", {class:"muted small", text:"Sound only, no window: upload an MP3 next to index.html on GitHub (for example winner.mp3) and type its name. Add #t=45 to start 45 seconds in (winner.mp3#t=45). Or paste a YouTube link: the official YouTube player then shows in a small corner window, and some music videos block this. If a song can’t play, the built-in music plays instead. Leave empty for the built-in music."}),
+      el("p", {class:"muted small", text:"Sound only, no window: upload an MP3 next to index.html on GitHub (for example winner.mp3) and type its name. Add #t=45 to start 45 seconds in (winner.mp3#t=45). Or paste a YouTube link: the official YouTube player then shows in a small corner window, and some music videos block this. If a song can’t play, the built-in music plays instead. Leave empty to use winner.mp3 / intro.mp3 automatically if they are on GitHub, otherwise the built-in music."}),
       el("p", {class:"small", style:"margin:.6rem 0 .2rem;font-weight:700", text:"Winner music (while the winner walks up to collect)"}), el("div", {class:"row", style:"margin-top:0"}, wm, test(wm, "Winner music")),
       el("p", {class:"small", style:"margin:.6rem 0 .2rem;font-weight:700", text:"Intro music (during “Are you ready?”, stops at 3 · 2 · 1)"}), el("div", {class:"row", style:"margin-top:0"}, im, test(im, "Intro music")),
       el("h3", {text:"Intro before the draw"}),
@@ -2385,12 +2429,13 @@ function viewDraw(pin){
 
   /* emcee music controls: L = softer / louder, M = stop / play (only for this moment) */
   let mcSoft = false, mcStop = false, lastPhase = "";
-  const mcBtn = el("button", {class:"mtoggle fixed", type:"button", onclick:e => { e.stopPropagation(); toggleQuiet(); }});
-  function applyQuiet(){ const f = mcStop ? 0 : mcSoft ? .22 : 1; Sound.duck(f); MUSIC.duck(f);
-    mcBtn.textContent = mcStop ? "🔇" : "🔊"; mcBtn.title = mcStop ? "Play music (M)" : "Stop music (M)"; mcBtn.setAttribute("aria-label", mcBtn.title); }
+  const sk = stageKeys({stop:() => toggleQuiet(), slow:() => toggleSoft(), fixed:true});
+  function applyQuiet(){ const f = mcStop ? 0 : mcSoft ? .22 : 1; Sound.duck(f); MUSIC.duck(f); sk.paint(mcStop, mcSoft); }
+  const autoMusic = {winner:"", intro:""};
+  mp3Default("winner.mp3").then(v => autoMusic.winner = v); mp3Default("intro.mp3").then(v => autoMusic.intro = v);
   function toggleSoft(){ Sound.unlock(); if (mcStop) return; mcSoft = !mcSoft; applyQuiet(); }
   function toggleQuiet(){ Sound.unlock(); mcStop = !mcStop; if (mcStop) mcSoft = false; applyQuiet(); }
-  app.append(el("div", {class:"ld"}, head, body), dock, dlg, mcBtn);
+  app.append(el("div", {class:"ld"}, head, body), dock, dlg, sk.el);
   applyQuiet();
   paintTools();
   document.addEventListener("fullscreenchange", paintTools);
@@ -2436,8 +2481,14 @@ function viewDraw(pin){
   /* full-screen winner celebration for a few seconds, then back to the draw screen */
   function celebrate(w, tr){
     if (!w) return;
+    /* stays on screen until the winner has collected the prize: Continue (Enter) or Prize collected (C) */
     const close = () => { if (!ov.isConnected) return; ov.classList.add("out"); document.removeEventListener("keydown", key, true); setTimeout(() => ov.remove(), 700); };
-    const key = e => { if (["Escape", " ", "Enter"].indexOf(e.key) >= 0){ e.preventDefault(); e.stopPropagation(); close(); } };
+    const collected = () => { close(); const p = pending(); if (p) act(p.id, "collected"); };
+    const key = e => {
+      if (e.key === "Enter" || e.key === "Escape"){ e.preventDefault(); e.stopPropagation(); close(); }
+      else if (e.key === "c" || e.key === "C"){ e.preventDefault(); e.stopPropagation(); collected(); }
+      else if (e.code === "Space"){ e.preventDefault(); e.stopPropagation(); }   /* Space must not start a new draw from here */
+    };
     const title = tr >= 3 ? "GRAND PRIZE WINNER" : "CONGRATULATIONS";
     const letters = el("p", {class:"cele-title", "aria-label":title}, title.split("").map((c, i) => el("span", {style:"animation-delay:" + (0.35 + i * 0.05) + "s", text: c === " " ? "\u00a0" : c})));
     const ov = el("div", {class:"cele" + (tr >= 3 ? " grand" : tr === 2 ? " big" : ""), role:"dialog", "aria-label":title},
@@ -2449,12 +2500,12 @@ function viewDraw(pin){
         el("p", {class:"cele-name", text:w.name}),
         el("p", {class:"cele-meta", text:[w.staffId, w.dept].filter(Boolean).join(" · ")}),
         el("p", {class:"cele-prize", text:"🎁 " + w.prize})),
-      el("button", {class:"intro-skip", type:"button", text:"Continue ›", onclick:close}));
-    ov.addEventListener("click", e => { if (e.target === ov) close(); });
+      el("div", {class:"cele-actions"},
+        el("button", {class:"intro-skip", type:"button", text:"✓ Prize collected (C)", onclick:collected}),
+        el("button", {class:"intro-skip", type:"button", text:"Continue ›", onclick:close})));
     document.addEventListener("keydown", key, true);
     document.body.append(ov);
     if (!reduce) celebrationSky(ov, ov.querySelector(".cele-sky"), tr);
-    setTimeout(close, tr >= 3 ? 9000 : tr === 2 ? 7000 : 5500);
   }
   function revealFx(tr){
     const fl = el("div", {class:"ld-flash" + (tr >= 3 ? " gold" : ""), "aria-hidden":"true"}); document.body.append(fl); setTimeout(() => fl.remove(), 1100);
@@ -2500,7 +2551,7 @@ function viewDraw(pin){
     function end(){
       if (!introOn) return; introOn = false;
       timers.forEach(clearTimeout); document.removeEventListener("keydown", onKey, true);
-      if (S && S.settings && S.settings.introMusic) MUSIC.stop(800);
+      if ((S && S.settings && S.settings.introMusic) || autoMusic.intro) MUSIC.stop(800);
       ov.classList.add("out"); setTimeout(() => { ov.remove(); render(); }, 600);
     }
     function onKey(e){ if (e.key === "Escape" || e.code === "Space" || e.key === "Enter"){ e.preventDefault(); e.stopPropagation(); end(); } }
@@ -2517,7 +2568,7 @@ function viewDraw(pin){
     }
     animated();
     function animated(){
-      const ownIntro = S && S.settings && S.settings.introMusic;
+      const ownIntro = (S && S.settings && S.settings.introMusic) || autoMusic.intro;
       let own = !!ownIntro;
       if (own) MUSIC.play(ownIntro, "Intro music", 100).then(okk => { if (!okk){ own = false; Sound.introTrack(); } });
       else Sound.introTrack();
@@ -2550,8 +2601,7 @@ function viewDraw(pin){
     Sound.unlock();
     const d = document, r = d.documentElement;
     if (d.fullscreenElement){ d.exitFullscreen && d.exitFullscreen(); return; }
-    if (r.requestFullscreen) r.requestFullscreen().catch(() => toast("Press F11 on the keyboard for full screen."));
-    else toast("Press F11 on the keyboard for full screen.");
+    if (r.requestFullscreen) r.requestFullscreen().catch(() => {});
   }
   function render(){
     if (!S) return;
@@ -2560,13 +2610,13 @@ function viewDraw(pin){
     /* a new moment (drawing, a new winner, back to waiting) brings the music back to normal */
     const phase = busy ? "draw" : (p ? "win-" + p.id : "wait");
     if (phase !== lastPhase){ lastPhase = phase; if (mcSoft || mcStop){ mcSoft = false; mcStop = false; applyQuiet(); } }
-    const ytWin = S.settings && S.settings.winnerMusic;
+    const ytWin = (S.settings && S.settings.winnerMusic) || autoMusic.winner;
     if (busy){ Sound.mode("draw", cur ? tierOf(cur.name) : 1); }
     else if (p){
       if (ytWin && !ytFailed){
         Sound.mode("draw", tierOf(p.prize));                  /* built-in music off: YouTube takes over */
         if (ytFor !== p.id){ ytFor = p.id; clearTimeout(ytTimer);
-          ytTimer = setTimeout(() => { if (pending() && pending().id === ytFor) MUSIC.play(ytWin, "Winner music", 90, true).then(okk => { if (!okk){ ytFailed = true; render(); } }); }, revealedJustNow ? (tierOf(p.prize) >= 3 ? 5000 : 3600) : 300); }
+          ytTimer = setTimeout(() => { if (pending() && pending().id === ytFor) MUSIC.play(ytWin, "Winner music", 90, true).then(okk => { if (!okk){ ytFailed = true; render(); } }); }, revealedJustNow ? (tierOf(p.prize) >= 3 ? 1800 : 1400) : 300); }
       } else Sound.mode("win", tierOf(p.prize));
     } else {
       if (ytFor){ ytFor = null; clearTimeout(ytTimer); MUSIC.stop(1500); }
@@ -2632,7 +2682,8 @@ function viewDraw(pin){
     const cur = currentPrize(); if (!cur){ toast("All prizes have been drawn."); return; }
     if (!S.poolCount){ toast("No numbers left in the draw."); return; }
     const tr = tierOf(cur.name);
-    busy = true; chosen = cur.name; render();
+    MUSIC.stop(250); if (ytFor){ ytFor = null; clearTimeout(ytTimer); }
+    busy = true; chosen = cur.name; Sound.mode("draw", tr); render();
     line.textContent = (tr >= 3 ? "🏆 Drawing the GRAND PRIZE…" : "Drawing for " + cur.name + "…"); btns.innerHTML = ""; num.className = "ld-num spinning" + (tr >= 2 ? " hot" : ""); pname.textContent = ""; pmeta.textContent = ""; panel.classList.remove("has-winner", "grand");
     const src = S.poolSample.length ? S.poolSample : [0];
     const secs = reduce ? 1 : (S.settings.duration || 8), D = secs * 1000, start = performance.now();
@@ -2671,9 +2722,8 @@ function viewDraw(pin){
     if (e.key === "Escape") setDock(false);
     if (e.code === "Space"){ e.preventDefault(); draw(); }
     else if (e.key === "f" || e.key === "F") fullscreen();
-    else if (e.key === "m" || e.key === "M") toggleQuiet();
+    else if (e.key === "s" || e.key === "S" || e.key === "m" || e.key === "M") toggleQuiet();
     else if (e.key === "l" || e.key === "L") toggleSoft();
-    else if (e.key === "s" || e.key === "S") openSettings();
     else if (e.key === "i" || e.key === "I") playIntro();
   });
   refresh(); setInterval(() => { if (!busy && !dlg.open) refresh(); }, 20000);
