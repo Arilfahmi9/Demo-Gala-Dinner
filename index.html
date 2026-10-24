@@ -543,7 +543,7 @@ body:not(.drawmode) .mc.fixed{display:none}
 .db-dl h2{font-size:1rem;margin:0}
 .db-dl .muted{margin:.2rem 0 .7rem}
 .db-dl-row{display:flex;flex-wrap:wrap;gap:.6rem}
-@media (min-width:1200px){ .db-menu{grid-template-columns:repeat(7,minmax(0,1fr))} .db-link{flex-direction:column;text-align:center;gap:.3rem;padding:.7rem .5rem} }
+@media (min-width:1200px){ .db-menu{grid-template-columns:repeat(9,minmax(0,1fr))} .db-link{flex-direction:column;text-align:center;gap:.3rem;padding:.7rem .5rem} }
 .dashmode .db-orgs{grid-template-columns:1fr 1fr}
 body.dashmode .bgart{position:fixed}
 @media (max-width:1100px){ .dashmode .db-top{grid-template-columns:1fr 1fr} .dashmode .db-orgs{grid-column:1/-1} }
@@ -712,6 +712,30 @@ body.dashmode .bgart{position:fixed}
 .royal-tag.queen{color:#FF9AD0}
 .royal-pair.sm .royal-tag{display:none}
 .vote-crowns .royal-tag,.poster-crowns .royal-tag{font-size:.7rem}
+.guest-badge{display:table;margin:0 auto .3rem;padding:.25rem .9rem;border-radius:999px;font-weight:800;font-size:.8rem;letter-spacing:.08em;color:#2b1250;background:linear-gradient(180deg,#FFD6EC,#FF7AC6)}
+.ld-staffonly{padding:.3rem .8rem;border-radius:999px;border:1px solid var(--warn);color:var(--warn);font-weight:800;font-size:clamp(.7rem,1vw,.9rem);letter-spacing:.12em;text-transform:uppercase}
+/* dashboard settings */
+.db-settings{margin-top:1rem;padding:.9rem 1.1rem}
+.db-settings summary{cursor:pointer;display:flex;flex-wrap:wrap;align-items:baseline;gap:.4rem .9rem;font-weight:800;color:var(--gold);font-size:1rem;list-style:none}
+.db-settings summary::-webkit-details-marker{display:none}
+.db-settings summary::after{content:"▾";margin-left:auto;color:var(--muted)}
+.db-settings[open] summary::after{content:"▴"}
+.db-settings summary small{font-weight:500;font-size:.78rem}
+.ds-pane h3{margin:1rem 0 .4rem;font-size:.95rem;color:var(--gold)}
+.ds-pane .ld-seg{display:flex;flex-wrap:wrap;gap:.4rem}
+.ds-pane .ld-seg label{display:flex;align-items:center;gap:.4rem;padding:.45rem .8rem;border:1px solid var(--line);border-radius:999px;cursor:pointer;font-size:.88rem}
+.ds-pane .ld-seg label:has(input:checked){border-color:var(--gold);background:rgba(242,207,115,.12)}
+.ds-pane input[type=text],.ds-pane input[type=number],.ds-pane select{margin-top:0}
+.poster ol li .li2{display:flex;flex-direction:column;line-height:1.2}
+.poster ol li .li2 small{font-size:.78em;font-weight:600;color:var(--muted)}
+/* posters: fit on one screen */
+.poster .qr.sm{width:min(50%,13rem)}
+.poster{padding-top:1.2rem;padding-bottom:1.2rem}
+.poster .poster-crowns{margin:.4rem 0 .1rem}
+.poster .poster-crowns .royal{width:4.2rem}
+.poster .bd-tag{margin:.2rem 0 .3rem}
+.poster ol{margin-top:.6rem}
+.poster ol li{margin:.25rem 0}
 @media (max-width:820px){ .grid{grid-template-columns:1fr} }
 @media print{ body{padding:0;-webkit-print-color-adjust:exact;print-color-adjust:exact} body::after{display:none} .brand,.noprint,.toast,.demobar,.demonote{display:none!important} .poster{max-width:none} }
 @media (prefers-reduced-motion:reduce){ .pop{animation:none} .toast{transition:none} }
@@ -1006,13 +1030,115 @@ function viewDashboard(){
   const go = (icon, text, page, note) => el("a", {class:"db-link", href:pageUrl(page), target:"_blank", rel:"noopener"},
     el("span", {class:"db-link-i", "aria-hidden":"true", text:icon}), el("span", null, el("b", {text:text}), el("small", {text:note})));
   const menu = el("nav", {class:"db-menu", "aria-label":"Event pages"},
-    go("📝", "Registration", "", "What the QR opens"),
+    go("📝", "Staff registration", "", "What the staff QR opens"),
+    go("🎟", "Guest registration", "guest", "What the guest QR opens"),
     go("🧾", "Registration desk", "kiosk", "Tablet at the counter"),
     go("🎰", "Lucky draw", "draw", "Big screen"),
     go("👑", "King & Queen", "awards", "Big screen"),
     go("🗳", "Voting page", "vote", "What the voting QR opens"),
-    go("🖼", "Registration poster", "poster", "QR to print"),
+    go("🖼", "Staff poster", "poster", "Staff QR to print"),
+    go("🖼", "Guest poster", "guest-poster", "Guest QR to print"),
     go("🖼", "Voting poster", "vote-poster", "QR to print"));
+  /* ===== event settings from the dashboard (same Google Sheet, so the big screens pick them up) ===== */
+  const setBox = el("div", {class:"ds-pane"});
+  let setTab = "reg";
+  const seg = (name, opts, cur, onPick) => el("div", {class:"ld-seg", role:"radiogroup"}, opts.map(([v, t]) =>
+    el("label", null, el("input", {type:"radio", name:name, checked: cur === v, onchange:() => onPick(v)}), el("span", {text:t}))));
+  const H3 = t => el("h3", {text:t});
+  const note = t => el("p", {class:"muted small", text:t});
+  async function settingsTab(){
+    setBox.innerHTML = ""; setBox.append(el("p", {class:"muted small", text:"Loading…"}));
+    const pin = pinNow();
+    try{
+      if (setTab === "reg"){
+        let r = await call("apiRegSettings", pin);
+        const save = async o => { try{ r = await call("apiSaveRegSettings", pin, o); toast("Saved."); }catch(e){ toast(errText(e)); } };
+        setBox.innerHTML = "";
+        setBox.append(H3("Staff registration (QR code)"), seg("ds-open", [[true, "Open"], [false, "Closed"]], r.open, v => save({open:v})),
+          note("Closed = the registration pages show “Registration is closed. Please ask at the registration counter.”"),
+          H3("Guest registration (guest QR code)"), seg("ds-gopen", [[true, "Open"], [false, "Registration desk only"]], r.guestOpen, v => save({guestOpen:v})));
+      }
+      if (setTab === "draw"){
+        let D = await call("apiDrawState", pin); const st = D.settings;
+        const from = el("input", {type:"number", value:String(st.from), style:"width:7rem", "aria-label":"From"});
+        const to = el("input", {type:"number", value:String(st.to), style:"width:7rem", "aria-label":"To"});
+        let dur = st.duration, src = st.source, gd = st.guestsInDraw !== false;
+        const save = el("button", {class:"btn primary", type:"button", text:"Save lucky draw settings"});
+        save.addEventListener("click", async () => { save.disabled = true;
+          try{ D = await call("apiSaveDrawSettings", pin, {from:from.value, to:to.value, duration:dur, source:src, introVideo:st.introVideo || "", winnerMusic:st.winnerMusic || "", introMusic:st.introMusic || "", guestsInDraw:gd}); toast("Lucky draw settings saved."); }
+          catch(e){ toast(errText(e)); } save.disabled = false; });
+        setBox.innerHTML = "";
+        setBox.append(H3("Lucky number range"), el("div", {class:"row"}, el("span", {text:"From"}), from, el("span", {text:"to"}), to),
+          H3("Spin time"), seg("ds-dur", [[5, "5 seconds"], [8, "8 seconds"], [10, "10 seconds"]], dur, v => dur = v),
+          H3("Draw from"), seg("ds-src", [["REGISTERED", "Registered numbers only"], ["RANGE", "Every number in the range"]], src, v => src = v),
+          H3("Guests in the lucky draw"), seg("ds-gd", [[true, "Yes, guests can win"], [false, "No, staff only"]], gd, v => gd = v),
+          note(D.poolCount + " numbers in the draw now · " + D.registered + " registered" + (D.guests ? " (" + D.guests + " guests)" : "")),
+          el("div", {class:"row"}, save));
+      }
+      if (setTab === "prizes"){
+        const D = await call("apiDrawState", pin);
+        const list = D.prizes.map(p => ({name:p.name, qty:p.qty, level:p.level || "", won:p.qty - p.remaining}));
+        const tb = el("tbody");
+        const paint = () => { tb.innerHTML = ""; list.forEach((p, i) => {
+          const n = el("input", {type:"text", value:p.name, "aria-label":"Prize name"}); n.addEventListener("input", () => p.name = n.value);
+          const q = el("input", {type:"number", min:"1", value:String(p.qty), style:"width:5rem", "aria-label":"Quantity"}); q.addEventListener("input", () => p.qty = q.value);
+          const lv = el("select", {"aria-label":"Level", style:"width:auto"}, [["", "Auto"], ["NORMAL", "Normal"], ["BIG", "Big prize"], ["GRAND", "Grand prize"]].map(([v, t]) => el("option", {value:v, text:t})));
+          lv.value = p.level; lv.addEventListener("change", () => p.level = lv.value);
+          tb.append(el("tr", null, el("td", {text:String(i + 1)}), el("td", null, n), el("td", null, q), el("td", null, lv), el("td", {class:"muted small", text:p.won ? p.won + " drawn" : ""}),
+            el("td", {class:"nowrap"}, el("button", {class:"btn mini", type:"button", text:"↑", disabled:i === 0, onclick:() => { [list[i - 1], list[i]] = [list[i], list[i - 1]]; paint(); }}),
+              el("button", {class:"btn mini", type:"button", text:"↓", disabled:i === list.length - 1, onclick:() => { [list[i + 1], list[i]] = [list[i], list[i + 1]]; paint(); }}),
+              el("button", {class:"btn mini", type:"button", text:"✕", onclick:() => { list.splice(i, 1); paint(); }})))); }); };
+        paint();
+        const save = el("button", {class:"btn primary", type:"button", text:"Save prizes"});
+        save.addEventListener("click", async () => { save.disabled = true; try{ await call("apiSavePrizes", pin, list); toast("Prizes saved."); settingsTab(); }catch(e){ toast(errText(e)); save.disabled = false; } });
+        setBox.innerHTML = "";
+        setBox.append(note("Drawn from top to bottom, grand prize last. Level: Auto makes the last prize Grand and the two before it Big."),
+          el("div", {class:"tablewrap"}, el("table", {class:"tbl"}, el("thead", null, el("tr", null, ["#", "Prize", "Quantity", "Level", "", ""].map(h => el("th", {text:h})))), tb)),
+          el("div", {class:"row"}, el("button", {class:"btn", type:"button", text:"+ Add prize", onclick:() => { list.push({name:"", qty:1, level:"", won:0}); paint(); }}), save));
+      }
+      if (setTab === "vote"){
+        let V = await call("apiAwardsState", pin);
+        const saveA = async o => { try{ V = await call("apiSaveAwardSettings", pin, o); toast("Saved."); }catch(e){ toast(errText(e)); } };
+        setBox.innerHTML = "";
+        setBox.append(H3("Voting"), seg("ds-vopen", [[true, "Open"], [false, "Closed"]], V.open, async v => { try{ V = await call("apiSetVoting", pin, v); toast(v ? "Voting is open." : "Voting is closed."); }catch(e){ toast(errText(e)); } }),
+          note(V.voters + " guests have voted."),
+          H3("Who can vote"), seg("ds-check", [["FULL", "Staff ID + last 4 phone digits"], ["STAFFID", "Staff ID only"], ["OPEN", "Open voting (one vote per phone)"]], V.check, v => saveA({check:v})),
+          H3("Guests (no staff ID)"), seg("ds-gv", [[true, "Guests can vote (phone number)"], [false, "Staff only"]], V.guestsVote !== false, v => saveA({guestsVote:v})),
+          H3("Finalists called to the stage"), seg("ds-fin", [[3, "Top 3"], [4, "Top 4"], [5, "Top 5"], [0, "All nominees"]], V.finalists || 0, v => saveA({finalists:v})));
+      }
+      if (setTab === "noms"){
+        const V = await call("apiAwardsState", pin);
+        const list = V.nominees.map(n => Object.assign({}, n));
+        const dl = el("datalist", {id:"ds-guests"}, rows.map(r => el("option", {value:r.name + (r.staffId ? " — " + r.staffId : "")})));
+        const wrap = el("div");
+        const paint = () => { wrap.innerHTML = ""; CAT_ORDER.forEach(cat => {
+          const tb = el("tbody");
+          list.forEach((n, i) => { if (n.cat !== cat) return;
+            const nm = el("input", {type:"text", value:n.name, list:"ds-guests", placeholder:"Type to search registered guests", "aria-label":"Nominee name"});
+            const dp = el("input", {type:"text", value:n.dept || "", placeholder:"Department", "aria-label":"Department"});
+            nm.addEventListener("input", () => { const m = nm.value.match(/^(.*) — (\S+)$/); const g = m ? rows.find(r => r.staffId === m[2]) : null;
+              if (g){ n.name = g.name; n.staffId = g.staffId; n.dept = g.dept; nm.value = g.name; dp.value = g.dept; } else n.name = nm.value; });
+            dp.addEventListener("input", () => n.dept = dp.value);
+            tb.append(el("tr", null, el("td", null, nm), el("td", null, dp), el("td", {class:"muted small nowrap", text:n.staffId || ""}),
+              el("td", null, el("button", {class:"btn mini", type:"button", text:"✕", onclick:() => { list.splice(i, 1); paint(); }})))); });
+          wrap.append(el("h3", {class:"vote-cat"}, royalIcon(cat, "sm"), el("span", {text:V.labels[cat]})), el("div", {class:"tablewrap"}, el("table", {class:"tbl"}, tb)),
+            el("div", {class:"row"}, el("button", {class:"btn", type:"button", text:"+ Add nominee", onclick:() => { list.push({id:"", cat, name:"", staffId:"", dept:""}); paint(); }})));
+        }); };
+        paint();
+        const save = el("button", {class:"btn primary", type:"button", text:"Save nominees"});
+        save.addEventListener("click", async () => { save.disabled = true; try{ await call("apiSaveNominees", pin, list); toast("Nominees saved."); settingsTab(); }catch(e){ toast(errText(e)); save.disabled = false; } });
+        setBox.innerHTML = "";
+        setBox.append(dl, note("Type a name and pick it from the list to fill in the staff ID and department."), wrap, el("div", {class:"row"}, save));
+      }
+    }catch(e){ setBox.innerHTML = ""; setBox.append(el("p", {class:"msg", text:errText(e)})); }
+  }
+  const setTabs = el("div", {class:"ld-tabs"}, [["reg", "Registration"], ["draw", "Lucky draw"], ["prizes", "Prizes"], ["vote", "Voting"], ["noms", "Nominees"]].map(([k, t]) =>
+    el("button", {type:"button", "aria-selected": setTab === k, text:t, onclick:e => { setTab = k; setTabs.querySelectorAll("button").forEach(b => b.setAttribute("aria-selected", b === e.currentTarget)); settingsTab(); }})));
+  const setCard = el("details", {class:"card db-settings"},
+    el("summary", null, el("span", {text:"⚙ Event settings"}), el("small", {class:"muted", text:"Change lucky draw and voting settings here without touching the big screens"})),
+    note("Saved to the same Google Sheet as the lucky draw and King & Queen pages. The big screens pick up changes within about 20 seconds."),
+    setTabs, setBox);
+  setCard.addEventListener("toggle", () => { if (setCard.open && !setBox.childNodes.length) settingsTab(); });
   const dlCard = el("div", {class:"card db-dl"},
     el("h2", {text:"Download reports"}),
     el("p", {class:"muted small", text:"Excel-ready CSV files. Download after registration and voting close."}),
@@ -1027,6 +1153,7 @@ function viewDashboard(){
       el("div", {class:"db-total"}, el("div", {class:"db-tl"}, el("p", {class:"db-label", text:"Total registered"}), live), totalNum, lastAt),
       el("div", {class:"db-total"}, el("p", {class:"db-label", text:"Best Dressed voters"}), voteNum, el("p", {class:"db-sub", text:"guests have voted"})),
       el("div", {class:"db-total db-orgcard"}, orgBox)),
+    setCard,
     dlCard,
     el("div", {class:"grid db-grid"},
       el("div", {class:"card"}, el("div", {class:"db-head"}, el("h2", {text:"By department"}), deptCount), deptList),
@@ -1597,15 +1724,16 @@ function viewVote(){
     }
     clear();
     let mem = null; try{ mem = JSON.parse(localStorage.getItem("ghg-simple-reg-v1")); }catch(e){}
-    const sid = el("input", {type:"text", id:"vsid", autocapitalize:"characters", autocomplete:"off", placeholder:"e.g. UOC1234 or MG1234", value:(mem && mem.staffId) || ""});
+    const gv = cfg.guestsVote !== false;
+    const sid = el("input", {type:"text", id:"vsid", autocapitalize:"characters", autocomplete:"off", placeholder: gv ? "e.g. UOC1234 · guests: 012-345 6789" : "e.g. UOC1234 or MG1234", value:(mem && (mem.staffId || (gv && mem.org === "Guest" && mem.phone))) || ""});
     const ph = el("input", {type:"tel", id:"vph", inputmode:"numeric", maxlength:"4", autocomplete:"off", placeholder:"e.g. 6789"});
     const msg = el("p", {class:"msg", role:"status"});
     const btn = el("button", {class:"btn primary big", type:"submit", text:"Continue"});
     const f = el("form", {novalidate:true},
-      el("label", {class:"f", for:"vsid", text:"Your staff ID"}), sid,
+      el("label", {class:"f", for:"vsid", text: gv ? "Your staff ID (guests: your phone number)" : "Your staff ID"}), sid,
       cfg.check === "FULL" ? el("label", {class:"f", for:"vph", text:"Last 4 digits of the phone number you registered with"}) : null, cfg.check === "FULL" ? ph : null, msg, btn);
     f.addEventListener("submit", async e => { e.preventDefault(); msg.textContent = "";
-      if (!sid.value.trim()){ msg.textContent = "Please enter your staff ID."; sid.focus(); return; }
+      if (!sid.value.trim()){ msg.textContent = "Please enter your staff ID (guests: your phone number)."; sid.focus(); return; }
       btn.disabled = true; btn.textContent = "Checking…";
       try{ const r = await call("apiVoteCheck", {staffId:sid.value, phone4:ph.value, deviceId:devId()}); voter = {staffId:sid.value, phone4:ph.value, name:r.name, voted:r.voted};
         if (r.voted.QUEEN && r.voted.KING) return thanks(r.name, true); step2(); }
@@ -1673,10 +1801,10 @@ function viewVotePoster(){
     el("p", {class:"cta", style:"margin:0", text:"Vote for"}),
     el("h2", {style:"font-size:1.6rem;margin:.1rem 0 0", text:"King & Queen of the Night"}),
     bdTag(),
-    el("img", {class:"qr", src:c.toDataURL("image/png"), alt:"QR code to vote for King and Queen"}),
+    el("img", {class:"qr sm", src:c.toDataURL("image/png"), alt:"QR code to vote for King and Queen"}),
     el("ol", null,
       el("li", null, el("b", {text:"1"}), "Scan QR Code"),
-      el("li", null, el("b", {text:"2"}), "Enter your staff ID"),
+      el("li", null, el("b", {text:"2"}), el("span", {class:"li2"}, "Enter your staff ID", el("small", {text:"Guests: your phone number"}))),
       el("li", null, el("b", {text:"3"}), "Pick your King & Queen")),
     el("p", {class:"fine", text:"One vote per person for each award."})));
 }
@@ -1955,6 +2083,11 @@ function viewAwards(pin){
       el("p", {class:"muted small", text:"“Call the top 3” shows only the nominees with the most votes (in alphabetical order, no vote counts), so the emcee can call them up before the reveal. Ties at the cut-off are all included."}),
       el("div", {class:"ld-seg", role:"radiogroup", "aria-label":"Finalists"}, [[3, "Top 3"], [4, "Top 4"], [5, "Top 5"], [0, "All nominees"]].map(([v, t]) =>
         el("label", null, el("input", {type:"radio", name:"fin", value:String(v), checked: (A.finalists || 0) === v, onchange: async () => { try{ A = await call("apiSaveAwardSettings", pin, {finalists:v}); render(); toast("Saved."); }catch(e){ toast(errText(e)); } }}), el("span", {text:t})))),
+      el("h3", {text:"Guests (no staff ID)"}),
+      el("div", {class:"ld-seg", role:"radiogroup", "aria-label":"Guests can vote"},
+        [[true, "Guests can vote (with their phone number)"], [false, "Staff only"]].map(([v, t]) => el("label", null,
+          el("input", {type:"radio", name:"gvote", checked: (A.guestsVote !== false) === v, onchange: async () => { try{ A = await call("apiSaveAwardSettings", pin, {guestsVote:v}); render(); toast(v ? "Guests can vote." : "Voting is now staff only."); }catch(e){ toast(errText(e)); } }}),
+          el("span", {text:t})))),
       el("h3", {text:"Who can vote"}),
       el("div", {class:"ld-seg", style:"flex-direction:column;align-items:stretch"},
         [["FULL", "Registered staff: staff ID + last 4 phone digits (most secure)"], ["STAFFID", "Registered staff: staff ID only"], ["OPEN", "Open voting: anyone with the QR, one vote per phone"]]
@@ -2048,9 +2181,10 @@ function viewDraw(pin){
     el("h1", {class:"ld-title"}, el("span", null, "Annual Dinner 2027 ", el("span", {class:"dot", text:"•"}), " Lucky Draw")),
     el("p", {class:"ld-when"}, "Friday, 29 January 2027", el("span", {class:"sep", text:"•"}), "Mövenpick Hotel & Convention Centre KLIA"));
   const pname = el("p", {class:"ld-pname"}), pmeta = el("p", {class:"ld-pmeta"});
+  const staffOnly = el("span", {class:"ld-staffonly", text:"Staff only", hidden:true});
   const panel = el("div", {class:"ld-panel"}, line, num, pname, pmeta, sub);
   const body = el("section", {class:"ld-body"},
-    el("div", {class:"ld-top"}, el("p", {class:"ld-label", text:"Now drawing"}), sel),
+    el("div", {class:"ld-top"}, el("p", {class:"ld-label", text:"Now drawing"}), sel, staffOnly),
     panel,
     el("div", {class:"ld-bottom"}, winCard, btns,
       el("div", {class:"ld-card ld-drawn"}, drawnCount, chips,
@@ -2125,6 +2259,14 @@ function viewDraw(pin){
       el("h3", {text:"Spin time"}), dur,
       el("h3", {text:"Draw from"}), src,
       el("p", {class:"muted small", text:"“Registered numbers only” is recommended: only people who scanned the QR code and registered can win."}),
+      el("h3", {text:"Guests in the lucky draw"}),
+      el("p", {class:"muted small", text:"Guests are people registered without a staff ID (" + (S.guests || 0) + " registered). Choose “Staff only” if the committee decides guests can’t win. Their numbers are then left out of the draw."}),
+      el("div", {class:"ld-seg", role:"radiogroup", "aria-label":"Guests in the lucky draw"},
+        [[true, "Yes, guests can win"], [false, "No, staff only"]].map(([v, t]) => el("label", null,
+          el("input", {type:"radio", name:"gdraw", checked: (st.guestsInDraw !== false) === v, onchange: async () => {
+            try{ S = await call("apiSaveDrawSettings", pin, {from:st.from, to:st.to, duration:st.duration, source:st.source, introVideo:st.introVideo || "", winnerMusic:st.winnerMusic || "", introMusic:st.introMusic || "", guestsInDraw:v});
+              render(); toast(v ? "Guests are in the lucky draw." : "Lucky draw is now staff only."); renderSettings(); }catch(e){ toast(errText(e)); } }}),
+          el("span", {text:t})))),
       el("h3", {text:"Your own music (optional)"}),
       el("p", {class:"muted small", text:"Sound only, no window: upload an MP3 next to index.html on GitHub (for example winner.mp3) and type its name. Add #t=45 to start 45 seconds in (winner.mp3#t=45). Or paste a YouTube link: the official YouTube player then shows in a small corner window, and some music videos block this. If a song can’t play, the built-in music plays instead. Leave empty for the built-in music."}),
       el("p", {class:"small", style:"margin:.6rem 0 .2rem;font-weight:700", text:"Winner music (while the winner walks up to collect)"}), el("div", {class:"row", style:"margin-top:0"}, wm, test(wm, "Winner music")),
@@ -2342,6 +2484,7 @@ function viewDraw(pin){
   function render(){
     if (!S) return;
     const p = pending(), cur = currentPrize();
+    staffOnly.hidden = !(S.settings && S.settings.guestsInDraw === false);
     /* a new moment (drawing, a new winner, back to waiting) brings the music back to normal */
     const phase = busy ? "draw" : (p ? "win-" + p.id : "wait");
     if (phase !== lastPhase){ lastPhase = phase; if (mcSoft || mcStop){ mcSoft = false; mcStop = false; applyQuiet(); } }
@@ -2487,7 +2630,72 @@ function viewPoster(){
     el("p", {class:"fine", text:"No sign-in needed. One registration per person."})));
 }
 
+/* ---------- guest registration (invited guests without a staff ID, on their own phone) ---------- */
+function viewGuest(){
+  clear();
+  if (!B.open || B.guestOpen === false){
+    app.append(el("div", {class:"card center"}, el("h2", {text:"Guest registration"}), el("p", {class:"muted", text:"Please register at the registration counter. Our committee will help you."})));
+    return;
+  }
+  const mem = remembered();
+  if (mem){ viewResult(mem, "You’re registered. Enjoy the evening!", false); return; }
+  const name = el("input", {type:"text", id:"gname", autocomplete:"name", autocapitalize:"words", required:true});
+  const company = el("input", {type:"text", id:"gcompany", autocomplete:"organization", placeholder:"e.g. Ministry of Higher Education"});
+  const phone = el("input", {type:"tel", id:"gphone", inputmode:"tel", autocomplete:"tel", placeholder:"e.g. 012-345 6789", required:true});
+  const msg = el("p", {class:"msg", role:"status"});
+  const btn = el("button", {class:"btn primary big", type:"submit", text:"Register and get my number"});
+  const form = el("form", {novalidate:true},
+    el("label", {class:"f", for:"gname", text:"Full name"}), name,
+    el("label", {class:"f", for:"gcompany", text:"Company / organisation (optional)"}), company,
+    el("label", {class:"f", for:"gphone", text:"Phone number"}), phone,
+    el("p", {class:"muted small", style:"margin:.3rem 0 0", text:"Your phone number is also how you vote for King & Queen."}),
+    msg, btn);
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    const n = name.value.trim(), pv = phone.value.trim(), pd = pv.replace(/\D/g, "");
+    if (!n){ msg.textContent = "Please enter your full name."; name.focus(); return; }
+    if (!pd){ msg.textContent = "Please enter your phone number."; phone.focus(); return; }
+    if (pd.length < 9 || pd.length > 15){ msg.textContent = "Please check your phone number."; phone.focus(); return; }
+    btn.disabled = true; btn.textContent = "Registering"; msg.textContent = "";
+    try{
+      const r = await call("apiRegister", {name:n, guest:true, company:company.value, phone:pv, deviceId:deviceId()});
+      remember(Object.assign({}, r, {phone:pv}));
+      viewResult(r, r.status === "already" ? "You’re already registered." : "Welcome! You’re registered.", true);
+    }catch(err){ msg.textContent = errText(err); btn.disabled = false; btn.textContent = "Register and get my number"; }
+  });
+  app.append(
+    el("ol", {class:"steps", "aria-label":"How it works"},
+      el("li", null, el("b", {text:"1"}), "Scan"), el("li", null, el("b", {text:"2"}), "Your details"), el("li", null, el("b", {text:"3"}), "Get your number")),
+    el("div", {class:"card"}, el("p", {class:"guest-badge", text:"🎟 Guest"}), el("h2", {class:"center", text:"Guest registration"}),
+      el("p", {class:"muted small center", style:"margin:.1rem 0 .4rem", text:"For invited guests without a staff ID."}), form));
+  name.focus();
+}
+
+/* ---------- guest registration poster ---------- */
+function viewGuestPoster(){
+  clear();
+  const q = qrcode(0, "L"); q.addData(pageUrl("guest")); q.make();
+  const n = q.getModuleCount(), cell = 14, size = (n + 8) * cell, c = document.createElement("canvas");
+  c.width = c.height = size; const g = c.getContext("2d");
+  g.fillStyle = "#fff"; g.fillRect(0, 0, size, size); g.fillStyle = "#000";
+  for (let r = 0; r < n; r++) for (let k = 0; k < n; k++) if (q.isDark(r, k)) g.fillRect((k + 4) * cell, (r + 4) * cell, cell, cell);
+  document.body.classList.add("postermode");
+  const hdr = document.querySelector(".brand").cloneNode(true); hdr.querySelectorAll("img, .when").forEach(n => n.remove());
+  app.append(el("div", {class:"poster"},
+    hdr,
+    el("p", {class:"guest-badge", text:"🎟 Guest registration"}),
+    el("img", {class:"qr sm", src:c.toDataURL("image/png"), alt:"QR code for guest registration"}),
+    el("p", {class:"cta", text:"Guests, scan to register"}),
+    el("ol", null,
+      el("li", null, el("b", {text:"1"}), "Scan QR Code"),
+      el("li", null, el("b", {text:"2"}), "Your name and phone number"),
+      el("li", null, el("b", {text:"3"}), "Get your lucky draw number")),
+    el("p", {class:"fine", text:"For invited guests without a staff ID. Staff, please use the staff QR code."})));
+}
+
 if (B.view === "dashboard") viewDashboard();
+else if (B.view === "guest") viewGuest();
+else if (B.view === "guest-poster") viewGuestPoster();
 else if (B.view === "poster") viewPoster();
 else if (B.view === "kiosk") kioskPinGate(viewForm);
 else if (B.view === "draw") staffGate("Lucky draw", "Enter the staff PIN to run the lucky draw.", viewDraw);
@@ -2502,11 +2710,11 @@ else viewForm();
   var app = document.getElementById("app");
   app.innerHTML = '<div class="card center"><p class="muted">Loading…</p></div>';
   var q = new URLSearchParams(location.search), page = (q.get("page") || "").toLowerCase();
-  var views = ["kiosk", "dashboard", "poster", "draw", "vote", "awards", "vote-poster"];
+  var views = ["kiosk", "dashboard", "poster", "draw", "vote", "awards", "vote-poster", "guest", "guest-poster"];
   window.__apiPost("apiConfig", [])
     .then(function(c){
       BOOT = {view: views.indexOf(page) >= 0 ? page : "form", appUrl: location.origin + location.pathname,
-        open: c.open, staffIdRequired: c.staffIdRequired, phoneRequired: c.phoneRequired, orgs: c.orgs, departments: c.departments, demo: c.demo, votingOpen: c.votingOpen};
+        open: c.open, staffIdRequired: c.staffIdRequired, phoneRequired: c.phoneRequired, orgs: c.orgs, departments: c.departments, demo: c.demo, votingOpen: c.votingOpen, guestOpen: c.guestOpen};
       app.innerHTML = ""; window.__startApp();
     })
     .catch(function(e){
