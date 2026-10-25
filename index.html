@@ -1016,15 +1016,15 @@ function localUrl(url){   /* in the Claude preview, pages are #views of this sam
   if (!window.__PREVIEW) return url;
   const h = url.indexOf("#"); return location.href.split("#")[0] + (h >= 0 ? url.slice(h) : "");
 }
-function openPage(url){
+function openPage(url, auto){
   if (IN_VIEWER){ if (window.__PREVIEW){ location.hash = url.slice(url.indexOf("#") + 1); location.reload(); } else location.href = url; return; }
-  if (!document.fullscreenElement){ window.open(url, "_blank", "noopener"); return; }
+  if (!document.fullscreenElement && !auto){ window.open(url, "_blank", "noopener"); return; }
   const old = document.querySelector(".pv"); if (old) old.remove();
   const quiet = f => { try{ Sound.duck(f); }catch(e){} try{ MUSIC.duck(f); }catch(e){} };
   quiet(0);
   const fr = el("iframe", {class:"pv-frame", src:localUrl(url), allow:"fullscreen; autoplay", title:"Event page"});
   const ov = el("div", {class:"pv"}, fr,
-    el("button", {class:"pv-back", type:"button", text:"← Back", onclick:() => { ov.remove(); quiet(1); }}));
+    el("button", {class:"pv-back", type:"button", text:"← Back", onclick:() => { ov.remove(); quiet(1); if (auto && document.fullscreenElement) document.exitFullscreen().catch(() => {}); }}));
   document.body.append(ov); fr.focus();
 }
 window.__openPage = openPage;
@@ -1034,7 +1034,15 @@ if (!window.__pvClick){ window.__pvClick = true;
     const a = e.target.closest && e.target.closest("a[target=_blank]"); if (!a || e.ctrlKey || e.metaKey || e.shiftKey) return;
     const href = a.getAttribute("href") || ""; let ours = false;
     try{ const u = new URL(href, location.href); ours = href.indexOf(BOOT.appUrl) === 0 || (u.origin === location.origin && u.pathname === location.pathname); }catch(_){}
-    if (!ours || (!IN_VIEWER && !document.fullscreenElement)) return;
+    if (!ours) return;
+    /* the big-screen pages (lucky draw, King & Queen) open straight in full screen */
+    const big = /[?&#](page=)?(draw|awards)(&|$)/.test(href.replace(/^[^?#]*/, ""));
+    if (!IN_VIEWER && !document.fullscreenElement){
+      if (!big || !document.documentElement.requestFullscreen) return;
+      e.preventDefault();
+      document.documentElement.requestFullscreen().then(() => window.__openPage(href, true), () => window.open(href, "_blank", "noopener"));
+      return;
+    }
     e.preventDefault(); window.__openPage(href);
   }, true);
 }
@@ -2130,7 +2138,7 @@ function twinkles(cat, n){
 }
 
 /* ---------- stage keys: three see-through letter buttons, bottom-left. S stop/play music · L slow (softer) · F full screen ---------- */
-function goFull(){ const d = document, r = d.documentElement; if (d.fullscreenElement){ d.exitFullscreen && d.exitFullscreen(); return; } if (r.requestFullscreen) r.requestFullscreen().catch(() => {}); }
+function goFull(){ const d = IN_VIEWER ? window.top.document : document, r = d.documentElement; if (d.fullscreenElement){ d.exitFullscreen && d.exitFullscreen(); return; } if (r.requestFullscreen) r.requestFullscreen().catch(() => {}); }
 function stageKeys(o){
   const mk = (letter, title, fn) => el("button", {class:"skey", type:"button", title:title, "aria-label":title, text:letter, onclick:e => { e.stopPropagation(); fn(); }});
   const bS = mk("S", "Stop / play music (S)", o.stop), bL = mk("L", "Slow: softer music (L)", o.slow), bF = mk("F", "Full screen (F)", goFull);
@@ -2252,8 +2260,7 @@ function viewAwards(pin){
     slow:() => { if (awStop) return; awSoft = !awSoft; Sound.duck(awSoft ? .22 : 1); awKeys.paint(awStop, awSoft); }});
   app.append(el("div", {class:"ld aw"}, head, el("section", {class:"aw-body"}, cards.KING.box, cards.QUEEN.box), strip), dock, dlg, awKeys.el);
 
-  function fullscreen(){ Sound.unlock(); const d = document, r = d.documentElement; if (d.fullscreenElement){ d.exitFullscreen && d.exitFullscreen(); return; }
-    if (r.requestFullscreen) r.requestFullscreen().catch(() => {}); }
+  function fullscreen(){ Sound.unlock(); goFull(); }
   function leaders(cat){
     const list = A.nominees.filter(n => n.cat === cat).sort((a, b) => b.votes - a.votes);
     const top = list.length ? list[0].votes : 0;
@@ -3017,12 +3024,7 @@ function viewDraw(pin){
       at(15600, end);
     }
   }
-  function fullscreen(){
-    Sound.unlock();
-    const d = document, r = d.documentElement;
-    if (d.fullscreenElement){ d.exitFullscreen && d.exitFullscreen(); return; }
-    if (r.requestFullscreen) r.requestFullscreen().catch(() => {});
-  }
+  function fullscreen(){ Sound.unlock(); goFull(); }
   function render(){
     if (!S) return;
     const p = pending(), cur = currentPrize();
