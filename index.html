@@ -985,7 +985,7 @@ function viewForm(){
   const other = el("input", {type:"text", id:"deptOther", placeholder:"Type your department", hidden:true, "aria-label":"Your department"});
   if (dept.tagName === "SELECT") dept.addEventListener("change", () => { other.hidden = dept.value !== "__other"; if (!other.hidden) other.focus(); });
   const msg = el("p", {class:"msg", role:"status"});
-  const btn = el("button", {class:"btn primary big", type:"submit", text:"Register and get my number"});
+  const btn = el("button", {class:"btn primary big", type:"submit", text:"Register and Get Lucky Number"});
   /* registration desk only: switch between a staff member and an outside guest (no staff ID) */
   const desk = B.view === "kiosk";
   let guest = false;
@@ -1035,7 +1035,7 @@ function viewForm(){
       try{
         const r = await call("apiRegister", {name:n, guest:true, company:company.value, phone:pv, deviceId:"", pin:sessionStorage.getItem("ghg-pin") || ""});
         viewResult(r, r.status === "already" ? "Already registered." : "Guest registered. Enjoy the evening!", true);
-      }catch(err){ msg.textContent = errText(err); btn.disabled = false; btn.textContent = "Register and get my number"; }
+      }catch(err){ msg.textContent = errText(err); btn.disabled = false; btn.textContent = "Register and Get Lucky Number"; }
       return;
     }
     if (B.staffIdRequired && !sv){ msg.textContent = "Please enter your staff ID."; sid.focus(); return; }
@@ -1050,7 +1050,7 @@ function viewForm(){
       const r = await call("apiRegister", {name:n, staffId:sv, email:email.value.trim(), phone:pv, org:org.value, dept:d, deviceId: B.view === "kiosk" ? "" : deviceId(), pin: B.view === "kiosk" ? (sessionStorage.getItem("ghg-pin") || "") : ""});
       remember(r);
       viewResult(r, r.status === "already" ? "You’re already registered." : "You’re registered. Enjoy the evening!", true);
-    }catch(err){ msg.textContent = errText(err); btn.disabled = false; btn.textContent = "Register and get my number"; }
+    }catch(err){ msg.textContent = errText(err); btn.disabled = false; btn.textContent = "Register and Get Lucky Number"; }
   });
   app.append(
     el("ol", {class:"steps", "aria-label":"How it works"},
@@ -3005,7 +3005,7 @@ function viewGuest(){
   const company = el("input", {type:"text", id:"gcompany", autocomplete:"organization", placeholder:"e.g. Ministry of Higher Education"});
   const phone = el("input", {type:"tel", id:"gphone", inputmode:"tel", autocomplete:"tel", placeholder:"e.g. 012-345 6789", required:true});
   const msg = el("p", {class:"msg", role:"status"});
-  const btn = el("button", {class:"btn primary big", type:"submit", text:"Register and get my number"});
+  const btn = el("button", {class:"btn primary big", type:"submit", text:"Register and Get Lucky Number"});
   const form = el("form", {novalidate:true},
     el("label", {class:"f", for:"gname", text:"Full name"}), name,
     el("label", {class:"f", for:"gcompany", text:"Company / organisation (optional)"}), company,
@@ -3023,7 +3023,7 @@ function viewGuest(){
       const r = await call("apiRegister", {name:n, guest:true, company:company.value, phone:pv, deviceId:deviceId()});
       remember(Object.assign({}, r, {phone:pv}));
       viewResult(r, r.status === "already" ? "You’re already registered." : "Welcome! You’re registered.", true);
-    }catch(err){ msg.textContent = errText(err); btn.disabled = false; btn.textContent = "Register and get my number"; }
+    }catch(err){ msg.textContent = errText(err); btn.disabled = false; btn.textContent = "Register and Get Lucky Number"; }
   });
   app.append(
     el("ol", {class:"steps", "aria-label":"How it works"},
