@@ -1006,25 +1006,38 @@ function pageUrl(p){ return window.__PREVIEW ? B.appUrl + "#" + (p || "form") : 
 /* open another event page. In full screen (big screen / LED) it opens on top of this page so full screen is kept;
    "← Back" returns. Inside that view, links stay in the same view. Otherwise it opens in a new tab as before. */
 const IN_VIEWER = window.self !== window.top;
+/* staff PIN: entered once, then remembered on this device (all tabs) until it changes or is wrong */
+const PIN = {
+  get(){ try{ return sessionStorage.getItem("ghg-pin") || localStorage.getItem("ghg-pin"); }catch(e){ return null; } },
+  set(v){ try{ sessionStorage.setItem("ghg-pin", v); localStorage.setItem("ghg-pin", v); }catch(e){} },
+  del(){ try{ sessionStorage.removeItem("ghg-pin"); localStorage.removeItem("ghg-pin"); }catch(e){} }
+};
+function localUrl(url){   /* in the Claude preview, pages are #views of this same file */
+  if (!window.__PREVIEW) return url;
+  const h = url.indexOf("#"); return location.href.split("#")[0] + (h >= 0 ? url.slice(h) : "");
+}
 function openPage(url){
-  if (IN_VIEWER){ location.href = url; return; }
+  if (IN_VIEWER){ if (window.__PREVIEW){ location.hash = url.slice(url.indexOf("#") + 1); location.reload(); } else location.href = url; return; }
   if (!document.fullscreenElement){ window.open(url, "_blank", "noopener"); return; }
   const old = document.querySelector(".pv"); if (old) old.remove();
   const quiet = f => { try{ Sound.duck(f); }catch(e){} try{ MUSIC.duck(f); }catch(e){} };
   quiet(0);
-  const fr = el("iframe", {class:"pv-frame", src:url, allow:"fullscreen; autoplay", title:"Event page"});
+  const fr = el("iframe", {class:"pv-frame", src:localUrl(url), allow:"fullscreen; autoplay", title:"Event page"});
   const ov = el("div", {class:"pv"}, fr,
     el("button", {class:"pv-back", type:"button", text:"← Back", onclick:() => { ov.remove(); quiet(1); }}));
   document.body.append(ov); fr.focus();
 }
+window.__openPage = openPage;
 /* any link to our own pages that would open a new tab goes through openPage */
-document.addEventListener("click", e => {
-  const a = e.target.closest && e.target.closest("a[target=_blank]"); if (!a || e.ctrlKey || e.metaKey || e.shiftKey) return;
-  let u; try{ u = new URL(a.href, location.href); }catch(_){ return; }
-  if (u.origin !== location.origin || u.pathname !== location.pathname) return;
-  if (!IN_VIEWER && !document.fullscreenElement) return;
-  e.preventDefault(); openPage(u.href);
-}, true);
+if (!window.__pvClick){ window.__pvClick = true;
+  document.addEventListener("click", e => {
+    const a = e.target.closest && e.target.closest("a[target=_blank]"); if (!a || e.ctrlKey || e.metaKey || e.shiftKey) return;
+    const href = a.getAttribute("href") || ""; let ours = false;
+    try{ const u = new URL(href, location.href); ours = href.indexOf(BOOT.appUrl) === 0 || (u.origin === location.origin && u.pathname === location.pathname); }catch(_){}
+    if (!ours || (!IN_VIEWER && !document.fullscreenElement)) return;
+    e.preventDefault(); window.__openPage(href);
+  }, true);
+}
 function el(tag, attrs, ...kids){
   const e = document.createElement(tag);
   if (attrs) for (const k in attrs){
@@ -1050,7 +1063,7 @@ function deviceId(){
   }catch(e){ return ""; }
 }
 function kioskPinGate(next){
-  const saved = sessionStorage.getItem("ghg-pin");
+  const saved = PIN.get();
   if (saved){ next(); return; }
   clear();
   const inp = el("input", {type:"password", inputmode:"numeric", autocomplete:"off", "aria-label":"Staff PIN", placeholder:"Staff PIN"});
@@ -1058,7 +1071,7 @@ function kioskPinGate(next){
   const btn = el("button", {class:"btn primary big", type:"submit", text:"Open registration desk"});
   const f = el("form", null, inp, msg, btn);
   f.addEventListener("submit", async e => { e.preventDefault(); btn.disabled = true;
-    try{ await call("apiCheckPin", inp.value); sessionStorage.setItem("ghg-pin", inp.value); next(); }
+    try{ await call("apiCheckPin", inp.value); PIN.set(inp.value); next(); }
     catch(err){ msg.textContent = errText(err); btn.disabled = false; inp.select(); } });
   app.append(el("div", {class:"card center"}, el("h2", {text:"Registration desk"}), el("p", {class:"muted", text:"Enter the staff PIN to use this device for registering guests."}), f));
   inp.focus();
@@ -1139,7 +1152,7 @@ function viewForm(){
       if (pd && (pd.length < 9 || pd.length > 15)){ msg.textContent = "Please check the phone number."; phone.focus(); return; }
       btn.disabled = true; btn.textContent = "Registering"; msg.textContent = "";
       try{
-        const r = await call("apiRegister", {name:n, guest:true, company:company.value, phone:pv, deviceId:"", pin:sessionStorage.getItem("ghg-pin") || ""});
+        const r = await call("apiRegister", {name:n, guest:true, company:company.value, phone:pv, deviceId:"", pin:PIN.get() || ""});
         viewResult(r, r.status === "already" ? "Already registered." : "Guest registered. Enjoy the evening!", true);
       }catch(err){ msg.textContent = errText(err); btn.disabled = false; btn.textContent = "Register and Get Lucky Number"; }
       return;
@@ -1153,7 +1166,7 @@ function viewForm(){
     if (!d){ msg.textContent = "Please choose your department."; (dept.value === "__other" ? other : dept).focus(); return; }
     btn.disabled = true; btn.textContent = "Registering"; msg.textContent = "";
     try{
-      const r = await call("apiRegister", {name:n, staffId:sv, email:email.value.trim(), phone:pv, org:org.value, dept:d, deviceId: B.view === "kiosk" ? "" : deviceId(), pin: B.view === "kiosk" ? (sessionStorage.getItem("ghg-pin") || "") : ""});
+      const r = await call("apiRegister", {name:n, staffId:sv, email:email.value.trim(), phone:pv, org:org.value, dept:d, deviceId: B.view === "kiosk" ? "" : deviceId(), pin: B.view === "kiosk" ? (PIN.get() || "") : ""});
       remember(r);
       viewResult(r, r.status === "already" ? "You’re already registered." : "You’re registered. Enjoy the evening!", true);
     }catch(err){ msg.textContent = errText(err); btn.disabled = false; btn.textContent = "Register and Get Lucky Number"; }
@@ -1190,7 +1203,7 @@ function viewResult(r, headline, fresh){
 
 /* ---------- dashboard (staff PIN) ---------- */
 function viewDashboard(){
-  const saved = sessionStorage.getItem("ghg-pin");
+  const saved = PIN.get();
   if (!saved){
     clear();
     const inp = el("input", {type:"password", inputmode:"numeric", autocomplete:"off", "aria-label":"Staff PIN", placeholder:"Staff PIN"});
@@ -1198,7 +1211,7 @@ function viewDashboard(){
     const btn = el("button", {class:"btn primary big", type:"submit", text:"Open dashboard"});
     const f = el("form", null, inp, msg, btn);
     f.addEventListener("submit", async e => { e.preventDefault(); btn.disabled = true;
-      try{ await call("apiCheckPin", inp.value); sessionStorage.setItem("ghg-pin", inp.value); viewDashboard(); }
+      try{ await call("apiCheckPin", inp.value); PIN.set(inp.value); viewDashboard(); }
       catch(err){ msg.textContent = errText(err); btn.disabled = false; inp.select(); } });
     app.append(el("div", {class:"card center"}, el("h2", {text:"Staff only"}), el("p", {class:"muted", text:"Enter the staff PIN to see registrations."}), f));
     inp.focus(); return;
@@ -1214,7 +1227,7 @@ function viewDashboard(){
   const deptCount = el("span", {class:"db-pill"});
   const feed = el("ul", {class:"feed"});
   /* ----- downloads (CSV opens in Excel) ----- */
-  const pinNow = () => sessionStorage.getItem("ghg-pin");
+  const pinNow = () => PIN.get();
   function saveCsv(name, table){
     const csv = "\ufeff" + table.map(r => r.map(v => '"' + String(v == null ? "" : v).replace(/"/g, '""') + '"').join(",")).join("\r\n");
     const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], {type:"text/csv"})); a.download = name; document.body.append(a); a.click(); a.remove();
@@ -1449,7 +1462,7 @@ function viewDashboard(){
   function bump(node){ node.classList.remove("db-bump"); void node.offsetWidth; node.classList.add("db-bump"); }
   async function loadVotes(){
     try{
-      const v = await call("apiAwardsState", sessionStorage.getItem("ghg-pin"));
+      const v = await call("apiAwardsState", PIN.get());
       voteBox.innerHTML = ""; voteNum.textContent = String(v.voters);
       voteBox.append(el("p", {class:"muted small", style:"margin:0 0 .6rem"}, el("b", {style:"color:" + (v.open ? "var(--ok)" : "var(--warn)"), text: v.open ? "● Voting open" : "● Voting closed"}), " · " + v.voters + " guests voted"));
       const g = el("div", {class:"grid", style:"margin-top:0"});
@@ -1462,7 +1475,7 @@ function viewDashboard(){
   async function load(){
     loadVotes();
     try{
-      const d = await call("apiDashboard", sessionStorage.getItem("ghg-pin"));
+      const d = await call("apiDashboard", PIN.get());
       rows = d.rows;
       const total = rows.length;
       if (lastTotal !== null && total > lastTotal){ bump(totalNum); toast((total - lastTotal) + " new registration" + (total - lastTotal > 1 ? "s" : "")); }
@@ -1499,14 +1512,14 @@ function viewDashboard(){
       latest.forEach(r => feed.append(el("li", null, el("span", {class:"n", text:String(r.luckyNo)}), el("span", null, el("b", {text:r.name}), el("div", {class:"sub", text:[r.staffId, r.dept].filter(Boolean).join(" · ")})), el("span", {class:"sub", text:r.time}))));
       lastAt.textContent = "Updates every 10 seconds · last checked " + new Date().toLocaleTimeString([], {hour:"numeric", minute:"2-digit", second:"2-digit"});
       live.classList.remove("off");
-    }catch(e){ live.classList.add("off"); if (/PIN/i.test(errText(e))){ sessionStorage.removeItem("ghg-pin"); viewDashboard(); } }
+    }catch(e){ live.classList.add("off"); if (/PIN/i.test(errText(e))){ PIN.del(); viewDashboard(); } }
   }
   load(); setInterval(load, 10000);
 }
 
 /* ---------- staff PIN gate (shared) ---------- */
 function staffGate(title, sub, next){
-  const saved = sessionStorage.getItem("ghg-pin");
+  const saved = PIN.get();
   if (saved){ next(saved); return; }
   clear();
   const inp = el("input", {type:"password", inputmode:"numeric", autocomplete:"off", "aria-label":"Staff PIN", placeholder:"Staff PIN"});
@@ -1514,7 +1527,7 @@ function staffGate(title, sub, next){
   const btn = el("button", {class:"btn primary big", type:"submit", text:"Open"});
   const f = el("form", null, inp, msg, btn);
   f.addEventListener("submit", async e => { e.preventDefault(); btn.disabled = true;
-    try{ await call("apiCheckPin", inp.value); sessionStorage.setItem("ghg-pin", inp.value); next(inp.value); }
+    try{ await call("apiCheckPin", inp.value); PIN.set(inp.value); next(inp.value); }
     catch(err){ msg.textContent = errText(err); btn.disabled = false; inp.select(); } });
   app.append(el("div", {class:"card center"}, el("h2", {text:title}), el("p", {class:"muted", text:sub}), f));
   inp.focus();
@@ -2273,7 +2286,7 @@ function viewAwards(pin){
     if (!qrImg.src){ const q = qrcode(0, "M"); q.addData(pageUrl("vote")); q.make(); qrImg.src = q.createDataURL(6, 2); }
     if (dlg.open) renderSettings();
   }
-  async function refresh(){ try{ A = await call("apiAwardsState", pin); render(); }catch(e){ if (/PIN/i.test(errText(e))){ sessionStorage.removeItem("ghg-pin"); location.reload(); } else toast(errText(e)); } }
+  async function refresh(){ try{ A = await call("apiAwardsState", pin); render(); }catch(e){ if (/PIN/i.test(errText(e))){ PIN.del(); location.reload(); } else toast(errText(e)); } }
 
   /* ----- call the nominees to the stage (no votes shown), then reveal from there ----- */
   let showing = false;
@@ -3056,7 +3069,7 @@ function viewDraw(pin){
     S.winners.forEach(w => chips.append(el("span", {class:"chip " + ({Collected:"collected", "No-show":"noshow", Removed:"removedc"}[w.status] || ""), title:w.status + (w.prize ? ", " + w.prize : ""), text:String(w.luckyNo)})));
   }
   async function refresh(){ try{ S = await call("apiDrawState", pin); render(); }catch(e){ handle(e); } }
-  function handle(e){ if (/PIN/i.test(errText(e))){ sessionStorage.removeItem("ghg-pin"); location.reload(); } else toast(errText(e)); }
+  function handle(e){ if (/PIN/i.test(errText(e))){ PIN.del(); location.reload(); } else toast(errText(e)); }
   let syncP = Promise.resolve();
   async function act(id, action, redraw){
     if (busy) return;
