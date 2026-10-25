@@ -1035,15 +1035,26 @@ function openPage(url, auto){
     f.addEventListener("load", () => { try{ f.contentWindow.focus(); }catch(e){} });
     ov.prepend(f); f.focus();
   };
-  const close = () => { ov.remove(); window.__pvNav = null; quiet(1); document.documentElement.classList.remove("pv-open");   /* stays in full screen */
+  const close = () => { ov.remove(); window.__pvNav = null; window.__pvBack = null; quiet(1); document.documentElement.classList.remove("pv-open");   /* stays in full screen */
     if (!document.fullscreenElement && document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(() => {}); };
   /* ← Back: one page back (e.g. QR to vote → King & Queen); from the first page, back to this screen */
-  ov.append(el("button", {class:"pv-back", type:"button", text:"← Back", onclick:() => { trail.pop(); if (trail.length) show(trail[trail.length - 1]); else close(); }}));
+  const back = () => { trail.pop(); if (trail.length) show(trail[trail.length - 1]); else close(); };
+  ov.append(el("button", {class:"pv-back", type:"button", text:"← Back (B)", onclick:back}));
+  window.__pvBack = back;
   window.__pvNav = u => { trail.push(u); show(u); };
   document.documentElement.classList.add("pv-open");
   document.body.append(ov); window.__pvNav(url);
 }
 window.__openPage = openPage;
+/* B = ← Back (also from inside the opened page) */
+if (!window.__bKey){ window.__bKey = true;
+  document.addEventListener("keydown", e => {
+    if (e.key !== "b" && e.key !== "B") return;
+    const tag = (e.target.tagName || "").toLowerCase(); if (["input","textarea","select"].includes(tag) || document.querySelector("dialog[open]")) return;
+    let fn = null; try{ fn = IN_VIEWER ? window.top.__pvBack : window.__pvBack; }catch(_){}
+    if (fn){ e.preventDefault(); e.stopPropagation(); fn(); }
+  }, true);
+}
 if (!window.__blurClick){ window.__blurClick = true;
   document.addEventListener("click", e => { const b = e.target.closest && e.target.closest("button, a"); if (b && !b.closest("dialog, form")) setTimeout(() => b.blur(), 0); });
   document.addEventListener("change", e => { if (e.target.classList && e.target.classList.contains("ld-select")) e.target.blur(); });
