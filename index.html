@@ -63,7 +63,7 @@ h2{font-family:var(--display);font-weight:700;font-size:1.35rem;line-height:1.2;
 .muted{color:var(--muted)}
 .small{font-size:.88rem}
 label.f{display:block;text-align:left;font-weight:700;margin-top:1rem}
-input[type=text],input[type=tel],input[type=password],select{width:100%;font-size:1.1rem;padding:.85rem 1rem;border:1px solid var(--line);border-radius:12px;background:var(--surface-2);margin-top:.35rem}
+input[type=text],input[type=tel],input[type=email],input[type=password],select{width:100%;font-size:1.1rem;padding:.85rem 1rem;border:1px solid var(--line);border-radius:12px;background:var(--surface-2);margin-top:.35rem}
 .btn{display:inline-block;border:1px solid var(--line);background:var(--surface-2);border-radius:12px;padding:.7rem 1.1rem;font-weight:700;cursor:pointer;text-decoration:none}
 .btn.primary{background:linear-gradient(180deg,#FBE29A 0%,#E8BE5C 55%,#C9962E 100%);border-color:#E8BE5C;color:var(--on-gold);box-shadow:0 10px 30px -12px rgba(242,207,115,.7)}
 .btn.big{width:100%;padding:1rem;font-size:1.15rem;border-radius:999px;margin-top:1.25rem}
@@ -254,7 +254,7 @@ dialog.ld-dlg{overflow:auto}
 body:not(.drawmode):not(.wide):not(.postermode) .card{padding:1.1rem 1.1rem 1.2rem;border-radius:16px}
 body:not(.drawmode):not(.wide):not(.postermode) .card h2{font-size:1.02rem;letter-spacing:.12em;margin:0 0 .2rem}
 label.f{font-size:.84rem;margin-top:.75rem}
-input[type=text],input[type=tel],input[type=password],select{font-size:.98rem;padding:.6rem .85rem;border-radius:10px;margin-top:.25rem}
+input[type=text],input[type=tel],input[type=email],input[type=password],select{font-size:.98rem;padding:.6rem .85rem;border-radius:10px;margin-top:.25rem}
 .btn.big{padding:.8rem;font-size:1rem;margin-top:1rem}
 .msg{margin:.4rem 0 0;font-size:.9rem}
 .steps{margin:0 0 .8rem;font-size:.8rem}
@@ -272,7 +272,7 @@ body:not(.drawmode):not(.wide):not(.postermode) main{max-width:25rem}
 body:not(.drawmode):not(.wide):not(.postermode) .card{padding:.9rem .95rem 1rem;border-radius:14px}
 body:not(.drawmode):not(.wide):not(.postermode) .card h2{font-size:.9rem;letter-spacing:.14em;margin:0}
 label.f{font-size:.76rem;margin-top:.55rem;letter-spacing:.01em}
-input[type=text],input[type=tel],input[type=password],select{font-size:.9rem;padding:.48rem .75rem;border-radius:9px;margin-top:.2rem}
+input[type=text],input[type=tel],input[type=email],input[type=password],select{font-size:.9rem;padding:.48rem .75rem;border-radius:9px;margin-top:.2rem}
 .btn.big{padding:.68rem;font-size:.92rem;margin-top:.85rem}
 .msg{font-size:.82rem;min-height:0}
 .steps{font-size:.74rem;margin:0 0 .6rem;gap:.3rem}
@@ -296,7 +296,7 @@ input[type=text],input[type=tel],input[type=password],select{font-size:.9rem;pad
   .steps{font-size:.7rem;margin-bottom:.55rem}
   label.f{font-size:.8rem;margin-top:.65rem}
   /* 16px stops iPhones zooming in when a field is tapped; 44px is a comfortable touch target */
-  input[type=text],input[type=tel],input[type=password],select{font-size:16px;min-height:44px;padding:.55rem .8rem}
+  input[type=text],input[type=tel],input[type=email],input[type=password],select{font-size:16px;min-height:44px;padding:.55rem .8rem}
   .btn.big{min-height:48px;font-size:1rem;margin-top:.95rem}
   .who{font-size:1.5rem}
   .lucky{font-size:clamp(4.2rem,24vw,6rem)}
@@ -768,7 +768,10 @@ body.dashmode .bgart{position:fixed}
 .poster2{position:relative;max-width:30rem;margin:.5rem auto 1rem;padding:1.4rem 1.3rem 1.3rem;border-radius:24px;text-align:center;color:var(--ink);
   background:linear-gradient(180deg,rgba(30,16,66,.92),rgba(20,10,48,.94));border:1.5px solid transparent;background-clip:padding-box;box-shadow:0 30px 70px -30px rgba(0,0,0,.9)}
 .poster2::before{content:"";position:absolute;inset:-1.5px;border-radius:25px;padding:1.5px;background:var(--p2-ring);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
-.tone-teal{--p2-a:#5FE0D2;--p2-b:#F2CF73;--p2-ring:linear-gradient(135deg,#5FE0D2,#F2CF73,#1E8C9E)}
+.tone-teal{--p2-a:#3FE3CF;--p2-b:#FFD36E;--p2-ring:linear-gradient(135deg,#3FE3CF,#FFD36E,#2A9DF4)}
+.tone-teal .p2-title span{background-image:linear-gradient(90deg,#3FE3CF,#E9FFF9 35%,#FFD36E 65%,#3FE3CF)!important;filter:drop-shadow(0 0 18px rgba(63,227,207,.45))!important}
+.tone-pink .p2-title span{filter:drop-shadow(0 0 18px rgba(255,122,198,.45))!important}
+.tone-teal .p2-qrwrap{box-shadow:0 0 50px -4px #3FE3CF}
 .tone-pink{--p2-a:#FF7AC6;--p2-b:#F2CF73;--p2-ring:linear-gradient(135deg,#FF7AC6,#F2CF73,#C38BFF)}
 .tone-royal{--p2-a:#FF7AC6;--p2-b:#7FB2FF;--p2-ring:linear-gradient(135deg,#7FB2FF,#F2CF73,#FF7AC6)}
 .p2-kick{margin:0;font-size:.7rem;font-weight:800;letter-spacing:.28em;text-transform:uppercase;color:var(--gold)}
@@ -812,6 +815,50 @@ body:not(.drawmode) .skeys.fixed{display:none}
 /* celebration buttons: bottom-right, subtle */
 .cele-actions{position:absolute;right:1.5vw;bottom:2vh;z-index:5;display:flex;gap:.5rem}
 .cele-actions .intro-skip{position:static}
+.ld-standby .intro-logos{height:clamp(36px,8vh,80px)}
+.ld-standby .intro-kick{font-size:clamp(.9rem,1.9vw,1.6rem)}
+.ld-standby-hint{position:absolute;left:0;right:0;bottom:2vh;margin:0;text-align:center;font-size:.72rem;color:var(--muted);opacity:.25;z-index:2}
+.intro-word.count.last{filter:drop-shadow(0 0 40px rgba(255,61,154,.6))}
+/* WOW draw effects */
+.ld.dim::after{content:"";position:fixed;inset:0;background:radial-gradient(ellipse 60% 55% at 50% 50%,transparent 40%,rgba(5,2,14,.55) 100%);pointer-events:none;z-index:3;animation:introIn .6s ease both}
+.spin-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;border-radius:inherit}
+.ld-panel.spinfx::before{content:"";position:absolute;inset:-60%;z-index:0;pointer-events:none;
+  background:conic-gradient(from 0deg,transparent 0 20deg,rgba(242,207,115,.22) 26deg,transparent 34deg 110deg,rgba(255,122,198,.2) 116deg,transparent 124deg 200deg,rgba(127,178,255,.2) 206deg,transparent 214deg 290deg,rgba(242,207,115,.22) 296deg,transparent 304deg);
+  animation:rays 2.4s linear infinite}
+.ld-panel.spinfx.hot::before{animation-duration:1.4s}
+.ld-panel.spinfx .ld-num{animation:spinPulse .5s ease-in-out infinite alternate}
+@keyframes spinPulse{from{filter:drop-shadow(0 0 20px rgba(242,207,115,.4))}to{filter:drop-shadow(0 0 60px rgba(255,243,196,.95))}}
+.ld-num.zoomland{animation:zoomLand .9s cubic-bezier(.15,1.6,.35,1) both!important}
+@keyframes zoomLand{0%{transform:scaleX(1.12) scale(1.9);filter:brightness(2.4) drop-shadow(0 0 80px #fff)}60%{transform:scaleX(1.12) scale(.95)}100%{transform:scaleX(1.12) scale(1);filter:drop-shadow(0 0 40px rgba(242,207,115,.6))}}
+.land-burst{position:absolute;left:50%;top:48%;width:10px;height:10px;z-index:2;pointer-events:none;border-radius:50%;
+  box-shadow:0 0 0 0 rgba(255,243,196,.9),0 0 120px 60px rgba(242,207,115,.6);animation:landBurst 1.6s ease-out forwards}
+.land-burst.grand{box-shadow:0 0 0 0 #fff,0 0 160px 90px rgba(255,243,196,.8)}
+@keyframes landBurst{0%{transform:translate(-50%,-50%) scale(.2);opacity:1}40%{opacity:1}100%{transform:translate(-50%,-50%) scale(60);opacity:0}}
+.coin-canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:70}
+@media (prefers-reduced-motion:reduce){ .ld-panel.spinfx::before,.ld-panel.spinfx .ld-num,.ld-num.zoomland{animation:none!important} }
+/* King & Queen polish */
+.aw-strip .aw-url{display:none!important}
+.aw-label{position:relative;display:inline-block;padding:0 .2em}
+.aw-label .glints,.awn .awc-title .glints,.awc .awc-title .glints{position:absolute;inset:-20% -4%;pointer-events:none}
+.glints i{position:absolute;width:12px;height:12px;background:#fff;clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%);filter:drop-shadow(0 0 6px #fff);opacity:0;animation:twinkle 2s ease-in-out infinite}
+.aw-label::after{content:attr(data-t);position:absolute;inset:0;padding:0 .2em;-webkit-text-fill-color:transparent;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.55) 48%,transparent 66%);background-size:250% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 3.2s ease-in-out infinite;pointer-events:none}
+@keyframes shine{0%{background-position:150% 0}60%,100%{background-position:-60% 0}}
+.awn .awc-title,.awc .awc-title{position:relative;display:table;margin-left:auto;margin-right:auto}
+/* finalists: cards drop in under a spotlight, a light sweep crosses each card, a halo turns behind each face */
+.awn-card{position:relative;overflow:hidden;animation:cardDrop .9s cubic-bezier(.2,1.4,.4,1) both!important}
+@keyframes cardDrop{0%{opacity:0;transform:translateY(-60px) rotateX(70deg) scale(.7);filter:brightness(2.4) blur(6px)}60%{opacity:1;filter:brightness(1.4)}100%{transform:none;filter:none}}
+.awn-card::before{content:"";position:absolute;left:50%;top:-140%;width:140%;height:180%;transform:translateX(-50%);background:radial-gradient(ellipse 40% 60% at 50% 100%,rgba(255,250,230,.28),transparent 70%);pointer-events:none;animation:cardSpot 1.6s ease-out both}
+@keyframes cardSpot{0%{opacity:0}30%{opacity:1}100%{opacity:.35}}
+.awn-card::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.35) 50%,transparent 65%);background-size:250% 100%;animation:shine 3s .8s ease-in-out infinite;pointer-events:none}
+.awn-av{position:relative}
+.awn-av::before{content:"";position:absolute;inset:-9px;border-radius:50%;background:conic-gradient(from 0deg,transparent,rgba(255,243,196,.95),transparent 30%,rgba(255,255,255,.7),transparent 60%,rgba(255,243,196,.95),transparent);
+  -webkit-mask:radial-gradient(circle,transparent 62%,#000 64%);mask:radial-gradient(circle,transparent 62%,#000 64%);animation:haloSpin 2.6s linear infinite}
+.awn-badge{position:absolute;top:.7rem;right:.7rem;font-size:.62rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;padding:.15rem .5rem;border-radius:999px;color:#1b1040;background:linear-gradient(90deg,#FFF3C4,#F2CF73)}
+.awn-name{background:linear-gradient(180deg,#ffffff,#FFF3C4);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.vortex-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+.awc.shake{animation:ldshake .7s ease}
+@media (prefers-reduced-motion:reduce){ .glints i,.aw-label::after,.awn-card,.awn-card::before,.awn-card::after,.awn-av::before{animation:none!important} }
 /* posters: fit on one screen */
 .poster .qr.sm{width:min(50%,13rem)}
 .poster{padding-top:1.2rem;padding-bottom:1.2rem}
@@ -904,7 +951,7 @@ function kioskPinGate(next){
   const msg = el("p", {class:"msg", role:"status"});
   const btn = el("button", {class:"btn primary big", type:"submit", text:"Open registration desk"});
   const f = el("form", null, inp, msg, btn);
-  f.addEventListener("submit", async e => { e.preventDefault(); btn.disabled = true;
+  f.addEventListener("submit", async e => { e.preventDefault(); btn.disabled = true; try{ Sound.unlock(); }catch(_){}
     try{ await call("apiCheckPin", inp.value); sessionStorage.setItem("ghg-pin", inp.value); next(); }
     catch(err){ msg.textContent = errText(err); btn.disabled = false; inp.select(); } });
   app.append(el("div", {class:"card center"}, el("h2", {text:"Registration desk"}), el("p", {class:"muted", text:"Enter the staff PIN to use this device for registering guests."}), f));
@@ -943,7 +990,17 @@ function viewForm(){
   const desk = B.view === "kiosk";
   let guest = false;
   const company = el("input", {type:"text", id:"company", autocomplete:"organization", placeholder:"e.g. Mövenpick, Ministry of Higher Education, partner company"});
+  const email = el("input", {type:"email", id:"email", autocomplete:"email", inputmode:"email", autocapitalize:"off", spellcheck:"false", placeholder:"e.g. name@cyberjaya.edu.my", required:true});
+  const emailOk = v => {   /* same rule as the server: official staff domains only, never student emails */
+    const e = String(v || "").trim().toLowerCase(); if (!e) return B.emailRequired === false ? "" : "Please enter your staff email.";
+    if (!/^[^\s@]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(e)) return "Please check your email address.";
+    const dom = e.split("@")[1], allow = B.emailDomains || [], block = B.emailBlocked || [];
+    if (block.some(b => dom === b || dom.endsWith("." + b))) return "This email can’t be used to register as staff. Please use your official staff email.";
+    if (allow.length && !allow.some(p => p.indexOf("*.") === 0 ? dom.endsWith(p.slice(1)) : dom === p)) return "Please use your official staff email (" + allow.filter(p => p.indexOf("*.") !== 0).map(p => "@" + p).join(" or ") + ").";
+    return "";
+  };
   const staffBits = [el("label", {class:"f", for:"sid", text: B.staffIdRequired ? "Staff ID" : "Staff ID (optional)"}), sid,
+    el("label", {class:"f", for:"email", text: B.emailRequired === false ? "Staff Email (optional)" : "Staff Email"}), email,
     el("label", {class:"f", for:"org", text:"Organisation"}), org, el("label", {class:"f", for:"dept", text:"Department"}), dept, other];
   const guestBits = [el("label", {class:"f", for:"company", text:"Company / organisation (optional)"}), company];
   const phoneLabel = el("label", {class:"f", for:"phone", text: B.phoneRequired ? "Phone number" : "Phone number (optional)"});
@@ -982,6 +1039,7 @@ function viewForm(){
       return;
     }
     if (B.staffIdRequired && !sv){ msg.textContent = "Please enter your staff ID."; sid.focus(); return; }
+    const em = emailOk(email.value); if (em){ msg.textContent = em; email.focus(); return; }
     const pv = phone.value.trim(), pd = pv.replace(/\D/g, "");
     if (B.phoneRequired && !pd){ msg.textContent = "Please enter your phone number."; phone.focus(); return; }
     if (pd && (pd.length < 9 || pd.length > 15)){ msg.textContent = "Please check your phone number."; phone.focus(); return; }
@@ -989,7 +1047,7 @@ function viewForm(){
     if (!d){ msg.textContent = "Please choose your department."; (dept.value === "__other" ? other : dept).focus(); return; }
     btn.disabled = true; btn.textContent = "Registering"; msg.textContent = "";
     try{
-      const r = await call("apiRegister", {name:n, staffId:sv, phone:pv, org:org.value, dept:d, deviceId: B.view === "kiosk" ? "" : deviceId(), pin: B.view === "kiosk" ? (sessionStorage.getItem("ghg-pin") || "") : ""});
+      const r = await call("apiRegister", {name:n, staffId:sv, email:email.value.trim(), phone:pv, org:org.value, dept:d, deviceId: B.view === "kiosk" ? "" : deviceId(), pin: B.view === "kiosk" ? (sessionStorage.getItem("ghg-pin") || "") : ""});
       remember(r);
       viewResult(r, r.status === "already" ? "You’re already registered." : "You’re registered. Enjoy the evening!", true);
     }catch(err){ msg.textContent = errText(err); btn.disabled = false; btn.textContent = "Register and get my number"; }
@@ -1062,8 +1120,8 @@ function viewDashboard(){
     saveCsv("Gala-registrations-" + stamp() + ".csv",
       [["TOTAL REGISTERED", rows.length], [], ["BY ORGANISATION", "Total"]].concat(Object.entries(orgs).sort((a, b) => b[1] - a[1]))
       .concat([[], ["BY DEPARTMENT", "Total"]]).concat(Object.entries(depts).sort((a, b) => b[1] - a[1]))
-      .concat([[], ["ALL REGISTRATIONS"], ["Lucky No", "Name", "Staff ID", "Phone", "Organisation", "Department", "Registered at"]])
-      .concat(rows.map(r => [r.luckyNo, r.name, r.staffId || "", r.phone || "", r.org || "", r.dept, r.time])));
+      .concat([[], ["ALL REGISTRATIONS"], ["Lucky No", "Name", "Staff ID", "Email", "Phone", "Organisation", "Department", "Registered at"]])
+      .concat(rows.map(r => [r.luckyNo, r.name, r.staffId || "", r.email || "", r.phone || "", r.org || "", r.dept, r.time])));
   }
   async function dlVotes(){
     try{
@@ -1094,9 +1152,9 @@ function viewDashboard(){
       if (openVotes) t.push(["Open votes (not linked to a staff ID)", openVotes]);
       t.push([], ["BY ORGANISATION", "Registered", "Voted"]);
       Object.entries(orgs).sort((a, b) => b[1][0] - a[1][0]).forEach(([o, v]) => t.push([o, v[0], v[1]]));
-      t.push([], ["ALL REGISTERED STAFF"], ["No", "Name", "Staff ID", "Organisation", "Department", "Lucky No", "Voted?", "Voted for Queen", "Voted for King"]);
+      t.push([], ["ALL REGISTERED STAFF"], ["No", "Name", "Staff ID", "Email", "Organisation", "Department", "Lucky No", "Voted?", "Voted for Queen", "Voted for King"]);
       rows.slice().sort((a, b) => a.name.localeCompare(b.name)).forEach((r, i) => { const v = voted[key(r.staffId)] || {};
-        t.push([i + 1, r.name, r.staffId || "", r.org || "", r.dept || "", r.luckyNo, (v.QUEEN || v.KING) ? "Yes" : "No", v.QUEEN || "", v.KING || ""]); });
+        t.push([i + 1, r.name, r.staffId || "", r.email || "", r.org || "", r.dept || "", r.luckyNo, (v.QUEEN || v.KING) ? "Yes" : "No", v.QUEEN || "", v.KING || ""]); });
       saveCsv("Gala-registered-and-voted-" + stamp() + ".csv", t);
     }catch(e){ toast(errText(e)); }
   }
@@ -1156,7 +1214,22 @@ function viewDashboard(){
         setBox.innerHTML = "";
         setBox.append(H3("Staff Registration (QR Code)"), seg("ds-open", [[true, "Open"], [false, "Closed"]], r.open, v => save({open:v})),
           note("Closed = the registration pages show “Registration is closed. Please ask at the registration counter.”"),
-          H3("Guest Registration (Guest QR Code)"), seg("ds-gopen", [[true, "Open"], [false, "Registration desk only"]], r.guestOpen, v => save({guestOpen:v})));
+          H3("Guest Registration (Guest QR Code)"), seg("ds-gopen", [[true, "Open"], [false, "Registration desk only"]], r.guestOpen, v => save({guestOpen:v})),
+          H3("Official Staff Email"),
+          seg("ds-ereq", [[true, "Required for staff"], [false, "Optional"]], r.emailRequired !== false, v => save({emailRequired:v})),
+          (() => { const a = el("input", {type:"text", value:r.emailDomains || "", style:"max-width:30rem", "aria-label":"Allowed email domains"});
+            const b = el("input", {type:"text", value:r.emailBlocked || "", style:"max-width:30rem", "aria-label":"Blocked email domains"});
+            return el("div", null,
+              el("p", {class:"small", style:"margin:.5rem 0 .2rem", text:"Allowed domains (*.cyberjaya.edu.my = kk.cyberjaya.edu.my, kh.cyberjaya.edu.my …)"}), a,
+              el("p", {class:"small", style:"margin:.5rem 0 .2rem", text:"Never allowed (for example student emails)"}), b,
+              el("div", {class:"row"}, el("button", {class:"btn primary", type:"button", text:"Save Email Rules", onclick:() => bg(call("apiSaveRegSettings", pin, {emailDomains:a.value, emailBlocked:b.value}), x => { cache.reg = x; a.value = x.emailDomains; b.value = x.emailBlocked; })}))); })(),
+          H3("Allowed Staff ID Prefixes"),
+          (() => { const inp = el("input", {type:"text", value:r.prefixes || "", placeholder:"e.g. UOC, MG, SMR", style:"max-width:18rem", "aria-label":"Allowed staff ID prefixes"});
+            return el("div", {class:"row", style:"margin-top:0"}, inp, el("button", {class:"btn primary", type:"button", text:"Save", onclick:() => { cache.reg.prefixes = inp.value; bg(call("apiSaveRegSettings", pin, {prefixes:inp.value}), x => { cache.reg = x; inp.value = x.prefixes; }); }})); })(),
+          note("Only staff IDs starting with these can register, for example UOC, MG, SMR. Add KU, KK later if Kota Kinabalu and Kuching staff join. Leave empty to allow any staff ID. Guests are not affected."),
+          H3("Staff List (from HR)"),
+          el("p", {class:"small", style:"margin:.2rem 0"}, el("b", {style:"color:" + (r.staffList ? "var(--ok)" : "var(--warn)"), text: r.staffList ? "● " + r.staffList + " staff on the list: checks are ON" : "● No staff list yet: checks are OFF"})),
+          note("Paste the HR staff list (Staff ID, Name, and Phone if available) into the “Staff List” tab of the Google Sheet. Then staff can only register with a Staff ID on the list, and anyone on the list is stopped from registering as a guest."));
       }
       if (setTab === "draw"){
         const D = cache.draw, st = D.settings;
@@ -1824,12 +1897,23 @@ function viewVote(){
   const votedLocal = () => { try{ return JSON.parse(localStorage.getItem(vkey)) || {}; }catch(e){ return {}; } };
   let cfg = null, voter = null;
   const devId = () => { let d = ""; try{ d = localStorage.getItem("ghg-device") || ""; if (!d){ d = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(36).slice(2)); localStorage.setItem("ghg-device", d); } }catch(e){} return d; };
+  /* keep the first screen in step with the settings: if the committee switches guests on/off or opens/closes voting, it updates by itself (unless someone is typing) */
+  let onStep1 = false;
+  const watch = setInterval(() => {
+    if (!document.body.contains(app) || !onStep1) return;
+    call("apiVoteConfig").then(c => {
+      const changed = !cfg || c.open !== cfg.open || (c.guestsVote !== false) !== (cfg.guestsVote !== false) || c.check !== cfg.check || c.nominees.length !== cfg.nominees.length;
+      const typed = Array.prototype.some.call(app.querySelectorAll("input"), i => i.value.trim() && !i.defaultValue);
+      cfg = c; if (changed && onStep1 && !typed) step1();
+    }).catch(() => {});
+  }, 15000);
   call("apiVoteConfig").then(c => { cfg = c; step1(); }).catch(e => { clear(); app.append(el("div", {class:"card center"}, el("p", {class:"msg", text:errText(e)}))); });
   function closedCard(t, sub){ clear(); app.append(el("div", {class:"card center vote-card"}, royalPair("vote-crowns"), el("h2", {text:t}), bdTag(), el("p", {class:"muted", text:sub}))); }
   function step1(){
     if (!cfg.open) return closedCard("Best Dressed voting", "Voting isn’t open right now. Please check back when the emcee announces it.");
     if (!cfg.nominees.length) return closedCard("Best Dressed voting", "The nominees haven’t been announced yet. Please check back soon.");
     const done = votedLocal(); if (done.QUEEN && done.KING) return thanks(done.name);
+    onStep1 = true;
     if (cfg.check === "OPEN"){
       clear(); app.append(el("div", {class:"card center"}, el("p", {class:"muted", text:"Loading…"})));
       call("apiVoteCheck", {deviceId:devId()}).then(r => { voter = {staffId:"", phone4:"", name:"", voted:r.voted}; if (r.voted.QUEEN && r.voted.KING) return thanks("", true); step2(); })
@@ -1839,17 +1923,29 @@ function viewVote(){
     clear();
     let mem = null; try{ mem = JSON.parse(localStorage.getItem("ghg-simple-reg-v1")); }catch(e){}
     const gv = cfg.guestsVote !== false;
-    const sid = el("input", {type:"text", id:"vsid", autocapitalize:"characters", autocomplete:"off", placeholder: gv ? "e.g. UOC1234 · guests: 012-345 6789" : "e.g. UOC1234 or MG1234", value:(mem && (mem.staffId || (gv && mem.org === "Guest" && mem.phone))) || ""});
+    /* Staff vote with their staff ID; guests (no staff ID) vote with their phone number */
+    let who = (gv && mem && mem.org === "Guest" && !mem.staffId) ? "guest" : "staff";
+    const sid = el("input", {type:"text", id:"vsid", autocapitalize:"characters", autocomplete:"off", placeholder:"e.g. UOC1234 or MG1234", value:(mem && mem.staffId) || ""});
+    const gph = el("input", {type:"tel", id:"vgph", inputmode:"tel", autocomplete:"tel", placeholder:"e.g. 012-345 6789", value:(mem && mem.org === "Guest" && mem.phone) || ""});
     const ph = el("input", {type:"tel", id:"vph", inputmode:"numeric", maxlength:"4", autocomplete:"off", placeholder:"e.g. 6789"});
     const msg = el("p", {class:"msg", role:"status"});
     const btn = el("button", {class:"btn primary big", type:"submit", text:"Continue"});
-    const f = el("form", {novalidate:true},
-      el("label", {class:"f", for:"vsid", text: gv ? "Your staff ID (guests: your phone number)" : "Your staff ID"}), sid,
-      cfg.check === "FULL" ? el("label", {class:"f", for:"vph", text:"Last 4 digits of the phone number you registered with"}) : null, cfg.check === "FULL" ? ph : null, msg, btn);
+    const staffBits = [el("label", {class:"f", for:"vsid", text:"Staff ID"}), sid,
+      cfg.check === "FULL" ? el("label", {class:"f", for:"vph", text:"Last 4 digits of your registered phone number"}) : null, cfg.check === "FULL" ? ph : null].filter(Boolean);
+    const guestBits = [el("label", {class:"f", for:"vgph", text:"Phone Number"}), gph];
+    const seg = gv ? el("div", {class:"who-seg", role:"radiogroup", "aria-label":"Who is voting"},
+      el("button", {type:"button", role:"radio", text:"Staff"}), el("button", {type:"button", role:"radio", text:"Guest"})) : null;
+    function setWho(w){ who = w; if (seg) seg.querySelectorAll("button").forEach((b, i) => b.setAttribute("aria-checked", String(i === (w === "guest" ? 1 : 0))));
+      staffBits.forEach(n => n.hidden = w === "guest"); guestBits.forEach(n => n.hidden = w !== "guest"); msg.textContent = ""; }
+    if (seg) seg.querySelectorAll("button").forEach((b, i) => b.addEventListener("click", () => { setWho(i ? "guest" : "staff"); (i ? gph : sid).focus(); }));
+    const f = el("form", {novalidate:true}, seg, staffBits, gv ? guestBits : null, msg, btn);
+    setWho(who);
     f.addEventListener("submit", async e => { e.preventDefault(); msg.textContent = "";
-      if (!sid.value.trim()){ msg.textContent = "Please enter your staff ID (guests: your phone number)."; sid.focus(); return; }
+      const idv = who === "guest" ? gph.value.trim() : sid.value.trim();
+      if (!idv){ msg.textContent = who === "guest" ? "Please enter your phone number." : "Please enter your staff ID."; (who === "guest" ? gph : sid).focus(); return; }
+      if (who === "guest" && idv.replace(/\D/g, "").length < 9){ msg.textContent = "Please check your phone number."; gph.focus(); return; }
       btn.disabled = true; btn.textContent = "Checking…";
-      try{ const r = await call("apiVoteCheck", {staffId:sid.value, phone4:ph.value, deviceId:devId()}); voter = {staffId:sid.value, phone4:ph.value, name:r.name, voted:r.voted};
+      try{ const r = await call("apiVoteCheck", {staffId:idv, phone4:ph.value, deviceId:devId()}); voter = {staffId:idv, phone4:ph.value, name:r.name, voted:r.voted};
         if (r.voted.QUEEN && r.voted.KING) return thanks(r.name, true); step2(); }
       catch(err){ msg.textContent = errText(err); btn.disabled = false; btn.textContent = "Continue"; } });
     app.append(el("div", {class:"card vote-card"}, royalPair("vote-crowns"),
@@ -1857,7 +1953,7 @@ function viewVote(){
       el("p", {class:"muted small center", text:"One vote per person for each award."}), f));
   }
   function step2(){
-    clear();
+    onStep1 = false; clear();
     const pick = {};
     const submit = el("button", {class:"btn primary big", type:"button", text:"Submit my vote", disabled:true});
     const msg = el("p", {class:"msg", role:"status"});
@@ -1893,7 +1989,7 @@ function viewVote(){
       sections, msg, submit));
   }
   function thanks(name, already){
-    clear();
+    onStep1 = false; clear();
     app.append(el("div", {class:"card center vote-card"}, royalPair("vote-crowns big"),
       el("h2", {text: already ? "You’ve already voted" : "Thank you for voting!"}),
       name ? el("p", {style:"font-weight:700;margin:.2rem 0", text:name}) : null,
@@ -1919,7 +2015,7 @@ function goFull(){ const d = document, r = d.documentElement; if (d.fullscreenEl
 function stageKeys(o){
   const mk = (letter, title, fn) => el("button", {class:"skey", type:"button", title:title, "aria-label":title, text:letter, onclick:e => { e.stopPropagation(); fn(); }});
   const bS = mk("S", "Stop / play music (S)", o.stop), bL = mk("L", "Slow: softer music (L)", o.slow), bF = mk("F", "Full screen (F)", goFull);
-  const box = el("div", {class:"skeys" + (o.fixed ? " fixed" : ""), role:"group", "aria-label":"Stage controls"}, bS, bL, bF);
+  const box = el("div", {class:"skeys" + (o.fixed ? " fixed" : ""), role:"group", "aria-label":"Stage controls"}, o.onlyFull ? null : bS, o.onlyFull ? null : bL, bF);
   return { el: box, paint(stopped, soft){ bS.classList.toggle("on", !!stopped); bL.classList.toggle("on", !!soft); bL.disabled = !!stopped; } };
 }
 /* your own MP3s: if a setting is empty, use winner.mp3 / intro.mp3 / runway.mp3 / awards.mp3 when that file is on the website */
@@ -1946,12 +2042,62 @@ function musicCtl(start){
   };
 }
 
+/* ---------- shared stage effects for King & Queen ---------- */
+const PAL = { KING:["#7FB2FF", "#F2CF73", "#B57BFF", "#FFF3C4", "#4A8BFF"], QUEEN:["#FF7AC6", "#F2CF73", "#C38BFF", "#FFF3C4", "#FF3D9A"] };
+/* tiny blinking glints scattered over a title */
+function glints(n){ const b = el("span", {class:"glints", "aria-hidden":"true"});
+  for (let i = 0; i < n; i++) b.append(el("i", {style:"left:" + (4 + Math.random() * 92).toFixed(1) + "%;top:" + (Math.random() * 80).toFixed(1) + "%;animation-delay:" + (Math.random() * 3).toFixed(2) + "s;animation-duration:" + (1.4 + Math.random() * 1.6).toFixed(2) + "s"}));
+  return b; }
+/* light vortex pulled into the centre (while the names spin) */
+function vortexFx(host, cat, secs){
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return () => {};
+  const cv = el("canvas", {class:"vortex-canvas", "aria-hidden":"true"}); host.prepend(cv);
+  const W = innerWidth, H = innerHeight, dpr = devicePixelRatio || 1; cv.width = W * dpr; cv.height = H * dpr;
+  const cx = cv.getContext("2d"); cx.setTransform(dpr, 0, 0, dpr, 0, 0); const ox = W / 2, oy = H * .58, cols = PAL[cat];
+  let parts = [], alive = true; const t0 = performance.now();
+  (function frame(now){
+    if (!alive){ cx.clearRect(0, 0, W, H); return; }
+    const p = Math.min(1, (now - t0) / (secs * 1000));
+    for (let k = 0; k < 3 + p * 14; k++){ const a = Math.random() * 6.283; parts.push({a, d:Math.max(W, H) * (.5 + Math.random() * .3), s:.008 + Math.random() * .01 + p * .02, w:.02 + p * .05, c:cols[(Math.random() * cols.length) | 0], z:1 + Math.random() * 2.2}); }
+    cx.globalCompositeOperation = "source-over"; cx.fillStyle = "rgba(8,3,22,.2)"; cx.fillRect(0, 0, W, H); cx.globalCompositeOperation = "lighter";
+    parts.forEach(q => { const px = ox + Math.cos(q.a) * q.d, py = oy + Math.sin(q.a) * q.d * .5; q.a += q.w; q.d *= (1 - q.s - p * .01);
+      cx.strokeStyle = q.c; cx.globalAlpha = Math.min(1, q.d / 80); cx.lineWidth = q.z; cx.beginPath(); cx.moveTo(px, py); cx.lineTo(ox + Math.cos(q.a) * q.d, oy + Math.sin(q.a) * q.d * .5); cx.stroke(); });
+    parts = parts.filter(q => q.d > 10); cx.globalAlpha = 1;
+    requestAnimationFrame(frame);
+  })(t0);
+  return () => { alive = false; setTimeout(() => cv.remove(), 60); };
+}
+/* the big moment: white flash, shockwave, gold coins and confetti cannons */
+function burstFx(cat, big){
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const fl = el("div", {class:"ld-flash gold", "aria-hidden":"true"}); document.body.append(fl); setTimeout(() => fl.remove(), 1100);
+  const cv = el("canvas", {class:"coin-canvas", "aria-hidden":"true"}); document.body.append(cv);
+  const dpr = devicePixelRatio || 1, W = innerWidth, H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; const cx = cv.getContext("2d"); cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const cols = PAL[cat], parts = [], ox = W / 2, oy = H * .5;
+  for (let k = 0; k < (big ? 280 : 180); k++){ const a = Math.random() * 6.283, sp = 4 + Math.random() * (big ? 17 : 12);
+    parts.push({x:ox, y:oy, vx:Math.cos(a) * sp, vy:Math.sin(a) * sp - 4, r:3 + Math.random() * 5, rot:Math.random() * 6, vr:(Math.random() - .5) * .4, life:0, coin:Math.random() < .55, c:cols[k % cols.length]}); }
+  [[0, H, 1], [W, H, -1]].forEach(([x, y, dir]) => { for (let k = 0; k < (big ? 110 : 70); k++){ const a = -Math.PI / 2 + dir * (.2 + Math.random() * .5), sp = 13 + Math.random() * 13;
+    parts.push({x, y, vx:Math.cos(a) * sp, vy:Math.sin(a) * sp, r:3 + Math.random() * 4, rot:Math.random() * 6, vr:(Math.random() - .5) * .5, life:0, coin:false, c:cols[k % cols.length]}); } });
+  const t0 = performance.now();
+  (function frame(now){
+    cx.clearRect(0, 0, W, H);
+    parts.forEach(q => { q.vy += .3; q.vx *= .99; q.x += q.vx; q.y += q.vy; q.rot += q.vr; q.life++;
+      cx.save(); cx.translate(q.x, q.y); cx.rotate(q.rot); cx.globalAlpha = Math.max(0, 1 - q.life / 150);
+      if (q.coin){ const s2 = Math.abs(Math.cos(q.rot * 2)), g = cx.createLinearGradient(-q.r, 0, q.r, 0); g.addColorStop(0, "#C9962E"); g.addColorStop(.5, "#FFF3C4"); g.addColorStop(1, "#C9962E");
+        cx.fillStyle = g; cx.beginPath(); cx.ellipse(0, 0, q.r * (.3 + .7 * s2), q.r, 0, 0, 7); cx.fill(); }
+      else { cx.fillStyle = q.c; cx.fillRect(-q.r / 2, -q.r / 4, q.r, q.r / 2); }
+      cx.restore(); });
+    if (now - t0 < 2800) requestAnimationFrame(frame); else cv.remove();
+  })(t0);
+}
+
 /* ---------- awards screen (staff PIN, for the big screen) ---------- */
 function viewAwards(pin){
   document.body.classList.add("drawmode"); clear();
   let A = null, guests = [];
   const autoAw = {runway:"", awards:""};
   mp3Default("runway.mp3").then(v => autoAw.runway = v); mp3Default("awards.mp3").then(v => autoAw.awards = v);
+  mp3Default("finalists.mp3").then(v => autoAw.finalists = v); mp3Default("reveal.mp3").then(v => autoAw.reveal = v);
   const revealed = (() => { try{ return JSON.parse(sessionStorage.getItem("ghg-revealed")) || {}; }catch(e){ return {}; } })();
   const saveRev = () => { try{ sessionStorage.setItem("ghg-revealed", JSON.stringify(revealed)); }catch(e){} };
   const cards = {};
@@ -2004,7 +2150,7 @@ function viewAwards(pin){
     if (!A) return;
     CAT_ORDER.forEach(cat => {
       const c = cards[cat], L = leaders(cat);
-      c.label.textContent = A.labels[cat];
+      if (c.label.dataset.t !== A.labels[cat]){ c.label.dataset.t = A.labels[cat]; c.label.textContent = A.labels[cat]; c.label.append(glints(9)); }
       c.count.textContent = A.perCat[cat] + " vote" + (A.perCat[cat] === 1 ? "" : "s") + " · " + L.list.length + " nominee" + (L.list.length === 1 ? "" : "s");
       const r = revealed[cat];
       if (r){ c.box.classList.add("done"); c.orb.innerHTML = ""; c.orb.append(el("span", {text:initials(r.names[0])})); c.name.textContent = r.names.join(" & "); c.meta.textContent = r.tie ? "It’s a tie! · " + r.votes + " votes each" : [r.staffId, r.dept, r.votes + " votes"].filter(Boolean).join(" · "); c.btn.textContent = "↺ Reveal again"; }
@@ -2031,7 +2177,7 @@ function viewAwards(pin){
     const list = finalists(cat);
     showing = true;
     const label = A.labels[cat], timers = [];
-    const fm = A.finalMusic || autoAw.runway;
+    const fm = A.finalMusic || autoAw.finalists || autoAw.runway;
     const startMusic = () => { if (fm){ Sound.mode("intro", 1); MUSIC.play(fm, "Finalists music", 90, true).then(ok => { if (!ok && showing) Sound.mode("runway", 1); }); } else Sound.mode("runway", 1); };
     const mc = musicCtl(startMusic);
     const close = (toReveal) => { if (!ov.isConnected) return; timers.forEach(clearTimeout); document.removeEventListener("keydown", key, true); ov.classList.add("out"); setTimeout(() => ov.remove(), 600); showing = false;
@@ -2048,7 +2194,7 @@ function viewAwards(pin){
       el("div", {class:"awc-stage"},
         royalIcon(cat, "awn-crown"),
         el("p", {class:"awn-kick", text: A.finalists && list.length === A.finalists ? "Top " + A.finalists + " finalists for" : "The finalists for"}),
-        el("p", {class:"awc-title"}, label.toUpperCase().split("").map((c, i) => el("span", {style:"animation-delay:" + (0.2 + i * 0.035) + "s", text: c === " " ? "\u00a0" : c}))),
+        el("p", {class:"awc-title"}, label.toUpperCase().split("").map((c, i) => el("span", {style:"animation-delay:" + (0.2 + i * 0.035) + "s", text: c === " " ? "\u00a0" : c})), glints(12)),
         grid, revealBtn),
       mc.el,
       el("button", {class:"intro-skip", type:"button", text:"Close", onclick:() => close(false)}));
@@ -2059,10 +2205,11 @@ function viewAwards(pin){
     startMusic();
     list.forEach((n, i) => timers.push(setTimeout(() => {
       grid.append(el("div", {class:"awn-card"},
+        el("span", {class:"awn-badge", text:"Finalist"}),
         el("span", {class:"awn-av " + cat.toLowerCase(), text:initials(n.name)}),
         el("p", {class:"awn-name", text:n.name}),
         el("p", {class:"awn-meta", text:[n.staffId, n.dept].filter(Boolean).join(" · ")})));
-      Sound.lock(true, 2);
+      if (!fm) Sound.lock(true, 2);
     }, 1400 + i * 900)));
     timers.push(setTimeout(() => revealBtn.classList.add("show"), 1400 + list.length * 900 + 300));
   }
@@ -2089,17 +2236,20 @@ function viewAwards(pin){
         el("div", {class:"awr-rollwrap"}, roll)));
     document.body.append(ov);
     celebrationSky(ov, ov.querySelector(".cele-sky"), 1, null, true);
-    const secs = 7; Sound.roll(secs, 3);
+    const secs = 7, rmp3 = autoAw.reveal;
+    MUSIC.stop(0); Sound.mode("intro", 1);
+    if (rmp3) MUSIC.play(rmp3, "Reveal", 100, false).then(ok => { if (!ok) Sound.roll(secs, 3); }); else Sound.roll(secs, 3);
+    const stopV = vortexFx(ov, cat, secs);
     const start = performance.now();
     (function spin(){
       const t = (performance.now() - start) / (secs * 1000);
-      if (t >= 1){ ov.remove(); winnerScreen(cat, L); return; }
+      if (t >= 1){ stopV(); ov.remove(); winnerScreen(cat, L, !!rmp3); return; }
       roll.textContent = names[Math.floor(Math.random() * names.length)];
       roll.classList.remove("tick"); void roll.offsetWidth; roll.classList.add("tick");
       setTimeout(spin, 60 + 340 * Math.pow(t, 2.4));
     })();
   }
-  function winnerScreen(cat, L){
+  function winnerScreen(cat, L, fanfareInMp3){
     const w = L.winners, tie = w.length > 1, label = A.labels[cat];
     revealed[cat] = {names:w.map(x => x.name), staffId: tie ? "" : (w[0].staffId || ""), dept: tie ? "" : w[0].dept, votes:L.top, tie}; saveRev(); render();
     const title = label.toUpperCase();
@@ -2127,8 +2277,9 @@ function viewAwards(pin){
     document.addEventListener("keydown", key, true);
     document.body.append(ov);
     celebrationSky(ov, ov.querySelector(".cele-sky"), 3, cat);
-    Sound.win(3); confetti(); setTimeout(confetti, 1000);
-    setTimeout(() => { if (ov.isConnected && !mc.stopped) startMusic(); }, 1600);   /* music right after the name appears */
+    if (!fanfareInMp3) Sound.win(3);
+    burstFx(cat, true); ov.classList.add("shake"); confetti(); setTimeout(confetti, 1000);
+    setTimeout(() => { if (ov.isConnected && !mc.stopped) startMusic(); }, fanfareInMp3 ? 3600 : 1600);   /* after the fanfare */
   }
 
   /* ----- settings dialog ----- */
@@ -2283,7 +2434,7 @@ function viewDraw(pin){
       introBtn, fsBtn, musicBtn, el("label", {class:"ld-vol"}, el("span", {text:"Music"}), mVol),
       fxBtn, el("label", {class:"ld-vol"}, el("span", {text:"Effects"}), fVol),
       setBtn,
-      el("p", {class:"ld-keys", text:"Keys: Space draw · I intro · S stop / play music · L slow (softer) · F full screen"})),
+      el("p", {class:"ld-keys", text:"Keys: Space draw · C prize collected · S stop / play music · L slow · F full screen · I countdown"})),
     dockBtn);
   function setDock(open){ dock.classList.toggle("open", open); dockBtn.setAttribute("aria-expanded", open); dockBtn.setAttribute("aria-label", open ? "Hide controls" : "Show controls"); }
   dockBtn.addEventListener("click", e => { e.stopPropagation(); Sound.unlock(); setDock(!dock.classList.contains("open")); });
@@ -2431,8 +2582,29 @@ function viewDraw(pin){
   let mcSoft = false, mcStop = false, lastPhase = "";
   const sk = stageKeys({stop:() => toggleQuiet(), slow:() => toggleSoft(), fixed:true});
   function applyQuiet(){ const f = mcStop ? 0 : mcSoft ? .22 : 1; Sound.duck(f); MUSIC.duck(f); sk.paint(mcStop, mcSoft); }
-  const autoMusic = {winner:"", intro:""};
-  mp3Default("winner.mp3").then(v => autoMusic.winner = v); mp3Default("intro.mp3").then(v => autoMusic.intro = v);
+  const autoMusic = {winner:"", intro:"", countdown:"", background:"", runway:"", awards:""};
+  ["background", "runway", "awards", "winner"].forEach(k => mp3Default(k + ".mp3").then(v => { autoMusic[k] = v; if (k === "background" && curTrack === "bg"){ curTrack = null; render(); } }));
+  /* music for each moment:  waiting = background.mp3 · drawing = none (sound effects only) ·
+     winner walking up = awards.mp3 for big / grand prizes, runway.mp3 for the others (winner.mp3 or the setting if you prefer) */
+  let curTrack = null, walkTimer = null;
+  function setMusic(kind, tr, id){
+    const k = kind === "walk" ? "walk-" + id : kind;
+    if (curTrack === k) return; curTrack = k; clearTimeout(walkTimer);
+    if (kind === "none"){ MUSIC.stop(0); Sound.mode("draw", tr); return; }
+    if (kind === "bg"){
+      Sound.mode("draw", tr);
+      if (autoMusic.background) MUSIC.play(autoMusic.background, "Background", 70, true).then(ok => { if (!ok && curTrack === "bg") Sound.mode("wait", tr); });
+      else { MUSIC.stop(600); Sound.mode("wait", tr); }
+      return;
+    }
+    const f = (S.settings && S.settings.winnerMusic) || (tr >= 2 ? autoMusic.awards : autoMusic.runway) || autoMusic.winner;
+    MUSIC.stop(0); Sound.mode("draw", tr);
+    walkTimer = setTimeout(() => {
+      if (curTrack !== k) return;
+      if (f) MUSIC.play(f, "Winner music", 90, true).then(ok => { if (!ok && curTrack === k) Sound.mode("win", tr); });
+      else Sound.mode("win", tr);
+    }, revealedJustNow ? (tr >= 3 ? 1800 : 1400) : 300);
+  }
   function toggleSoft(){ Sound.unlock(); if (mcStop) return; mcSoft = !mcSoft; applyQuiet(); }
   function toggleQuiet(){ Sound.unlock(); mcStop = !mcStop; if (mcStop) mcSoft = false; applyQuiet(); }
   app.append(el("div", {class:"ld"}, head, body), dock, dlg, sk.el);
@@ -2445,17 +2617,42 @@ function viewDraw(pin){
   function currentPrize(){ if (!S) return null; const open = S.prizes.filter(p => p.remaining > 0); return open.find(p => p.name === chosen) || open[0] || null; }
   /* ===== opening screen: shown when the lucky draw page opens, so the intro plays before the main display ===== */
   let startOn = false;
-  function showStart(){
+  /* standby: the screen waits quietly; when the emcee announces the lucky draw, press Enter (or Space) for the countdown */
+  let introThen = null;
+  function showStandby(){
     startOn = true;
-    const go = intro => {
+    const go = countdown => {
       if (!startOn) return; startOn = false; Sound.unlock(); document.removeEventListener("keydown", key, true);
-      st.classList.add("out"); setTimeout(() => st.remove(), 600);
-      if (intro) playIntro(); else render();
+      sb.classList.add("out"); setTimeout(() => sb.remove(), 500);
+      if (countdown){ introThen = showStart; playIntro(); } else showStart();
     };
     const key = e => {
       if (e.key === "Enter" || e.code === "Space"){ e.preventDefault(); e.stopPropagation(); go(true); }
       else if (e.key === "Escape"){ e.preventDefault(); e.stopPropagation(); go(false); }
       else if (e.key === "f" || e.key === "F"){ e.preventDefault(); e.stopPropagation(); fullscreen(); }
+    };
+    const sb = el("div", {class:"ld-start ld-standby", role:"dialog", "aria-label":"Lucky draw standby screen"},
+      el("div", {class:"intro-beams", "aria-hidden":"true"}), el("div", {class:"intro-glow", "aria-hidden":"true"}),
+      el("div", {class:"ld-start-stage"},
+        el("img", {class:"intro-logos", src:LOGOS, alt:"Cyberjaya Education Group Berhad, University of Cyberjaya, Cyberjaya College Central, SMR HR Group"}),
+        el("p", {class:"intro-kick", text:"Annual Dinner 2027 · Global Harmony Gala"})),
+      el("p", {class:"ld-standby-hint", text:"Enter = countdown · Esc = skip · F = full screen"}));
+    sb.addEventListener("click", () => go(true));
+    document.addEventListener("keydown", key, true);
+    document.body.append(sb);
+  }
+  function showStart(){
+    startOn = true; curTrack = "none";
+    const go = () => {
+      if (!startOn) return; startOn = false; Sound.unlock(); document.removeEventListener("keydown", key, true);
+      st.classList.add("out"); setTimeout(() => st.remove(), 600);
+      curTrack = null; render();   /* the background music starts now */
+    };
+    const key = e => {
+      if (e.key === "Enter" || e.code === "Space" || e.key === "Escape"){ e.preventDefault(); e.stopPropagation(); go(); }
+      else if (e.key === "f" || e.key === "F"){ e.preventDefault(); e.stopPropagation(); fullscreen(); }
+      else if (e.key === "s" || e.key === "S"){ e.preventDefault(); e.stopPropagation(); toggleQuiet(); }
+      else if (e.key === "l" || e.key === "L"){ e.preventDefault(); e.stopPropagation(); toggleSoft(); }
     };
     const st = el("div", {class:"ld-start", role:"dialog", "aria-label":"Lucky draw opening screen"},
       el("div", {class:"intro-beams", "aria-hidden":"true"}), el("div", {class:"intro-glow", "aria-hidden":"true"}),
@@ -2465,7 +2662,7 @@ function viewDraw(pin){
         el("h1", {class:"ld-start-title", text:"Lucky Draw"}),
         el("p", {class:"ld-start-when"}, "Friday, 29 January 2027", el("span", {class:"sep", text:"•"}), "Mövenpick Hotel & Convention Centre KLIA"),
         el("div", {class:"ld-start-btns"},
-          el("button", {class:"ld-btn gold ld-start-go", type:"button", text:"▶ Start the lucky draw", onclick:() => go(true)}))));
+          el("button", {class:"ld-btn gold ld-start-go", type:"button", text:"▶ Start the lucky draw", onclick:() => go()}))));
     document.addEventListener("keydown", key, true);
     document.body.append(st);
   }
@@ -2507,6 +2704,63 @@ function viewDraw(pin){
     document.body.append(ov);
     if (!reduce) celebrationSky(ov, ov.querySelector(".cele-sky"), tr);
   }
+  /* ===== WOW effects for the draw ===== */
+  /* while spinning: a vortex of golden sparks pulled into the number, light beams, a pulsing ring; faster and brighter as the spin goes on */
+  function spinFx(tr, secs){
+    if (reduce) return () => {};
+    panel.classList.add("spinfx" + (tr >= 2 ? " hot" : ""));
+    document.querySelector(".ld").classList.add("dim");
+    const cv = el("canvas", {class:"spin-canvas", "aria-hidden":"true"}); panel.prepend(cv);
+    const r = panel.getBoundingClientRect(), dpr = devicePixelRatio || 1, W = r.width, H = r.height, cx0 = W / 2, cy0 = H * .5;
+    cv.width = W * dpr; cv.height = H * dpr; const cx = cv.getContext("2d"); cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const cols = tr >= 3 ? ["#FFF3C4", "#F2CF73", "#FF7AC6", "#ffffff"] : tr === 2 ? ["#F2CF73", "#FF7AC6", "#B57BFF", "#FFF3C4"] : ["#F2CF73", "#FFF3C4", "#8FB2FF", "#FF9AD0"];
+    let parts = [], alive = true; const t0 = performance.now();
+    (function frame(now){
+      if (!alive) { cx.clearRect(0, 0, W, H); return; }
+      const p = Math.min(1, (now - t0) / (secs * 1000));
+      const spawn = 2 + Math.floor(p * (tr >= 3 ? 14 : 9));
+      for (let k = 0; k < spawn; k++){ const a = Math.random() * 6.283, d = Math.max(W, H) * (.45 + Math.random() * .25);
+        parts.push({a, d, s:.006 + Math.random() * .01 + p * .02, w:.02 + p * .05, c:cols[(Math.random() * cols.length) | 0], z:1 + Math.random() * 2}); }
+      cx.globalCompositeOperation = "source-over"; cx.fillStyle = "rgba(10,4,24,.22)"; cx.fillRect(0, 0, W, H);
+      cx.globalCompositeOperation = "lighter";
+      parts.forEach(q => { const px = cx0 + Math.cos(q.a) * q.d, py = cy0 + Math.sin(q.a) * q.d * .55;
+        q.a += q.w; q.d *= (1 - q.s - p * .01); const nx = cx0 + Math.cos(q.a) * q.d, ny = cy0 + Math.sin(q.a) * q.d * .55;
+        cx.strokeStyle = q.c; cx.globalAlpha = Math.min(1, q.d / 60); cx.lineWidth = q.z; cx.beginPath(); cx.moveTo(px, py); cx.lineTo(nx, ny); cx.stroke(); });
+      parts = parts.filter(q => q.d > 8);
+      cx.globalAlpha = .25 + .35 * p; const g = cx.createRadialGradient(cx0, cy0, 0, cx0, cy0, 160 + 120 * p);
+      g.addColorStop(0, tr >= 3 ? "rgba(255,243,196,.9)" : "rgba(242,207,115,.8)"); g.addColorStop(1, "rgba(242,207,115,0)");
+      cx.fillStyle = g; cx.beginPath(); cx.arc(cx0, cy0, 160 + 120 * p, 0, 7); cx.fill(); cx.globalAlpha = 1;
+      requestAnimationFrame(frame);
+    })(t0);
+    return () => { alive = false; panel.classList.remove("spinfx", "hot"); document.querySelector(".ld").classList.remove("dim"); setTimeout(() => cv.remove(), 60); };
+  }
+  /* the moment the number lands: zoom-in, light burst, golden coin shower and confetti cannons */
+  function landFx(tr){
+    if (reduce) return;
+    num.classList.remove("zoomland"); void num.offsetWidth; num.classList.add("zoomland");
+    const burst = el("div", {class:"land-burst" + (tr >= 3 ? " grand" : ""), "aria-hidden":"true"}); panel.append(burst); setTimeout(() => burst.remove(), 1800);
+    const cv = el("canvas", {class:"coin-canvas", "aria-hidden":"true"}); document.body.append(cv);
+    const dpr = devicePixelRatio || 1, W = innerWidth, H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; const cx = cv.getContext("2d"); cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const nr = num.getBoundingClientRect(), ox = nr.left + nr.width / 2, oy = nr.top + nr.height / 2;
+    const parts = [];
+    const n = tr >= 3 ? 260 : tr === 2 ? 190 : 140;
+    for (let k = 0; k < n; k++){ const a = Math.random() * 6.283, sp = 4 + Math.random() * (tr >= 3 ? 16 : 12);
+      parts.push({x:ox, y:oy, vx:Math.cos(a) * sp, vy:Math.sin(a) * sp - 4, r:3 + Math.random() * 5, rot:Math.random() * 6, vr:(Math.random() - .5) * .4, life:0, coin:Math.random() < .6}); }
+    /* confetti cannons from both bottom corners */
+    [[0, H, 1], [W, H, -1]].forEach(([x, y, dir]) => { for (let k = 0; k < (tr >= 2 ? 90 : 60); k++){ const a = -Math.PI / 2 + dir * (.25 + Math.random() * .45), sp = 12 + Math.random() * 12;
+      parts.push({x, y, vx:Math.cos(a) * sp, vy:Math.sin(a) * sp, r:3 + Math.random() * 4, rot:Math.random() * 6, vr:(Math.random() - .5) * .5, life:0, coin:false, c:["#FF3D9A", "#F2CF73", "#7FB2FF", "#7EE0B8", "#B57BFF"][k % 5]}); } });
+    const t0 = performance.now();
+    (function frame(now){
+      cx.clearRect(0, 0, W, H);
+      parts.forEach(q => { q.vy += .32; q.vx *= .99; q.x += q.vx; q.y += q.vy; q.rot += q.vr; q.life++;
+        cx.save(); cx.translate(q.x, q.y); cx.rotate(q.rot); cx.globalAlpha = Math.max(0, 1 - q.life / 140);
+        if (q.coin){ const sq = Math.abs(Math.cos(q.rot * 2)); const g = cx.createLinearGradient(-q.r, 0, q.r, 0); g.addColorStop(0, "#C9962E"); g.addColorStop(.5, "#FFF3C4"); g.addColorStop(1, "#C9962E");
+          cx.fillStyle = g; cx.beginPath(); cx.ellipse(0, 0, q.r * (.3 + .7 * sq), q.r, 0, 0, 7); cx.fill(); }
+        else { cx.fillStyle = q.c || "#F2CF73"; cx.fillRect(-q.r / 2, -q.r / 4, q.r, q.r / 2); }
+        cx.restore(); });
+      if (now - t0 < 2600) requestAnimationFrame(frame); else cv.remove();
+    })(t0);
+  }
   function revealFx(tr){
     const fl = el("div", {class:"ld-flash" + (tr >= 3 ? " gold" : ""), "aria-hidden":"true"}); document.body.append(fl); setTimeout(() => fl.remove(), 1100);
     const wv = el("div", {class:"ld-wave", "aria-hidden":"true"}); panel.append(wv); setTimeout(() => wv.remove(), 1300);
@@ -2544,15 +2798,15 @@ function viewDraw(pin){
   /* ===== "Are you ready?" intro: built-in animation, or your own video if one is set ===== */
   let introOn = false;
   function playIntro(){
-    if (introOn) return; introOn = true; Sound.unlock(); Sound.mode("intro", 1);
+    if (introOn) return; introOn = true; Sound.unlock(); Sound.mode("intro", 1); curTrack = "none"; clearTimeout(walkTimer); MUSIC.stop(0);
     const ov = el("div", {class:"intro", role:"dialog", "aria-label":"Lucky draw intro"});
     const skip = el("button", {class:"intro-skip", type:"button", text:"Skip ›"});
     const timers = [];
     function end(){
       if (!introOn) return; introOn = false;
       timers.forEach(clearTimeout); document.removeEventListener("keydown", onKey, true);
-      if ((S && S.settings && S.settings.introMusic) || autoMusic.intro) MUSIC.stop(800);
-      ov.classList.add("out"); setTimeout(() => { ov.remove(); render(); }, 600);
+      MUSIC.stop(250);
+      ov.classList.add("out"); setTimeout(() => { ov.remove(); const next = introThen; introThen = null; if (next) next(); else render(); }, 600);
     }
     function onKey(e){ if (e.key === "Escape" || e.code === "Space" || e.key === "Enter"){ e.preventDefault(); e.stopPropagation(); end(); } }
     skip.addEventListener("click", end);
@@ -2570,8 +2824,7 @@ function viewDraw(pin){
     function animated(){
       const ownIntro = (S && S.settings && S.settings.introMusic) || autoMusic.intro;
       let own = !!ownIntro;
-      if (own) MUSIC.play(ownIntro, "Intro music", 100).then(okk => { if (!okk){ own = false; Sound.introTrack(); } });
-      else Sound.introTrack();
+      own = false;   /* no music bed: only the countdown sound effects */
       introOn = true;
       const word = el("div", {class:"intro-word", "aria-live":"assertive"});
       ov.innerHTML = "";
@@ -2584,17 +2837,15 @@ function viewDraw(pin){
       if (!ov.isConnected) document.body.append(ov);
       const show = (text, cls, snd) => { word.className = "intro-word " + (cls || ""); word.textContent = text; void word.offsetWidth; word.classList.add("in"); if (snd) snd(); };
       const at = (ms, fn) => timers.push(setTimeout(fn, ms));
-      at(700,  () => show("Are you", "small"));
-      /* with your own intro song: only the song plays until the countdown, then it stops for 3 · 2 · 1 */
-      at(1600, () => show("READY?", "big", () => { if (!own) Sound.boom(true); }));
-      at(3000, () => { show("for the", "small"); if (!own) Sound.riser(1.6); });
-      at(4700, () => show("LUCKY DRAW!", "gold big shake", () => { if (!own) Sound.boom(true); confetti(); }));
-      at(6500, () => { show("", ""); if (own) MUSIC.stop(700); else Sound.riser(1); });
-      at(7400, () => show("3", "count", () => Sound.count(3)));
-      at(8400, () => show("2", "count", () => Sound.count(2)));
-      at(9400, () => show("1", "count", () => Sound.count(1)));
-      at(10400, () => show("LET’S GO!", "gold big", () => { Sound.go(); confetti(); }));
-      at(12600, end);
+      const cd = autoMusic.countdown;   /* countdown.mp3 next to index.html (10 beats, GO at 10 s) */
+      at(300,  () => show("Are you", "small"));
+      at(1100, () => show("READY?", "big", () => Sound.boom(true)));
+      at(2300, () => show("LUCKY DRAW!", "gold big shake", () => { Sound.boom(true); confetti(); }));
+      at(3500, () => { if (cd) MUSIC.play(cd, "Countdown", 100, false).then(ok => { if (!ok) cdFallback = true; }); else cdFallback = true; });
+      let cdFallback = false;
+      for (let n = 10; n >= 1; n--) at(3500 + (10 - n) * 1000, () => show(String(n), "count" + (n <= 3 ? " last" : ""), () => { if (cdFallback) Sound.count(n <= 3 ? n : 4); }));
+      at(13500, () => show("LET’S GO!", "gold big", () => { if (cdFallback) Sound.go(); confetti(); }));
+      at(15600, end);
     }
   }
   function fullscreen(){
@@ -2610,17 +2861,10 @@ function viewDraw(pin){
     /* a new moment (drawing, a new winner, back to waiting) brings the music back to normal */
     const phase = busy ? "draw" : (p ? "win-" + p.id : "wait");
     if (phase !== lastPhase){ lastPhase = phase; if (mcSoft || mcStop){ mcSoft = false; mcStop = false; applyQuiet(); } }
-    const ytWin = (S.settings && S.settings.winnerMusic) || autoMusic.winner;
-    if (busy){ Sound.mode("draw", cur ? tierOf(cur.name) : 1); }
-    else if (p){
-      if (ytWin && !ytFailed){
-        Sound.mode("draw", tierOf(p.prize));                  /* built-in music off: YouTube takes over */
-        if (ytFor !== p.id){ ytFor = p.id; clearTimeout(ytTimer);
-          ytTimer = setTimeout(() => { if (pending() && pending().id === ytFor) MUSIC.play(ytWin, "Winner music", 90, true).then(okk => { if (!okk){ ytFailed = true; render(); } }); }, revealedJustNow ? (tierOf(p.prize) >= 3 ? 1800 : 1400) : 300); }
-      } else Sound.mode("win", tierOf(p.prize));
-    } else {
-      if (ytFor){ ytFor = null; clearTimeout(ytTimer); MUSIC.stop(1500); }
-      Sound.mode("wait", cur ? tierOf(cur.name) : 1);
+    if (!startOn){
+      if (busy) setMusic("none", cur ? tierOf(cur.name) : 1);
+      else if (p) setMusic("walk", tierOf(p.prize), p.id);
+      else setMusic("bg", cur ? tierOf(cur.name) : 1);
     }
     revealedJustNow = false;
     panel.classList.toggle("grand", !!p && tierOf(p.prize) >= 3);
@@ -2682,19 +2926,22 @@ function viewDraw(pin){
     const cur = currentPrize(); if (!cur){ toast("All prizes have been drawn."); return; }
     if (!S.poolCount){ toast("No numbers left in the draw."); return; }
     const tr = tierOf(cur.name);
-    MUSIC.stop(250); if (ytFor){ ytFor = null; clearTimeout(ytTimer); }
+    curTrack = "none"; clearTimeout(walkTimer); MUSIC.stop(0);
     busy = true; chosen = cur.name; Sound.mode("draw", tr); render();
     line.textContent = (tr >= 3 ? "🏆 Drawing the GRAND PRIZE…" : "Drawing for " + cur.name + "…"); btns.innerHTML = ""; num.className = "ld-num spinning" + (tr >= 2 ? " hot" : ""); pname.textContent = ""; pmeta.textContent = ""; panel.classList.remove("has-winner", "grand");
     const src = S.poolSample.length ? S.poolSample : [0];
     const secs = reduce ? 1 : (S.settings.duration || 8), D = secs * 1000, start = performance.now();
     Sound.roll(secs, tr);
+    const stopSpin = spinFx(tr, secs);
     let res = null, err = null; syncP.catch(() => {}).then(() => call("apiDraw", pin, cur.name)).then(r => res = r, e => err = e);
     (function step(){
       const t = (performance.now() - start) / D;
       if (t >= 1 && (res || err)){
-        if (err){ busy = false; Sound.stop(); handle(err); refresh(); return; }
+        if (err){ stopSpin(); busy = false; Sound.stop(); handle(err); refresh(); return; }
         const won = (res.state.winners.find(w => w.status === "Called") || {}).luckyNo;
-        lockDigits(String(won), tr, () => { busy = false; S = res.state; revealedJustNow = true; render(); num.className = "ld-num pop" + (tr >= 3 ? " grandnum" : ""); Sound.win(tr); revealFx(tr); celebrate(pending(), tr); });
+        lockDigits(String(won), tr, () => { stopSpin(); busy = false; S = res.state; revealedJustNow = true; render(); num.className = "ld-num" + (tr >= 3 ? " grandnum" : ""); Sound.win(tr); landFx(tr); revealFx(tr);
+          /* let everyone see the number explode first, then the CONGRATULATIONS screen */
+          setTimeout(() => celebrate(pending(), tr), tr >= 3 ? 2200 : 1700); });
         return;
       }
       num.textContent = String(src[Math.floor(Math.random() * src.length)]); Sound.tick(tr);
@@ -2722,12 +2969,12 @@ function viewDraw(pin){
     if (e.key === "Escape") setDock(false);
     if (e.code === "Space"){ e.preventDefault(); draw(); }
     else if (e.key === "f" || e.key === "F") fullscreen();
-    else if (e.key === "s" || e.key === "S" || e.key === "m" || e.key === "M") toggleQuiet();
+    else if (e.key === "s" || e.key === "S") toggleQuiet();
     else if (e.key === "l" || e.key === "L") toggleSoft();
     else if (e.key === "i" || e.key === "I") playIntro();
   });
   refresh(); setInterval(() => { if (!busy && !dlg.open) refresh(); }, 20000);
-  showStart();
+  curTrack = "none"; showStart();
 }
 
 /* ---------- confetti ---------- */
@@ -2820,7 +3067,7 @@ function viewGuestPoster(){
 }
 function viewVotePoster(){
   posterView({tone:"royal", badge:"Best Dressed", top:royalPair("poster-crowns"), title:["Vote for", "King & Queen"], tag:"Best Dressed of the Evening", url:pageUrl("vote"), alt:"QR code to vote for King and Queen",
-    cta:"Scan to vote", steps:["Scan QR Code", ["Enter your staff ID", "Guests: your phone number"], "Pick your King & Queen"], fine:"One vote per person for each award."});
+    cta:"Scan to vote", steps:["Scan QR Code", ["Enter your Staff ID", "Guests: Phone Number"], "Pick your King & Queen"], fine:"One vote per person for each award."});
 }
 
 if (B.view === "dashboard") viewDashboard();
@@ -2843,10 +3090,10 @@ else viewForm();
   var q = new URLSearchParams(location.search), page = (q.get("page") || "").toLowerCase();
   var views = ["kiosk", "dashboard", "poster", "draw", "vote", "awards", "vote-poster", "guest", "guest-poster"];
   var view = views.indexOf(page) >= 0 ? page : "form";
-  var FALLBACK = {"open": true, "staffIdRequired": true, "phoneRequired": true, "orgs": ["Cyberjaya Education Group", "University of Cyberjaya", "Cyberjaya College Central", "SMR HR Group"], "departments": ["Centre for Academic Development a.k.a. Academic Management and Development", "Admission and Records", "Academic Administration Department", "Centre for Collaborative Partnerships", "Centre for Foundation, Language & General Studies", "Centre for Graduate Studies", "Centre of Postgraduate Studies", "Centre of Quality Assurance", "Centre of Research and Development", "Centre for Learning & Teaching", "Chancellery", "Continuing Education and Training", "Cyberjaya College Central", "Examinations", "Facilities and Logistics Management", "Faculty of Business & Technology", "Faculty of Creative Arts and Design", "Faculty of Medicine", "Faculty of Pharmacy", "Faculty of Psychology and Social Sciences", "Faculty of Safety & Health", "Faculty of Health", "Group Corporate and Marketing Communications", "Group Directorate", "Group Finance", "Group Governance", "Group Human Resources", "Group Information Technology", "Group Procurement", "Group Property Development Department", "Group Regional Recruitment", "Industry Engagement & Graduate Employability Department (pka GED, IIED)", "Internal Audit and Risk Management", "International Student Recruitment Department", "International Student Visa Department", "Laboratory", "Library and Knowledge Management", "Malaysian Student Recruitment Department", "Oxbridge Language Centre", "Quality Management and Enhancement Centre (QUAMEC)", "Registry", "Regulatory and Governance Department", "Research Management Department", "School of Biomedical Engineering", "Student Experience and Support Department (pka STAD)", "Tabung Amanah Zakat UOC"], "demo": false, "votingOpen": false, "guestOpen": true};
+  var FALLBACK = {"open": true, "staffIdRequired": true, "phoneRequired": true, "orgs": ["Cyberjaya Education Group", "University of Cyberjaya", "Cyberjaya College Central", "SMR HR Group"], "departments": ["Centre for Academic Development a.k.a. Academic Management and Development", "Admission and Records", "Academic Administration Department", "Centre for Collaborative Partnerships", "Centre for Foundation, Language & General Studies", "Centre for Graduate Studies", "Centre of Postgraduate Studies", "Centre of Quality Assurance", "Centre of Research and Development", "Centre for Learning & Teaching", "Chancellery", "Continuing Education and Training", "Cyberjaya College Central", "Examinations", "Facilities and Logistics Management", "Faculty of Business & Technology", "Faculty of Creative Arts and Design", "Faculty of Medicine", "Faculty of Pharmacy", "Faculty of Psychology and Social Sciences", "Faculty of Safety & Health", "Faculty of Health", "Group Corporate and Marketing Communications", "Group Directorate", "Group Finance", "Group Governance", "Group Human Resources", "Group Information Technology", "Group Procurement", "Group Property Development Department", "Group Regional Recruitment", "Industry Engagement & Graduate Employability Department (pka GED, IIED)", "Internal Audit and Risk Management", "International Student Recruitment Department", "International Student Visa Department", "Laboratory", "Library and Knowledge Management", "Malaysian Student Recruitment Department", "Oxbridge Language Centre", "Quality Management and Enhancement Centre (QUAMEC)", "Registry", "Regulatory and Governance Department", "Research Management Department", "School of Biomedical Engineering", "Student Experience and Support Department (pka STAD)", "Tabung Amanah Zakat UOC"], "demo": false, "votingOpen": false, "guestOpen": true, "emailRequired": true, "emailDomains": ["cyberjaya.edu.my", "*.cyberjaya.edu.my", "smrhrgroup.com", "*.smrhrgroup.com"], "emailBlocked": ["st.cyberjaya.edu.my"]};
   var cached = null; try{ cached = JSON.parse(localStorage.getItem("ghg-config") || "null"); }catch(e){}
   function boot(c){ return {view:view, appUrl:location.origin + location.pathname, open:c.open, staffIdRequired:c.staffIdRequired, phoneRequired:c.phoneRequired,
-    orgs:c.orgs, departments:c.departments, demo:c.demo, votingOpen:c.votingOpen, guestOpen:c.guestOpen}; }
+    orgs:c.orgs, departments:c.departments, demo:c.demo, votingOpen:c.votingOpen, guestOpen:c.guestOpen, emailRequired:c.emailRequired, emailDomains:c.emailDomains, emailBlocked:c.emailBlocked}; }
   BOOT = boot(cached || FALLBACK);
   app.innerHTML = ""; window.__startApp();
   window.__apiPost("apiConfig", [])
