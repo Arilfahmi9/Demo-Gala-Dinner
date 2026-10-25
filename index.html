@@ -226,6 +226,7 @@ dialog.ld-dlg{overflow:auto}
 .pv-frame{position:absolute;inset:0;width:100%;height:100%;border:0;background:#07040f}
 .pv-back{position:fixed;top:1.2vh;left:1.2vw;z-index:201;background:rgba(14,8,34,.75);border:1px solid var(--line);color:var(--gold);border-radius:999px;padding:.35rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer;opacity:.35;transition:opacity .2s}
 .pv-back:hover,.pv-back:focus-visible{opacity:1}
+html.pv-open,html.pv-open body{overflow:hidden!important}
 /* compact control menu */
 .ld-dock-btn{width:40px!important;height:40px!important;font-size:1.1rem!important}
 .ld-dock-panel{min-width:0!important;width:max-content;max-width:17rem;gap:.3rem!important;padding:.55rem!important;border-radius:14px!important}
@@ -1031,16 +1032,22 @@ function openPage(url, auto){
   const show = u => {
     const f = el("iframe", {class:"pv-frame", src:localUrl(u), allow:"fullscreen; autoplay", title:"Event page"});
     const prev = ov.querySelector(".pv-frame"); if (prev) prev.remove();
+    f.addEventListener("load", () => { try{ f.contentWindow.focus(); }catch(e){} });
     ov.prepend(f); f.focus();
   };
-  const close = () => { ov.remove(); window.__pvNav = null; quiet(1);   /* stays in full screen */
+  const close = () => { ov.remove(); window.__pvNav = null; quiet(1); document.documentElement.classList.remove("pv-open");   /* stays in full screen */
     if (!document.fullscreenElement && document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(() => {}); };
   /* ← Back: one page back (e.g. QR to vote → King & Queen); from the first page, back to this screen */
   ov.append(el("button", {class:"pv-back", type:"button", text:"← Back", onclick:() => { trail.pop(); if (trail.length) show(trail[trail.length - 1]); else close(); }}));
   window.__pvNav = u => { trail.push(u); show(u); };
+  document.documentElement.classList.add("pv-open");
   document.body.append(ov); window.__pvNav(url);
 }
 window.__openPage = openPage;
+if (!window.__blurClick){ window.__blurClick = true;
+  document.addEventListener("click", e => { const b = e.target.closest && e.target.closest("button, a"); if (b && !b.closest("dialog, form")) setTimeout(() => b.blur(), 0); });
+  document.addEventListener("change", e => { if (e.target.classList && e.target.classList.contains("ld-select")) e.target.blur(); });
+}
 /* dashboard on the main screen: any click puts it in full screen */
 if (!IN_VIEWER && BOOT.view === "dashboard" && !window.__dbFull){ window.__dbFull = true;
   document.addEventListener("click", e => {
@@ -2245,6 +2252,14 @@ function viewAwards(pin){
   const autoAw = {runway:"", awards:""};
   mp3Default("runway.mp3").then(v => autoAw.runway = v); mp3Default("awards.mp3").then(v => autoAw.awards = v);
   mp3Default("finalists.mp3").then(v => autoAw.finalists = v); mp3Default("reveal.mp3").then(v => autoAw.reveal = v);
+  mp3Default("kingqueen.mp3").then(v => { autoAw.bg = v; if (bgOn && !A.bgMusic && v) waitMusic(); });
+  /* waiting-screen music: the MP3 from Settings (or kingqueen.mp3 on GitHub), otherwise the built-in music */
+  let bgOn = false;
+  function waitMusic(){
+    bgOn = true; const bm = (A && A.bgMusic) || autoAw.bg;
+    if (bm){ Sound.mode("intro", 1); MUSIC.play(bm, "King & Queen music", 70, true).then(ok => { if (!ok) Sound.mode("wait", 3); }); }
+    else Sound.mode("wait", 3);
+  }
   const revealed = (() => { try{ return JSON.parse(sessionStorage.getItem("ghg-revealed")) || {}; }catch(e){ return {}; } })();
   const saveRev = () => { try{ sessionStorage.setItem("ghg-revealed", JSON.stringify(revealed)); }catch(e){} };
   const cards = {};
@@ -2276,8 +2291,9 @@ function viewAwards(pin){
   dockBtn.addEventListener("click", e => { e.stopPropagation(); Sound.unlock(); dock.classList.toggle("open"); });
   document.addEventListener("click", e => { if (!dock.contains(e.target)) dock.classList.remove("open"); });
   let awStop = false, awSoft = false;
-  const awKeys = stageKeys({fixed:true, stop:() => { Sound.unlock(); awStop = !awStop; if (awStop) awSoft = false; Sound.duck(awStop ? 0 : 1); awKeys.paint(awStop, awSoft); },
-    slow:() => { if (awStop) return; awSoft = !awSoft; Sound.duck(awSoft ? .22 : 1); awKeys.paint(awStop, awSoft); }});
+  const awDuck = f => { Sound.duck(f); MUSIC.duck(f); };
+  const awKeys = stageKeys({fixed:true, stop:() => { Sound.unlock(); awStop = !awStop; if (awStop) awSoft = false; awDuck(awStop ? 0 : 1); awKeys.paint(awStop, awSoft); },
+    slow:() => { if (awStop) return; awSoft = !awSoft; awDuck(awSoft ? .22 : 1); awKeys.paint(awStop, awSoft); }});
   app.append(el("div", {class:"ld aw"}, head, el("section", {class:"aw-body"}, cards.KING.box, cards.QUEEN.box), strip), dock, dlg, awKeys.el);
 
   function fullscreen(){ Sound.unlock(); goFull(); }
@@ -2326,10 +2342,10 @@ function viewAwards(pin){
     showing = true;
     const label = A.labels[cat], timers = [];
     const fm = A.finalMusic || autoAw.finalists || autoAw.runway;
-    const startMusic = () => { if (fm){ Sound.mode("intro", 1); MUSIC.play(fm, "Finalists music", 90, true).then(ok => { if (!ok && showing) Sound.mode("runway", 1); }); } else Sound.mode("runway", 1); };
+    const startMusic = () => { if (fm){ Sound.mode("intro", 1); MUSIC.play(fm, "Finalists music", 90, true).then(ok => { if (!ok && showing) Sound.mode("runway", 1); }); } else { MUSIC.stop(600); Sound.mode("runway", 1); } };
     const mc = musicCtl(startMusic);
     const close = (toReveal) => { if (!ov.isConnected) return; timers.forEach(clearTimeout); document.removeEventListener("keydown", key, true); ov.classList.add("out"); setTimeout(() => ov.remove(), 600); showing = false;
-      mc.reset(); MUSIC.stop(toReveal ? 500 : 1200); if (!toReveal) Sound.mode("wait", 3); };
+      mc.reset(); MUSIC.stop(toReveal ? 500 : 1200); if (!toReveal) waitMusic(); };
     const go = () => { close(true); setTimeout(() => reveal(cat), 650); };
     const key = e => { if (mc.key(e)){ e.preventDefault(); e.stopPropagation(); return; }
       if (e.key === "Escape"){ e.preventDefault(); e.stopPropagation(); close(false); } else if (e.key === "Enter"){ e.preventDefault(); e.stopPropagation(); go(); }
@@ -2403,9 +2419,9 @@ function viewAwards(pin){
     revealed[cat] = {names:w.map(x => x.name), staffId: tie ? "" : (w[0].staffId || ""), dept: tie ? "" : w[0].dept, votes:L.top, tie}; saveRev(); render();
     const title = label.toUpperCase();
     const am = A.music || autoAw.awards;
-    const startMusic = () => { if (am) MUSIC.play(am, "Award music", 90, true).then(ok => { if (!ok) Sound.mode("win", 3); }); else Sound.mode("win", 3); };
+    const startMusic = () => { if (am) MUSIC.play(am, "Award music", 90, true).then(ok => { if (!ok) Sound.mode("win", 3); }); else { MUSIC.stop(600); Sound.mode("win", 3); } };
     const mc = musicCtl(startMusic);
-    const close = () => { if (!ov.isConnected) return; ov.classList.add("out"); mc.reset(); MUSIC.stop(1500); Sound.mode("wait", 3); document.removeEventListener("keydown", key, true); setTimeout(() => ov.remove(), 700); revealing = false; };
+    const close = () => { if (!ov.isConnected) return; ov.classList.add("out"); mc.reset(); MUSIC.stop(1500); waitMusic(); document.removeEventListener("keydown", key, true); setTimeout(() => ov.remove(), 700); revealing = false; };
     const key = e => { if (mc.key(e)){ e.preventDefault(); e.stopPropagation(); return; } if (["Escape", "Enter", " "].indexOf(e.key) >= 0){ e.preventDefault(); e.stopPropagation(); close(); } };
     const chip = (cls, icon, text) => text ? el("span", {class:"awc-chip " + cls}, el("i", {"aria-hidden":"true", text:icon}), el("span", {text:text})) : null;
     const people = w.map((x, i) => el("div", {class:"awc-person", style:"animation-delay:" + (1.1 + i * .25) + "s"},
@@ -2518,11 +2534,15 @@ function viewAwards(pin){
     const k = el("input", {type:"text", value:A.labels.KING, "aria-label":"King award name"});
     const m = el("input", {type:"text", value:A.music || "", placeholder:"awards.mp3  or  https://www.youtube.com/watch?v=…", "aria-label":"Award music"});
     const fm = el("input", {type:"text", value:A.finalMusic || "", placeholder:"runway.mp3  or  https://www.youtube.com/watch?v=…", "aria-label":"Finalists music"});
+    const bgm = el("input", {type:"text", value:A.bgMusic || "", placeholder:"kingqueen.mp3  or  https://www.youtube.com/watch?v=…", "aria-label":"Background music"});
     const testBtn = inp => el("button", {class:"btn", type:"button", text:"▶ Test 10 s", onclick:() => { if (!MUSIC.valid(inp.value)){ toast("Type an MP3 file name or paste a YouTube link first."); return; } MUSIC.play(inp.value, "Music test").then(ok => { if (ok) setTimeout(() => MUSIC.stop(1200), 10000); }); }});
     const save = el("button", {class:"btn primary", type:"button", text:"Save"});
-    save.addEventListener("click", async () => { save.disabled = true; try{ A = await call("apiSaveAwardSettings", pin, {queen:q.value, king:k.value, music:m.value, finalMusic:fm.value}); render(); toast("Saved."); renderSettings(); }catch(e){ toast(errText(e)); save.disabled = false; } });
+    save.addEventListener("click", async () => { save.disabled = true; try{ A = await call("apiSaveAwardSettings", pin, {queen:q.value, king:k.value, music:m.value, finalMusic:fm.value, bgMusic:bgm.value}); render(); toast("Saved."); if (bgOn) waitMusic(); renderSettings(); }catch(e){ toast(errText(e)); save.disabled = false; } });
     return el("div", null,
       el("h3", {text:"Award titles"}), el("p", {class:"small", style:"margin:.2rem 0", text:"Female award"}), q, el("p", {class:"small", style:"margin:.6rem 0 .2rem", text:"Male award"}), k,
+      el("h3", {text:"Background music (King & Queen screen, while waiting)"}),
+      el("p", {class:"muted small", text:"Plays on this screen instead of the lucky draw music. MP3 file next to index.html on GitHub (e.g. kingqueen.mp3, add #t=30 to start 30 seconds in) or a YouTube link. Empty = kingqueen.mp3 if it is on GitHub, otherwise the built-in music."}),
+      el("div", {class:"row", style:"margin-top:0"}, bgm, testBtn(bgm)),
       el("h3", {text:"Music while the top finalists walk up to the stage"}),
       el("p", {class:"muted small", text:"MP3 file next to index.html (sound only, e.g. runway.mp3) or a YouTube link. Empty = runway.mp3 if it is on GitHub, otherwise built-in catwalk music."}),
       el("div", {class:"row", style:"margin-top:0"}, fm, testBtn(fm)),
@@ -2544,14 +2564,16 @@ function viewAwards(pin){
   }
 
   document.addEventListener("keydown", e => {
-    const tag = (e.target.tagName || "").toLowerCase(); if (["input","select","textarea","button"].includes(tag) || dlg.open || revealing || showing) return;
+    const tag = (e.target.tagName || "").toLowerCase(); if (["input","select","textarea"].includes(tag) || dlg.open || revealing || showing) return;
+    if (tag === "button"){ if (!/^[12kKqQfFsSlL ]$/.test(e.key)) return; e.target.blur(); }
     if (e.key === "s" || e.key === "S"){ awKeys.el.querySelector(".skey").click(); return; }
     if (e.key === "l" || e.key === "L"){ awKeys.el.querySelectorAll(".skey")[1].click(); return; }
     if (e.code === "Space" || e.key === " "){ e.preventDefault(); const next = CAT_ORDER.find(c => !revealed[c]); if (next) showNominees(next); return; }
     if (e.key === "1") showNominees("KING"); else if (e.key === "2") showNominees("QUEEN");
     else if (e.key === "q" || e.key === "Q") reveal("QUEEN"); else if (e.key === "k" || e.key === "K") reveal("KING"); else if (e.key === "f" || e.key === "F") fullscreen();
   });
-  document.addEventListener("pointerdown", () => { Sound.unlock(); Sound.mode("wait", 3); }, {once:true});
+  const kickMusic = () => { if (bgOn) return; Sound.unlock(); waitMusic(); };
+  document.addEventListener("pointerdown", kickMusic, {once:true}); document.addEventListener("keydown", kickMusic, {once:true});
   refresh(); setInterval(() => { if (!revealing && !dlg.open) refresh(); }, 10000);
   call("apiDashboard", pin).then(d => { guests = d.rows.map(r => ({name:r.name, staffId:r.staffId, dept:r.dept})); }).catch(() => {});
 }
@@ -3160,7 +3182,8 @@ function viewDraw(pin){
   sel.addEventListener("change", () => { chosen = sel.value; render(); });
   document.addEventListener("pointerdown", () => Sound.unlock(), {once:true});
   document.addEventListener("keydown", e => {
-    const tag = (e.target.tagName || "").toLowerCase(); if (["input","select","textarea","button"].includes(tag) || dlg.open || startOn) return;
+    const tag = (e.target.tagName || "").toLowerCase(); if (["input","textarea"].includes(tag) || dlg.open || startOn) return;
+    if (tag === "select" || tag === "button"){ if (!/^[5321gGfFsSlL ]$/.test(e.key)) return; e.target.blur(); }
     if (e.key === "Escape") setDock(false);
     if (e.code === "Space"){ e.preventDefault(); draw(); }
     else if (e.key === "f" || e.key === "F") fullscreen();
