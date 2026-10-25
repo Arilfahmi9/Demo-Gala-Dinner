@@ -224,9 +224,9 @@ dialog.ld-dlg{overflow:auto}
 /* in-page viewer: open another page without leaving full screen */
 .pv{position:fixed;inset:0;z-index:200;background:#07040f;animation:introIn .3s ease both}
 .pv-frame{position:absolute;inset:0;width:100%;height:100%;border:0;background:#07040f}
-.pv-back{position:fixed;top:1.2vh;left:1.2vw;z-index:201;background:rgba(14,8,34,.75);border:1px solid var(--line);color:var(--gold);border-radius:999px;padding:.35rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer;opacity:.35;transition:opacity .2s}
+.pv-back{position:fixed;top:.8vh;left:.8vw;z-index:201;width:26px;height:26px;padding:0;display:grid;place-items:center;background:rgba(14,8,34,.6);border:1px solid var(--line);color:var(--gold);border-radius:50%;font-size:.7rem;font-weight:700;cursor:pointer;opacity:.25;transition:opacity .2s}
 .pv-back:hover,.pv-back:focus-visible{opacity:1}
-html.pv-open,html.pv-open body{overflow:hidden!important}
+html.pv-open,html.pv-open body,html.fitscreen,html.fitscreen body{overflow:hidden!important}
 /* compact control menu */
 .ld-dock-btn{width:40px!important;height:40px!important;font-size:1.1rem!important}
 .ld-dock-panel{min-width:0!important;width:max-content;max-width:17rem;gap:.3rem!important;padding:.55rem!important;border-radius:14px!important}
@@ -1039,7 +1039,7 @@ function openPage(url, auto){
     if (!document.fullscreenElement && document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(() => {}); };
   /* ← Back: one page back (e.g. QR to vote → King & Queen); from the first page, back to this screen */
   const back = () => { trail.pop(); if (trail.length) show(trail[trail.length - 1]); else close(); };
-  ov.append(el("button", {class:"pv-back", type:"button", text:"← Back (B)", onclick:back}));
+  ov.append(el("button", {class:"pv-back", type:"button", text:"B", title:"Back (B)", "aria-label":"Back (B)", onclick:back}));
   window.__pvBack = back;
   window.__pvNav = u => { trail.push(u); show(u); };
   document.documentElement.classList.add("pv-open");
@@ -3285,8 +3285,18 @@ function qrCanvas(url){
   for (let r = 0; r < n; r++) for (let k = 0; k < n; k++) if (q.isDark(r, k)) g.fillRect((k + 4) * cell, (r + 4) * cell, cell, cell);
   return c.toDataURL("image/png");
 }
+function fitPoster(p){
+  const on = IN_VIEWER || !!document.fullscreenElement;
+  document.documentElement.classList.toggle("fitscreen", on);
+  p.style.cssText = ""; if (!on) return;
+  const w = p.offsetWidth, h = p.offsetHeight; if (!w || !h) return;
+  const sc = Math.min(innerWidth / w, innerHeight / h) * .95;
+  p.style.cssText = "position:fixed;left:50%;top:50%;margin:0;width:" + w + "px;transform:translate(-50%,-50%) scale(" + sc + ");transform-origin:center";
+}
 function posterView(o){
   clear(); document.body.classList.add("postermode");
+  setTimeout(() => { const p = app.querySelector(".poster2"); if (!p) return; const fit = () => fitPoster(p);
+    fit(); setTimeout(fit, 400); addEventListener("resize", fit); document.addEventListener("fullscreenchange", () => setTimeout(fit, 150)); }, 0);
   app.append(el("div", {class:"poster2 tone-" + o.tone},
     el("p", {class:"p2-kick", text:"Annual Dinner 2027 · Global Harmony Gala"}),
     o.top || null,
