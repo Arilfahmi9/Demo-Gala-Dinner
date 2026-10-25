@@ -221,6 +221,16 @@ dialog.ld-dlg{overflow:auto}
 .ld-vol{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--muted);padding:0 .2rem}
 .ld-vol input{flex:1;accent-color:var(--gold)}
 .ld-keys{margin:.2rem 0 0;font-size:.74rem;color:var(--muted);line-height:1.5}
+/* in-page viewer: open another page without leaving full screen */
+.pv{position:fixed;inset:0;z-index:200;background:#07040f;animation:introIn .3s ease both}
+.pv-frame{position:absolute;inset:0;width:100%;height:100%;border:0;background:#07040f}
+.pv-back{position:fixed;top:1.2vh;left:1.2vw;z-index:201;background:rgba(14,8,34,.75);border:1px solid var(--line);color:var(--gold);border-radius:999px;padding:.35rem .8rem;font-size:.78rem;font-weight:600;cursor:pointer;opacity:.35;transition:opacity .2s}
+.pv-back:hover,.pv-back:focus-visible{opacity:1}
+/* compact control menu */
+.ld-dock-btn{width:40px!important;height:40px!important;font-size:1.1rem!important}
+.ld-dock-panel{min-width:0!important;width:max-content;max-width:17rem;gap:.3rem!important;padding:.55rem!important;border-radius:14px!important}
+.ld-dock-panel .ld-tool{padding:.38rem .75rem!important;font-size:.8rem!important;display:block;text-decoration:none;box-sizing:border-box}
+.ld-dock-panel .ld-keys{font-size:.66rem;line-height:1.4;max-width:15rem}
 /* compact landscape fit: everything visible, number still huge */
 .ld{padding:1.4vh 2.4vw 1.4vh;gap:1vh}
 .ld-logos{height:clamp(24px,4.6vh,48px);margin-bottom:.8vh}
@@ -993,6 +1003,28 @@ if (BOOT.demo){ const dm = document.createElement("div"); dm.className = "demo-b
 const B = BOOT, app = document.getElementById("app"), KEY = "ghg-simple-reg-v1";
 /* link to another page: ?page=… on the real site, #… in the Claude preview */
 function pageUrl(p){ return window.__PREVIEW ? B.appUrl + "#" + (p || "form") : B.appUrl + (p ? "?page=" + p : ""); }
+/* open another event page. In full screen (big screen / LED) it opens on top of this page so full screen is kept;
+   "← Back" returns. Inside that view, links stay in the same view. Otherwise it opens in a new tab as before. */
+const IN_VIEWER = window.self !== window.top;
+function openPage(url){
+  if (IN_VIEWER){ location.href = url; return; }
+  if (!document.fullscreenElement){ window.open(url, "_blank", "noopener"); return; }
+  const old = document.querySelector(".pv"); if (old) old.remove();
+  const quiet = f => { try{ Sound.duck(f); }catch(e){} try{ MUSIC.duck(f); }catch(e){} };
+  quiet(0);
+  const fr = el("iframe", {class:"pv-frame", src:url, allow:"fullscreen; autoplay", title:"Event page"});
+  const ov = el("div", {class:"pv"}, fr,
+    el("button", {class:"pv-back", type:"button", text:"← Back", onclick:() => { ov.remove(); quiet(1); }}));
+  document.body.append(ov); fr.focus();
+}
+/* any link to our own pages that would open a new tab goes through openPage */
+document.addEventListener("click", e => {
+  const a = e.target.closest && e.target.closest("a[target=_blank]"); if (!a || e.ctrlKey || e.metaKey || e.shiftKey) return;
+  let u; try{ u = new URL(a.href, location.href); }catch(_){ return; }
+  if (u.origin !== location.origin || u.pathname !== location.pathname) return;
+  if (!IN_VIEWER && !document.fullscreenElement) return;
+  e.preventDefault(); openPage(u.href);
+}, true);
 function el(tag, attrs, ...kids){
   const e = document.createElement(tag);
   if (attrs) for (const k in attrs){
@@ -1025,7 +1057,7 @@ function kioskPinGate(next){
   const msg = el("p", {class:"msg", role:"status"});
   const btn = el("button", {class:"btn primary big", type:"submit", text:"Open registration desk"});
   const f = el("form", null, inp, msg, btn);
-  f.addEventListener("submit", async e => { e.preventDefault(); btn.disabled = true; try{ Sound.unlock(); }catch(_){}
+  f.addEventListener("submit", async e => { e.preventDefault(); btn.disabled = true;
     try{ await call("apiCheckPin", inp.value); sessionStorage.setItem("ghg-pin", inp.value); next(); }
     catch(err){ msg.textContent = errText(err); btn.disabled = false; inp.select(); } });
   app.append(el("div", {class:"card center"}, el("h2", {text:"Registration desk"}), el("p", {class:"muted", text:"Enter the staff PIN to use this device for registering guests."}), f));
@@ -2194,9 +2226,11 @@ function viewAwards(pin){
   const dockBtn = el("button", {class:"ld-dock-btn", type:"button", "aria-label":"Show controls", text:"+"});
   const dock = el("div", {class:"ld-dock"},
     el("div", {class:"ld-dock-panel"},
-      el("button", {class:"ld-tool gold", type:"button", text:"⛶ Full screen", onclick:fullscreen}),
       el("button", {class:"ld-tool", type:"button", text:"⚙ Awards settings", onclick:() => { dock.classList.remove("open"); openSettings("nominees"); }}),
-      el("button", {class:"ld-tool", type:"button", text:"📊 Live results", onclick:() => { dock.classList.remove("open"); openSettings("results"); }}),
+      el("button", {class:"ld-tool", type:"button", text:"📈 Live results", onclick:() => { dock.classList.remove("open"); openSettings("results"); }}),
+      el("a", {class:"ld-tool", href:pageUrl("vote"), target:"_blank", rel:"noopener", text:"🗳 Vote King & Queen", onclick:() => dock.classList.remove("open")}),
+      el("a", {class:"ld-tool", href:pageUrl("vote-poster"), target:"_blank", rel:"noopener", text:"▦ QR to vote", onclick:() => dock.classList.remove("open")}),
+      el("a", {class:"ld-tool", href:pageUrl("dashboard"), target:"_blank", rel:"noopener", text:"📊 Dashboard", onclick:() => dock.classList.remove("open")}),
       el("p", {class:"ld-keys", text:"Keys: 1 / 2 call King / Queen finalists · K / Q reveal · S stop / play music · L slow · F full screen"})), dockBtn);
   dockBtn.addEventListener("click", e => { e.stopPropagation(); Sound.unlock(); dock.classList.toggle("open"); });
   document.addEventListener("click", e => { if (!dock.contains(e.target)) dock.classList.remove("open"); });
@@ -2505,10 +2539,12 @@ function viewDraw(pin){
   const dockBtn = el("button", {class:"ld-dock-btn", type:"button", "aria-label":"Show controls", "aria-expanded":"false", text:"+"});
   const dock = el("div", {class:"ld-dock"},
     el("div", {class:"ld-dock-panel", role:"group", "aria-label":"Lucky draw controls"},
-      introBtn, fsBtn, musicBtn, el("label", {class:"ld-vol"}, el("span", {text:"Music"}), mVol),
-      fxBtn, el("label", {class:"ld-vol"}, el("span", {text:"Effects"}), fVol),
       setBtn,
-      el("p", {class:"ld-keys", text:"Keys: Space draw · C prize collected · S stop / play music · L slow · F full screen · I countdown"})),
+      el("a", {class:"ld-tool", href:pageUrl("dashboard"), target:"_blank", rel:"noopener", text:"📊 Dashboard", onclick:() => setDock(false)}),
+      el("a", {class:"ld-tool", href:pageUrl("awards"), target:"_blank", rel:"noopener", text:"👑 King & Queen", onclick:() => setDock(false)}),
+      el("a", {class:"ld-tool", href:pageUrl("vote"), target:"_blank", rel:"noopener", text:"🗳 Vote King & Queen", onclick:() => setDock(false)}),
+      el("a", {class:"ld-tool", href:pageUrl("vote-poster"), target:"_blank", rel:"noopener", text:"▦ QR to vote", onclick:() => setDock(false)}),
+      el("p", {class:"ld-keys", text:"Keys: Space draw · C prize collected · S stop / play music · L slow · F full screen"})),
     dockBtn);
   function setDock(open){ dock.classList.toggle("open", open); dockBtn.setAttribute("aria-expanded", open); dockBtn.setAttribute("aria-label", open ? "Hide controls" : "Show controls"); }
   dockBtn.addEventListener("click", e => { e.stopPropagation(); Sound.unlock(); setDock(!dock.classList.contains("open")); });
@@ -3093,7 +3129,6 @@ function viewDraw(pin){
     else if (e.key === "f" || e.key === "F") fullscreen();
     else if (e.key === "s" || e.key === "S") toggleQuiet();
     else if (e.key === "l" || e.key === "L") toggleSoft();
-    else if (e.key === "i" || e.key === "I") playIntro();
   });
   refresh(); setInterval(() => { if (!busy && !dlg.open) refresh(); }, 20000);
   curTrack = "none"; showStart();
