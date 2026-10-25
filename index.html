@@ -1017,17 +1017,37 @@ function localUrl(url){   /* in the Claude preview, pages are #views of this sam
   const h = url.indexOf("#"); return location.href.split("#")[0] + (h >= 0 ? url.slice(h) : "");
 }
 function openPage(url, auto){
-  if (IN_VIEWER){ if (window.__PREVIEW){ location.hash = url.slice(url.indexOf("#") + 1); location.reload(); } else location.href = url; return; }
+  /* inside the viewer: ask the main screen to switch page (it remembers the way back) */
+  if (IN_VIEWER){
+    try{ if (window.top.__pvNav){ window.top.__pvNav(url); return; } }catch(e){}
+    if (window.__PREVIEW){ location.hash = url.slice(url.indexOf("#") + 1); location.reload(); } else location.href = url; return;
+  }
   if (!document.fullscreenElement && !auto){ window.open(url, "_blank", "noopener"); return; }
   const old = document.querySelector(".pv"); if (old) old.remove();
   const quiet = f => { try{ Sound.duck(f); }catch(e){} try{ MUSIC.duck(f); }catch(e){} };
   quiet(0);
-  const fr = el("iframe", {class:"pv-frame", src:localUrl(url), allow:"fullscreen; autoplay", title:"Event page"});
-  const ov = el("div", {class:"pv"}, fr,
-    el("button", {class:"pv-back", type:"button", text:"← Back", onclick:() => { ov.remove(); quiet(1); if (auto && document.fullscreenElement) document.exitFullscreen().catch(() => {}); }}));
-  document.body.append(ov); fr.focus();
+  const trail = [];   /* pages opened inside the viewer, newest last */
+  const ov = el("div", {class:"pv"});
+  const show = u => {
+    const f = el("iframe", {class:"pv-frame", src:localUrl(u), allow:"fullscreen; autoplay", title:"Event page"});
+    const prev = ov.querySelector(".pv-frame"); if (prev) prev.remove();
+    ov.prepend(f); f.focus();
+  };
+  const close = () => { ov.remove(); window.__pvNav = null; quiet(1); };   /* stays in full screen */
+  /* ← Back: one page back (e.g. QR to vote → King & Queen); from the first page, back to this screen */
+  ov.append(el("button", {class:"pv-back", type:"button", text:"← Back", onclick:() => { trail.pop(); if (trail.length) show(trail[trail.length - 1]); else close(); }}));
+  window.__pvNav = u => { trail.push(u); show(u); };
+  document.body.append(ov); window.__pvNav(url);
 }
 window.__openPage = openPage;
+/* dashboard on the main screen: any click puts it in full screen */
+if (!IN_VIEWER && BOOT.view === "dashboard" && !window.__dbFull){ window.__dbFull = true;
+  document.addEventListener("click", e => {
+    if (BOOT.view !== "dashboard" || document.fullscreenElement || !document.documentElement.requestFullscreen) return;
+    if (e.target.closest && e.target.closest("a[target=_blank], dialog")) return;   /* links handle full screen themselves */
+    document.documentElement.requestFullscreen().catch(() => {});
+  }, true);
+}
 /* any link to our own pages that would open a new tab goes through openPage */
 if (!window.__pvClick){ window.__pvClick = true;
   document.addEventListener("click", e => {
@@ -1035,10 +1055,9 @@ if (!window.__pvClick){ window.__pvClick = true;
     const href = a.getAttribute("href") || ""; let ours = false;
     try{ const u = new URL(href, location.href); ours = href.indexOf(BOOT.appUrl) === 0 || (u.origin === location.origin && u.pathname === location.pathname); }catch(_){}
     if (!ours) return;
-    /* the big-screen pages (lucky draw, King & Queen) open straight in full screen */
-    const big = /[?&#](page=)?(draw|awards)(&|$)/.test(href.replace(/^[^?#]*/, ""));
+    /* every event page opened from a menu goes straight to full screen */
     if (!IN_VIEWER && !document.fullscreenElement){
-      if (!big || !document.documentElement.requestFullscreen) return;
+      if (!document.documentElement.requestFullscreen) return;
       e.preventDefault();
       document.documentElement.requestFullscreen().then(() => window.__openPage(href, true), () => window.open(href, "_blank", "noopener"));
       return;
