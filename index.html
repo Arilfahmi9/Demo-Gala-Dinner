@@ -1033,7 +1033,8 @@ function openPage(url, auto){
     const prev = ov.querySelector(".pv-frame"); if (prev) prev.remove();
     ov.prepend(f); f.focus();
   };
-  const close = () => { ov.remove(); window.__pvNav = null; quiet(1); };   /* stays in full screen */
+  const close = () => { ov.remove(); window.__pvNav = null; quiet(1);   /* stays in full screen */
+    if (!document.fullscreenElement && document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(() => {}); };
   /* ← Back: one page back (e.g. QR to vote → King & Queen); from the first page, back to this screen */
   ov.append(el("button", {class:"pv-back", type:"button", text:"← Back", onclick:() => { trail.pop(); if (trail.length) show(trail[trail.length - 1]); else close(); }}));
   window.__pvNav = u => { trail.push(u); show(u); };
@@ -2331,7 +2332,8 @@ function viewAwards(pin){
       mc.reset(); MUSIC.stop(toReveal ? 500 : 1200); if (!toReveal) Sound.mode("wait", 3); };
     const go = () => { close(true); setTimeout(() => reveal(cat), 650); };
     const key = e => { if (mc.key(e)){ e.preventDefault(); e.stopPropagation(); return; }
-      if (e.key === "Escape"){ e.preventDefault(); e.stopPropagation(); close(false); } else if (e.key === "Enter"){ e.preventDefault(); e.stopPropagation(); go(); } };
+      if (e.key === "Escape"){ e.preventDefault(); e.stopPropagation(); close(false); } else if (e.key === "Enter"){ e.preventDefault(); e.stopPropagation(); go(); }
+      else if (e.code === "Space" || e.key === " "){ e.preventDefault(); e.stopPropagation(); if (revealBtn.classList.contains("show")) go(); } };
     const grid = el("div", {class:"awn-grid" + (list.length > 6 ? " many" : "")});
     const revealBtn = el("button", {class:"ld-btn gold awn-go", type:"button", text:"👑 Reveal the " + label, onclick:go});
     const ov = el("div", {class:"awc awn " + cat.toLowerCase(), role:"dialog", "aria-label":"Nominees for " + label},
@@ -2545,6 +2547,7 @@ function viewAwards(pin){
     const tag = (e.target.tagName || "").toLowerCase(); if (["input","select","textarea","button"].includes(tag) || dlg.open || revealing || showing) return;
     if (e.key === "s" || e.key === "S"){ awKeys.el.querySelector(".skey").click(); return; }
     if (e.key === "l" || e.key === "L"){ awKeys.el.querySelectorAll(".skey")[1].click(); return; }
+    if (e.code === "Space" || e.key === " "){ e.preventDefault(); const next = CAT_ORDER.find(c => !revealed[c]); if (next) showNominees(next); return; }
     if (e.key === "1") showNominees("KING"); else if (e.key === "2") showNominees("QUEEN");
     else if (e.key === "q" || e.key === "Q") reveal("QUEEN"); else if (e.key === "k" || e.key === "K") reveal("KING"); else if (e.key === "f" || e.key === "F") fullscreen();
   });
@@ -3163,7 +3166,21 @@ function viewDraw(pin){
     else if (e.key === "f" || e.key === "F") fullscreen();
     else if (e.key === "s" || e.key === "S") toggleQuiet();
     else if (e.key === "l" || e.key === "L") toggleSoft();
+    else if (/^[5321gG]$/.test(e.key)) pickPrize(e.key.toUpperCase());
   });
+  /* hidden keys to choose the prize: 5 consolation · 3 third · 2 second · 1 first · G grand (by name, else by position) */
+  function pickPrize(k){
+    if (!S || busy || sel.disabled || !S.prizes.length) return;
+    const P = S.prizes, n = P.length;
+    const byName = {"5":/consol|saguhati/i, "3":/third|3rd|ketiga|\b3\b/i, "2":/second|2nd|kedua|\b2\b/i, "1":/first|1st|pertama|\b1\b/i, "G":/grand|utama/i}[k];
+    let i = P.findIndex(x => byName.test(x.name) && !(k !== "G" && /grand|utama/i.test(x.name)) && !(k !== "5" && /consol|saguhati/i.test(x.name)));
+    if (i < 0){
+      let g = P.findIndex(x => tierOf(x.name) >= 3); if (g < 0) g = n - 1;
+      i = k === "G" ? g : k === "5" ? 0 : g - Number(k);
+    }
+    const p = P[i]; if (!p || p.remaining <= 0) return;
+    chosen = p.name; render();
+  }
   refresh(); setInterval(() => { if (!busy && !dlg.open) refresh(); }, 20000);
   curTrack = "none"; showStart();
 }
