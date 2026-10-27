@@ -2607,32 +2607,36 @@ const MUSIC = (function(){
   let audio = null, fadeT = null, base = .9, ytBase = 90;
   const playing = new Set();   /* every MP3 still sounding, including one that is fading out */
   const isFile = u => /^([\w\-. \/]+|https:\/\/[^\s"'<>]+)\.(mp3|m4a|aac|ogg|wav)(#t=\d+)?$/i.test(String(u || "").trim());
+  /* each track has its own fade, so a song fading out is never left playing underneath the next one */
   function fade(a, to, ms, then){
-    clearInterval(fadeT); const from = a.volume, steps = Math.max(1, Math.round(ms / 60)); let k = 0;
-    fadeT = setInterval(() => { k++; a.volume = Math.max(0, Math.min(1, from + (to - from) * k / steps)); if (k >= steps){ clearInterval(fadeT); if (then) then(); } }, 60);
+    clearInterval(a._ft); const from = a.volume, steps = Math.max(1, Math.round(ms / 60)); let k = 0;
+    a._ft = setInterval(() => { k++; a.volume = Math.max(0, Math.min(1, from + (to - from) * k / steps)); if (k >= steps){ clearInterval(a._ft); if (then) then(); } }, 60);
   }
+  const kill = a => { clearInterval(a._ft); try{ a.pause(); a.currentTime = 0; }catch(e){} playing.delete(a); };
   return {
     valid: u => isFile(u) || YTM.valid(u),
     isFile,
     play(u, label, vol, loop){
       u = String(u || "").trim();
       if (isFile(u)){
-        if (audio){ try{ audio.pause(); }catch(e){} }
+        Array.from(playing).forEach(kill);   /* only one song at a time */
         const pm = window.__PREVIEW_MP3 && window.__PREVIEW_MP3[u.split("#")[0]];
-        audio = new Audio(pm ? pm + (u.indexOf("#") >= 0 ? u.slice(u.indexOf("#")) : "") : u); audio.loop = !!loop; audio.volume = 0; audio.preload = "auto"; base = (vol || 90) / 100;
-        playing.add(audio);
-        let pr; try{ pr = audio.play(); }catch(e){ pr = Promise.reject(e); }
-        return (pr && pr.then ? pr : Promise.resolve()).then(() => { fade(audio, base, 1200); return true; })
+        const a = new Audio(pm ? pm + (u.indexOf("#") >= 0 ? u.slice(u.indexOf("#")) : "") : u); a.loop = !!loop; a.volume = 0; a.preload = "auto";
+        base = Math.min(.8, (vol || 80) / 100);   /* kept below full volume so big speakers don't distort */
+        audio = a; playing.add(a);
+        let pr; try{ pr = a.play(); }catch(e){ pr = Promise.reject(e); }
+        return (pr && pr.then ? pr : Promise.resolve()).then(() => { if (audio === a) fade(a, base, 1200); else kill(a); return true; })
           .catch(() => { toast("Couldn’t play the music file “" + u + "”. Check the file name on GitHub. Using the built-in music instead."); return false; });
       }
       ytBase = vol || 85;
       return YTM.play(u, label, vol);
     },
-    duck(f){ if (audio){ clearInterval(fadeT); fade(audio, Math.min(1, base * f), 500); } YTM.setVol(ytBase * f); },
+    duck(f){ if (audio) fade(audio, Math.min(1, base * f), 500); YTM.setVol(ytBase * f); },
     stop(ms){
       /* a quick stop (Draw winner) silences everything at once, including music that was already fading out */
-      if (!ms || ms <= 300){ clearInterval(fadeT); playing.forEach(a => { try{ a.pause(); }catch(e){} }); playing.clear(); audio = null; YTM.stop(0); return; }
-      if (audio){ const a = audio; audio = null; fade(a, 0, ms, () => { a.pause(); playing.delete(a); }); }
+      if (!ms || ms <= 300){ Array.from(playing).forEach(kill); audio = null; YTM.stop(0); return; }
+      Array.from(playing).forEach(a => { if (a !== audio) kill(a); });
+      if (audio){ const a = audio; audio = null; fade(a, 0, ms, () => kill(a)); }
       YTM.stop(ms);
     }
   };
@@ -3689,7 +3693,7 @@ function viewDraw(pin){
     MUSIC.stop(0); Sound.mode("draw", tr);
     walkTimer = setTimeout(() => {
       if (curTrack !== k) return;
-      if (f) MUSIC.play(f, "Winner music", 90, true).then(ok => { if (!ok && curTrack === k) Sound.mode("win", tr); });
+      if (f) MUSIC.play(f, "Winner music", 75, true).then(ok => { if (!ok && curTrack === k) Sound.mode("win", tr); });
       else Sound.mode("win", tr);
     }, revealedJustNow ? (tr >= 3 ? 1800 : 1400) : 300);
   }
@@ -4039,7 +4043,7 @@ function viewDraw(pin){
     const w = S && S.winners.find(x => x.id === id);
     if (w && (action === "call" || action === "collected")){
       const before = JSON.stringify(S);
-      if (action === "call") w.calls = (w.calls || 0) + 1; else w.status = "Collected";
+      if (action === "call") w.calls = (w.calls || 0) + 1; else { w.status = "Collected"; MUSIC.stop(900); curTrack = null; }
       render();
       syncP = call("apiWinnerAction", pin, id, action).then(r => { if (!busy){ S = r; render(); } if (dlg.open) renderSettings(); })
         .catch(e => { S = JSON.parse(before); render(); handle(e); });
