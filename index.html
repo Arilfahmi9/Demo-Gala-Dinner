@@ -1783,24 +1783,32 @@ function viewDashboard(){
       }
       if (setTab === "prizes"){
         const D = cache.draw;
-        const list = D.prizes.map(p => ({name:p.name, qty:p.qty, level:p.level || "", won:p.qty - p.remaining}));
+        const pmus = (D.settings && D.settings.prizeMusic) || {};
+        const list = D.prizes.map(p => ({name:p.name, qty:p.qty, level:p.level || "", won:p.qty - p.remaining, music:pmus[p.name] || ""}));
+        const autoHint = (i, n) => { const t = String(n || "").toLowerCase(), g = list.length - 1;
+          const k = /grand|utama/.test(t) ? "grand" : /first|1st|pertama/.test(t) ? "first" : /second|2nd|kedua/.test(t) ? "second" : /third|3rd|ketiga/.test(t) ? "third" : i === g ? "grand" : i === g - 1 ? "first" : i === g - 2 ? "second" : i === g - 3 && i > 0 ? "third" : "";
+          return k ? "auto: " + k + ".mp3" : "auto: runway.mp3"; };
         const tb = el("tbody");
         const paint = () => { tb.innerHTML = ""; list.forEach((p, i) => {
           const n = el("input", {type:"text", value:p.name, "aria-label":"Prize name"}); n.addEventListener("input", () => p.name = n.value);
           const q = el("input", {type:"number", min:"1", value:String(p.qty), style:"width:5rem", "aria-label":"Quantity"}); q.addEventListener("input", () => p.qty = q.value);
           const lv = el("select", {"aria-label":"Level", style:"width:auto"}, [["", "Auto"], ["NORMAL", "Normal"], ["BIG", "Big prize"], ["GRAND", "Grand prize"]].map(([v, t]) => el("option", {value:v, text:t})));
           lv.value = p.level; lv.addEventListener("change", () => p.level = lv.value);
-          tb.append(el("tr", null, el("td", {text:String(i + 1)}), el("td", null, n), el("td", null, q), el("td", null, lv), el("td", {class:"muted small", text:p.won ? p.won + " drawn" : ""}),
+          const mu = el("input", {type:"text", value:p.music || "", placeholder:autoHint(i, p.name), style:"min-width:10rem", "aria-label":"Music for this prize"}); mu.addEventListener("input", () => p.music = mu.value);
+          tb.append(el("tr", null, el("td", {text:String(i + 1)}), el("td", null, n), el("td", null, q), el("td", null, lv), el("td", null, mu), el("td", {class:"muted small", text:p.won ? p.won + " drawn" : ""}),
             el("td", {class:"nowrap"}, el("button", {class:"btn mini", type:"button", text:"↑", disabled:i === 0, onclick:() => { [list[i - 1], list[i]] = [list[i], list[i - 1]]; paint(); }}),
               el("button", {class:"btn mini", type:"button", text:"↓", disabled:i === list.length - 1, onclick:() => { [list[i + 1], list[i]] = [list[i], list[i + 1]]; paint(); }}),
               el("button", {class:"btn mini", type:"button", text:"✕", onclick:() => { list.splice(i, 1); paint(); }})))); }); };
         paint();
         const save = el("button", {class:"btn primary", type:"button", text:"Save Prizes"});
-        save.addEventListener("click", () => { dirty = false; bg(call("apiSavePrizes", pin, list), r => { cache.draw = r; }); });
+        save.addEventListener("click", () => { dirty = false;
+          const mus = {}; list.forEach(p => { if (p.name && String(p.music || "").trim()) mus[p.name.trim()] = String(p.music).trim(); });
+          bg(call("apiSavePrizes", pin, list).then(() => call("apiSavePrizeMusic", pin, mus)), r => { cache.draw = r; }); });
         tb.addEventListener("input", () => dirty = true); tb.addEventListener("click", () => dirty = true);
         setBox.innerHTML = "";
         setBox.append(note("Drawn from top to bottom, grand prize last. Level: Auto makes the last prize Grand and the two before it Big."),
-          el("div", {class:"tablewrap"}, el("table", {class:"tbl"}, el("thead", null, el("tr", null, ["#", "Prize", "Quantity", "Level", "", ""].map(h => el("th", {text:h})))), tb)),
+          el("div", {class:"tablewrap"}, el("table", {class:"tbl"}, el("thead", null, el("tr", null, ["#", "Prize", "Quantity", "Level", "Music (MP3)", "", ""].map(h => el("th", {text:h})))), tb)),
+          note("Music (MP3): the song played when this prize’s winner is called, e.g. first.mp3 (a file next to index.html on GitHub) or a YouTube link. Leave empty to use the automatic file shown in grey."),
           el("div", {class:"row"}, el("button", {class:"btn", type:"button", text:"+ Add prize", onclick:() => { list.push({name:"", qty:1, level:"", won:0}); paint(); }}), save));
       }
       if (setTab === "vote"){
@@ -3683,6 +3691,7 @@ function viewDraw(pin){
   ["third", "second", "first", "grand"].forEach(k => mp3Default(k + ".mp3").then(v => { autoMusic[k] = v; }));
   function prizeSong(name){
     if (!name || !S) return "";
+    const set = S.settings && S.settings.prizeMusic && S.settings.prizeMusic[name]; if (set) return set;   /* chosen in Settings → Prizes */
     const t = String(name).toLowerCase();
     let k = /grand|utama/.test(t) ? "grand" : /first|1st|pertama/.test(t) ? "first" : /second|2nd|kedua/.test(t) ? "second" : /third|3rd|ketiga/.test(t) ? "third" : "";
     if (!k){ /* not named: count back from the grand prize at the end of the list */
