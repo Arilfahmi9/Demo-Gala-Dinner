@@ -3702,6 +3702,8 @@ function viewDraw(pin){
 
   const pending = () => S && S.winners.find(w => w.status === "Called");
   let ytFor = null, ytTimer = null, ytFailed = false, revealedJustNow = false;
+  /* "x of y left" only for the consolation prize (the first prize in the list, or one named Consolation / Saguhati) */
+  const showCount = x => !!x && x.qty > 1 && (/consol|saguhati/i.test(x.name) || (S && S.prizes[0] && S.prizes[0].name === x.name));
   function currentPrize(){ if (!S) return null; const open = S.prizes.filter(p => p.remaining > 0); return open.find(p => p.name === chosen) || open[0] || null; }
   /* ===== opening screen: shown when the lucky draw page opens, so the intro plays before the main display ===== */
   let startOn = false;
@@ -3998,7 +4000,7 @@ function viewDraw(pin){
     revealedJustNow = false;
     panel.classList.toggle("grand", !!p && tierOf(p.prize) >= 3);
     sel.innerHTML = "";
-    S.prizes.forEach(x => { const o = el("option", {value:x.name, text:x.name + " (" + x.remaining + " of " + x.qty + " left)"}); if (x.remaining <= 0) o.disabled = true; sel.append(o); });
+    S.prizes.forEach(x => { const o = el("option", {value:x.name, text:x.name + (showCount(x) ? " (" + x.remaining + " of " + x.qty + " left)" : x.remaining <= 0 ? " (drawn)" : "")});   /* counts only for the consolation prize */ if (x.remaining <= 0) o.disabled = true; sel.append(o); });
     if (p) sel.value = p.prize; else if (cur) sel.value = cur.name;
     sel.disabled = !!p || busy;
     const st = S.settings;
@@ -4019,7 +4021,7 @@ function viewDraw(pin){
       line.textContent = cur ? "" : (S.prizes.length ? "All prizes have been drawn" : "Add prizes in Settings");
       if (!busy){ num.className = "ld-num idle"; num.textContent = "000"; }
       winCard.append(el("p", {class:"ld-label", text:"Ready"}), el("p", {class:"ld-name", text: cur ? cur.name : "Thank you"}),
-        el("p", {class:"ld-meta", text: cur ? cur.remaining + " of " + cur.qty + " still to give away" : "Congratulations to every winner"}));
+        el("p", {class:"ld-meta", text: cur ? (showCount(cur) ? cur.remaining + " of " + cur.qty + " still to give away" : "") : "Congratulations to every winner"}));
       const b = el("button", {class:"ld-btn gold", type:"button", text:"Draw winner", onclick:draw});
       b.disabled = busy || !cur || S.poolCount === 0;
       btns.append(b, el("p", {class:"ld-hint", text:"Press Space to draw"}));
