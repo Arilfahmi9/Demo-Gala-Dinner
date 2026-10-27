@@ -383,6 +383,38 @@ body.dashmode .feed li{padding:.45rem 0;font-size:.9rem}
 .nom-txt small{color:var(--muted);font-size:.78rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nom-tick{flex:none;width:1.6rem;height:1.6rem;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-weight:800;color:transparent}
 .nom[aria-checked="true"] .nom-tick{background:var(--gold);border-color:var(--gold);color:var(--on-gold)}
+/* table number on the registration result */
+.tablebox{margin:.7rem auto .2rem;display:inline-flex;flex-direction:column;align-items:center;padding:.45rem 1.3rem .55rem;border:1.5px solid var(--gold);border-radius:14px;background:rgba(242,207,115,.08)}
+.tablebox .numlabel{margin:0}
+.tableno{margin:0;font-size:2.1rem;font-weight:800;color:var(--gold);line-height:1.1;letter-spacing:.02em}
+/* King & Queen voting from the list of registered staff */
+.vt-tabs{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:.2rem 0 .7rem}
+.vt-tab{display:flex;align-items:center;gap:.5rem;padding:.55rem .6rem;border-radius:14px;border:1.5px solid var(--line);background:rgba(255,255,255,.04);color:var(--ink);text-align:left;cursor:pointer;min-width:0;font:inherit}
+.vt-tab[aria-selected="true"].king{border-color:#7FB2FF;background:rgba(74,99,224,.18)}
+.vt-tab[aria-selected="true"].queen{border-color:#FF7AC6;background:rgba(224,34,138,.16)}
+.vt-tab:disabled{opacity:.55;cursor:default}
+.vt-tab-t{display:flex;flex-direction:column;min-width:0}
+.vt-tab-t b{font-size:.82rem;line-height:1.2}
+.vt-tab-t small{font-size:.74rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vt-tab.picked .vt-tab-t small{color:var(--gold);font-weight:700}
+.vt-search{width:100%;margin:0 0 .6rem}
+.vt-list{display:flex;flex-direction:column;gap:.45rem;max-height:52vh;overflow-y:auto;padding-right:.15rem;margin-bottom:.4rem}
+.vt-dept{border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.03)}
+.vt-dept>summary{display:flex;justify-content:space-between;align-items:center;gap:.5rem;padding:.6rem .75rem;cursor:pointer;font-weight:700;font-size:.9rem;list-style:none}
+.vt-dept>summary::-webkit-details-marker{display:none}
+.vt-dept>summary::after{content:"▾";color:var(--muted);transition:transform .2s}
+.vt-dept[open]>summary::after{transform:rotate(180deg)}
+.vt-dept>summary small{margin-left:auto;color:var(--muted);font-weight:600}
+.vt-row{display:flex;align-items:center;gap:.6rem;width:100%;padding:.5rem .75rem;border:0;border-top:1px solid var(--line);background:none;color:var(--ink);text-align:left;cursor:pointer;font:inherit}
+.vt-row .av{width:2.1rem;height:2.1rem;font-size:.8rem}
+.vt-name{flex:1;min-width:0;font-weight:600;display:flex;flex-direction:column;line-height:1.25}
+.vt-sid{font-size:.72rem;font-weight:600;color:var(--muted);letter-spacing:.03em}
+.vt-also{font-size:.7rem;color:var(--muted)}
+.vt-row[aria-checked="true"]{background:rgba(242,207,115,.12)}
+.vt-row[aria-checked="true"] .nom-tick{background:var(--gold);border-color:var(--gold);color:var(--on-gold)}
+.vt-bar{position:sticky;bottom:0;margin:0 -.2rem;padding:.6rem .2rem .2rem;background:linear-gradient(180deg,transparent,var(--card-bg,#1a0f33) 25%)}
+.vt-sum{display:flex;flex-wrap:wrap;justify-content:center;gap:.25rem .9rem;font-size:.82rem;margin:0 0 .45rem;color:var(--muted)}
+.vt-sum b{color:var(--ink)}
 /* royal icons and tagline */
 .royal{display:inline-block;line-height:0;filter:drop-shadow(0 4px 14px rgba(242,207,115,.45))}
 .royal svg{width:100%;height:auto;display:block}
@@ -499,6 +531,78 @@ body:not(.drawmode) .mc.fixed{display:none}
 .awn-av{display:grid;place-items:center;margin:0 auto 1.2vh;width:clamp(4.5rem,11vh,7.5rem);aspect-ratio:1;border-radius:50%;font-family:var(--display);font-weight:800;color:#fff;font-size:clamp(1.6rem,4vh,2.8rem);box-shadow:0 0 0 3px rgba(242,207,115,.7),0 0 40px rgba(242,207,115,.35)}
 .awn-av.queen{background:radial-gradient(circle at 35% 30%,#ff6fb5,#8B3FC1 70%)}
 .awn-av.king{background:radial-gradient(circle at 35% 30%,#8fa6ff,#3a2a9a 70%)}
+.awn-av.photo,.aw-orb.photo{background:#140a2c;overflow:hidden;padding:0}
+.awn-av.photo img,.aw-orb.photo img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
+.awn-grid.pics .awn-av{width:clamp(6.5rem,17vh,10.5rem)}
+.aw-orb{flex:none}
+.awc-photo{width:clamp(10rem,30vh,19rem);aspect-ratio:1;margin:0 auto 1.4vh;border-radius:50%;overflow:hidden;border:5px solid #F2CF73;box-shadow:0 0 0 6px rgba(255,243,196,.25),0 0 70px rgba(242,207,115,.65);opacity:0;animation:photoIn 1.1s cubic-bezier(.2,1.4,.4,1) forwards}
+.awc-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.awc-people.tie .awc-photo{width:clamp(7rem,20vh,12rem)}
+@keyframes photoIn{0%{opacity:0;transform:scale(.3) rotate(-12deg)}100%{opacity:1;transform:none}}
+/* one award at a time: King page, then Queen page */
+.aw-body.single{grid-template-columns:minmax(0,62rem);justify-content:center}
+.aw-body.single .aw-card:not(.on){display:none}
+.aw-body.single .aw-card .royal.aw-crown{width:clamp(5rem,13vh,9rem)}
+.aw-body.single .aw-orb{width:clamp(7rem,21vh,13rem)}
+.aw-body.single .aw-label{font-size:clamp(2.2rem,6vh,4.4rem)}
+.aw-next{position:fixed;right:5.2rem;bottom:1.2rem;z-index:30;opacity:.85}
+.aw-next:hover{opacity:1}
+.ph-row{display:flex;align-items:center;gap:.8rem;padding:.55rem 0;border-top:1px solid var(--line)}
+.ph-av{flex:none;width:3.6rem;height:3.6rem;border-radius:50%;overflow:hidden;display:grid;place-items:center;font-weight:800;color:#fff;background:#3a2a9a}
+.ph-av img{width:100%;height:100%;object-fit:cover}
+.ph-row .ph-t{flex:1;min-width:0}
+.ph-row .ph-t small{display:block;color:var(--muted)}
+/* ===== King & Queen stage: LED-friendly text (white edge + dark outline) ===== */
+.awc .awc-title span,.awn .awc-title span,.awr .awr-w{-webkit-text-stroke:.022em rgba(255,255,255,.92);paint-order:stroke fill}
+.awc.king .awc-title span,.awr.king .awr-w{filter:drop-shadow(0 0 1.5px #0a0630) drop-shadow(0 0 1.5px #0a0630) drop-shadow(0 0 22px rgba(74,130,255,.85))!important}
+.awc.queen .awc-title span,.awr.queen .awr-w{filter:drop-shadow(0 0 1.5px #2a0420) drop-shadow(0 0 1.5px #2a0420) drop-shadow(0 0 24px rgba(255,61,154,.9))!important}
+.awn-kick{font-size:clamp(1rem,2.4vh,1.7rem)!important;color:#FFE08A!important;text-shadow:0 0 12px rgba(242,207,115,.6),0 2px 0 #000}
+/* finalists: bright, outlined, twinkling names */
+.awn .awn-card{border-width:2px!important;background:linear-gradient(170deg,rgba(255,255,255,.12),rgba(255,255,255,.03))!important}
+.awn.king .awn-card{border-color:#8FB8FF!important;box-shadow:0 0 0 1px rgba(143,184,255,.35),0 0 40px rgba(74,130,255,.45),inset 0 0 30px rgba(74,130,255,.15)}
+.awn.queen .awn-card{border-color:#FF8CCB!important;box-shadow:0 0 0 1px rgba(255,140,203,.35),0 0 44px rgba(255,61,154,.5),inset 0 0 30px rgba(255,61,154,.16)}
+.awn .awn-name{font-size:clamp(1.4rem,3.7vh,2.7rem)!important;letter-spacing:.01em;-webkit-text-stroke:.03em rgba(255,255,255,.95);paint-order:stroke fill;background-size:220% 100%!important;
+  animation:shimmer 3.2s linear infinite,finBlink 1.6s ease-in-out infinite!important}
+.awn.king .awn-name{background-image:linear-gradient(100deg,#FFE08A,#ffffff 30%,#9CC3FF 55%,#FFE08A 80%)!important}
+.awn.queen .awn-name{background-image:linear-gradient(100deg,#FFE08A,#ffffff 30%,#FFB3DE 55%,#FFE08A 80%)!important}
+.awn-card:nth-child(2) .awn-name{animation-delay:0s,.5s!important}
+.awn-card:nth-child(3) .awn-name{animation-delay:0s,1s!important}
+@keyframes finBlink{0%,100%{filter:drop-shadow(0 0 1.5px #000) drop-shadow(0 0 6px rgba(255,224,138,.5))}50%{filter:drop-shadow(0 0 1.5px #000) drop-shadow(0 0 20px rgba(255,255,255,1)) drop-shadow(0 0 36px rgba(255,224,138,.9))}}
+.awn .awn-meta{color:#E9E0FF!important;font-size:clamp(.9rem,2vh,1.3rem)!important;text-shadow:0 2px 0 rgba(0,0,0,.6)}
+.awn-go{font-size:clamp(1.1rem,1.8vw,1.6rem)!important}
+/* reveal roll: name and photo flicker through the finalists */
+.awr .aw-roll{-webkit-text-stroke:.025em rgba(255,255,255,.95);paint-order:stroke fill}
+.awr.king .aw-roll{filter:drop-shadow(0 0 2px #050320) drop-shadow(0 0 30px rgba(74,130,255,.95))!important}
+.awr.queen .aw-roll{filter:drop-shadow(0 0 2px #200014) drop-shadow(0 0 34px rgba(255,61,154,1))!important}
+.awr-pic{width:clamp(7rem,20vh,12rem);aspect-ratio:1;margin:2vh auto 0;border-radius:50%;overflow:hidden;border:4px solid #F2CF73;box-shadow:0 0 50px rgba(242,207,115,.7);display:none}
+.awr-pic.on{display:block}
+.awr-pic img{width:100%;height:100%;object-fit:cover}
+/* winner: bigger outlined name, photo in a turning jewelled ring */
+.awc .awc-name span{-webkit-text-stroke:.025em rgba(255,255,255,.95);paint-order:stroke fill}
+.awc.king .awc-name span{filter:drop-shadow(0 0 2px #050320) drop-shadow(0 0 2px #050320) drop-shadow(0 0 34px rgba(74,130,255,.95))!important}
+.awc.queen .awc-name span{filter:drop-shadow(0 0 2px #200014) drop-shadow(0 0 2px #200014) drop-shadow(0 0 38px rgba(255,61,154,1))!important}
+.awc.queen .awc-name span{background-image:linear-gradient(110deg,#FFE3F3 0%,#ffffff 25%,#FF9AD0 50%,#FFE08A 70%,#FFE3F3 90%)!important}
+.awc-photo-wrap{position:relative;width:max-content;margin:0 auto 1.6vh}
+.awc-photo-wrap::before{content:"";position:absolute;inset:-14px;border-radius:50%;background:conic-gradient(#F2CF73,#7FB2FF,#FFF3C4,#4A63E0,#F2CF73);animation:ringSpin 3s linear infinite;filter:blur(1px);opacity:0;animation:ringSpin 3s linear infinite,fadeIn .8s 1.3s forwards}
+.awc.queen .awc-photo-wrap::before{background:conic-gradient(#FF7AC6,#FFE08A,#ffffff,#FF3D9A,#C38BFF,#FF7AC6)}
+.awc-photo-wrap .awc-photo{position:relative;margin:0;border-width:6px}
+.awc.queen .awc-photo{border-color:#FFD1EA;box-shadow:0 0 0 6px rgba(255,122,198,.35),0 0 90px rgba(255,61,154,.85)}
+@keyframes ringSpin{to{transform:rotate(360deg)}}
+@keyframes fadeIn{to{opacity:1}}
+.awx-ring{position:fixed;left:50%;top:50%;width:20vmin;height:20vmin;margin:-10vmin 0 0 -10vmin;border-radius:50%;border:6px solid rgba(255,243,196,.9);pointer-events:none;z-index:3;animation:awxRing 1.6s cubic-bezier(.2,.8,.3,1) forwards}
+.awc.queen .awx-ring{border-color:rgba(255,154,208,.95);box-shadow:0 0 40px rgba(255,61,154,.8)}
+.awc.king .awx-ring{border-color:rgba(160,200,255,.95);box-shadow:0 0 40px rgba(74,130,255,.8)}
+@keyframes awxRing{0%{transform:scale(.2);opacity:1}100%{transform:scale(9);opacity:0}}
+.awx-fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+/* overview (before the awards): no stage buttons, a big QR code to vote */
+.aw.ov .aw-card .aw-btns{display:none}
+.aw-body.single .aw-btns .ld-btn{flex:0 1 26rem!important;font-size:clamp(1rem,1.5vw,1.4rem)!important}
+.aw.ov .aw-orb{width:clamp(5rem,15vh,9rem)}
+.aw.ov .aw-card .royal.aw-crown{width:clamp(4.5rem,11vh,7rem)}
+.aw.ov .aw-strip{max-width:1200px;padding:2vh 2.4vw;gap:2.4vw;border-color:rgba(242,207,115,.55);box-shadow:0 0 50px rgba(242,207,115,.2)}
+.aw.ov .aw-qr{width:clamp(150px,27vh,280px);border-radius:16px;padding:8px}
+.aw.ov .aw-status{font-size:clamp(1.3rem,3.4vh,2.6rem)}
+.aw.ov .aw-strip .aw-url{display:block!important;font-size:clamp(.9rem,2vh,1.4rem);color:#FFE08A}
 .awn-name{margin:0;font-family:var(--display);font-weight:800;color:#fff;font-size:clamp(1.1rem,2.8vh,2rem);line-height:1.15}
 .awn-meta{margin:.5vh 0 0;color:var(--muted);font-weight:600;font-size:clamp(.8rem,1.7vh,1.1rem)}
 .awn-grid.many .awn-card{width:clamp(9rem,13vw,14rem);padding:1.6vh .8vw}
@@ -805,6 +909,46 @@ body.dashmode .bgart{position:fixed}
 .p2-fine{margin:.8rem 0 0;font-size:.78rem;color:var(--muted)}
 .poster2 .poster-crowns{margin:.7rem 0 0}
 .poster2 .poster-crowns .royal{width:3.8rem}
+/* staff poster: same royal look as the voting poster, in teal & gold */
+.tone-gala{--p2-a:#3FE3CF;--p2-b:#F2CF73;--p2-ring:linear-gradient(135deg,#3FE3CF,#F2CF73,#FF7AC6)}
+.tone-gala .p2-title span:first-child{font-size:.62em;letter-spacing:.2em;background:none;-webkit-text-fill-color:var(--ink);color:var(--ink);filter:none}
+.tone-gala .p2-title span:last-child{background-image:linear-gradient(90deg,#3FE3CF,#FFF3C4 35%,#F2CF73 65%,#3FE3CF);filter:drop-shadow(0 0 18px rgba(63,227,207,.45))}
+.tone-gala .p2-qrwrap{box-shadow:0 0 54px -4px #3FE3CF,0 0 90px -20px #F2CF73}
+.gala-ico{display:inline-block;line-height:0;filter:drop-shadow(0 4px 14px rgba(242,207,115,.5))}
+.poster2 .gala-ico{width:4.2rem}
+.gala-ico.tk{animation:float 2.6s ease-in-out infinite alternate}
+.gala-ico.tb{animation:float 2.6s ease-in-out .7s infinite alternate}
+.royal-tag.lucky{color:#FFE08A}
+.royal-tag.table{color:#7DF0E0}
+/* dashboard: seating plan */
+.seat-tools{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin:.3rem 0 .8rem}
+.seat-tools input{max-width:20rem}
+.seat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(15.5rem,1fr));gap:.7rem}
+.seat-card{border:1px solid var(--line);border-radius:14px;padding:.7rem .8rem;background:rgba(255,255,255,.035)}
+.seat-card h3{display:flex;justify-content:space-between;align-items:baseline;gap:.5rem;margin:0 0 .45rem;font-size:1.05rem;color:var(--gold)}
+.seat-card h3 small{font-size:.75rem;color:var(--muted);font-weight:700}
+.seat-card.full h3 small{color:var(--ok)}
+.seat-card.none h3{color:var(--warn)}
+.seat-dept{margin:.4rem 0 .15rem;font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#7DF0E0}
+.seat-card ol{margin:0;padding-left:1.3rem;font-size:.86rem;line-height:1.45}
+.seat-card ol small{color:var(--muted)}
+.seat-card{cursor:pointer;transition:border-color .2s,transform .2s}
+.seat-card:hover{border-color:var(--gold);transform:translateY(-2px)}
+.seat-card.vip{border-color:rgba(242,207,115,.6);background:linear-gradient(160deg,rgba(242,207,115,.14),rgba(255,255,255,.03) 60%)}
+.seat-dept.vip{color:var(--gold)}
+.seat-chips{display:flex;flex-wrap:wrap;gap:.35rem;margin:0 0 .8rem}
+.seat-chip{font:inherit;font-size:.82rem;font-weight:700;padding:.35rem .7rem;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--ink);cursor:pointer}
+.seat-chip:hover{border-color:var(--gold)}
+.seat-chip.vip{border-color:var(--gold);color:var(--gold)}
+.seat-chip.none{color:var(--warn)}
+.seat-dlg{width:min(36rem,94vw);max-height:88vh;border:1px solid var(--line);border-radius:18px;background:#1a0f33;color:var(--ink);padding:1rem 1.1rem;overflow:auto}
+.seat-dlg::backdrop{background:rgba(5,2,15,.7)}
+.seat-dlg h2{display:flex;align-items:center;gap:.5rem;margin:0;color:var(--gold)}
+.seat-dlg .vip-badge{font-size:.7rem;letter-spacing:.14em;padding:.2rem .6rem;border-radius:999px;background:linear-gradient(90deg,#FFF3C4,#F2CF73);color:#2b1250}
+.seat-dlg ol{padding-left:1.4rem;line-height:1.55}
+.seat-dlg ol small{color:var(--muted)}
+.vip-tbl input{min-width:0;width:100%}
+.ds-pane textarea{background:rgba(255,255,255,.06);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:.6rem .7rem;font:inherit;box-sizing:border-box}
 @media print{ .poster2{box-shadow:none} }
 /* one see-through music button (stop / play): barely visible on the big screen, clear when the mouse comes near */
 .mtoggle{position:absolute;left:1.2vw;bottom:1.6vh;z-index:60;width:2.6rem;height:2.6rem;border-radius:50%;display:grid;place-items:center;font-size:1.1rem;cursor:pointer;
@@ -1131,13 +1275,22 @@ function viewForm(){
     return;
   }
   const mem = remembered();
-  if (mem){ viewResult(mem, "You’re registered. Enjoy the evening!", false); return; }
+  if (mem){
+    viewResult(mem, "You’re registered. Enjoy the evening!", false);
+    if (mem.staffId) call("apiMyReg", {staffId:mem.staffId, name:mem.name}).then(r => {
+      if (!r || B.view !== "form" || !document.body.contains(app)) return;
+      if (r.status === "none"){ forget(); viewForm(); return; }   /* cleared after a rehearsal: register again */
+      if (String(r.table || "") !== String(mem.table || "") || Number(r.luckyNo) !== Number(mem.luckyNo)){
+        const m2 = Object.assign({}, mem, {table:r.table || "", luckyNo:r.luckyNo}); remember(m2); viewResult(m2, "You’re registered. Enjoy the evening!", false); }
+    }).catch(() => {});
+    return;
+  }
   const name = el("input", {type:"text", id:"name", autocomplete:"name", autocapitalize:"words", required:true});
   const org = el("select", {id:"org", required:true},
     el("option", {value:"", text:"Choose your organisation"}),
     (B.orgs || []).map(o => el("option", {value:o, text:o})));
   const phone = el("input", {type:"tel", id:"phone", inputmode:"tel", autocomplete:"tel", placeholder:"e.g. 012-345 6789"});
-  const sid = el("input", {type:"text", id:"sid", autocomplete:"off", autocapitalize:"characters", placeholder: B.staffIdRequired ? "e.g. UOC1234 or MG1234" : "Leave blank if you’re a guest"});
+  const sid = el("input", {type:"text", id:"sid", autocomplete:"off", autocapitalize:"characters", placeholder:"e.g. UOC1234 or MG1234"});
   let dept;
   if (B.departments && B.departments.length){
     dept = el("select", {id:"dept", required:true},
@@ -1164,14 +1317,12 @@ function viewForm(){
     if (allow.length && !allow.some(p => p.indexOf("*.") === 0 ? dom.endsWith(p.slice(1)) : dom === p)) return "Please use your official staff email (" + allow.filter(p => p.indexOf("*.") !== 0).map(p => "@" + p).join(" or ") + ").";
     return "";
   };
-  const staffBits = [el("label", {class:"f", for:"sid", text: B.staffIdRequired ? "Staff ID" : "Staff ID (optional)"}), sid,
+  const staffBits = [el("label", {class:"f", for:"sid", text:"Staff ID"}), sid,
     el("label", {class:"f", for:"email", text: B.emailRequired === false ? "Staff Email (optional)" : "Staff Email"}), email,
     el("label", {class:"f", for:"org", text:"Organisation"}), org, el("label", {class:"f", for:"dept", text:"Department"}), dept, other];
   const guestBits = [el("label", {class:"f", for:"company", text:"Company / organisation (optional)"}), company];
   const phoneLabel = el("label", {class:"f", for:"phone", text: B.phoneRequired ? "Phone number" : "Phone number (optional)"});
-  const who = desk ? el("div", {class:"who-seg", role:"radiogroup", "aria-label":"Who is registering"},
-    el("button", {type:"button", role:"radio", "aria-checked":"true", text:"Staff"}),
-    el("button", {type:"button", role:"radio", "aria-checked":"false", text:"Guest"})) : null;
+  const who = null;   /* internal staff event: no guest switch */
   function setGuest(g){
     guest = g;
     if (who) who.querySelectorAll("button").forEach((b, i) => b.setAttribute("aria-checked", String(i === (g ? 1 : 0))));
@@ -1203,7 +1354,7 @@ function viewForm(){
       }catch(err){ msg.textContent = errText(err); btn.disabled = false; btn.textContent = "Register and Get Lucky Number"; }
       return;
     }
-    if (B.staffIdRequired && !sv){ msg.textContent = "Please enter your staff ID."; sid.focus(); return; }
+    if (!sv){ msg.textContent = "Please enter your staff ID."; sid.focus(); return; }
     const em = emailOk(email.value); if (em){ msg.textContent = em; email.focus(); return; }
     const pv = phone.value.trim(), pd = pv.replace(/\D/g, "");
     if (B.phoneRequired && !pd){ msg.textContent = "Please enter your phone number."; phone.focus(); return; }
@@ -1233,6 +1384,7 @@ function viewResult(r, headline, fresh){
     el("p", {class:"who", text:r.name}), el("p", {class:"meta", text:[r.staffId, r.org, r.dept].filter(Boolean).join(" · ")}),
     el("p", {class:"numlabel", text:"Your lucky draw number"}),
     el("p", {class:"lucky" + (fresh ? " pop" : ""), text:String(r.luckyNo)}),
+    r.table ? el("div", {class:"tablebox"}, el("p", {class:"numlabel", text:"Your table"}), el("p", {class:"tableno", text:"Table " + r.table})) : null,
     el("p", {class:"muted small", text: B.view === "kiosk" ? "Please remember or photograph this number. Winners are called by number during dinner." : "Take a screenshot of this screen. Winners are called by number during dinner."}));
   app.append(card);
   if (B.view === "kiosk"){
@@ -1285,14 +1437,14 @@ function viewDashboard(){
     saveCsv("Gala-registrations-" + stamp() + ".csv",
       [["TOTAL REGISTERED", rows.length], [], ["BY ORGANISATION", "Total"]].concat(Object.entries(orgs).sort((a, b) => b[1] - a[1]))
       .concat([[], ["BY DEPARTMENT", "Total"]]).concat(Object.entries(depts).sort((a, b) => b[1] - a[1]))
-      .concat([[], ["ALL REGISTRATIONS"], ["Lucky No", "Name", "Staff ID", "Email", "Phone", "Organisation", "Department", "Registered at"]])
-      .concat(rows.map(r => [r.luckyNo, r.name, r.staffId || "", r.email || "", r.phone || "", r.org || "", r.dept, r.time])));
+      .concat([[], ["ALL REGISTRATIONS"], ["Lucky No", "Name", "Staff ID", "Email", "Phone", "Organisation", "Department", "Table", "Registered at"]])
+      .concat(rows.map(r => [r.luckyNo, r.name, r.staffId || "", r.email || "", r.phone || "", r.org || "", r.dept, r.table || "", r.time])));
   }
   async function dlVotes(){
     try{
       const v = await call("apiAwardsState", pinNow()), list = await call("apiVoteRows", pinNow());
       if (!list.length){ toast("No votes yet."); return; }
-      const t = [["BEST DRESSED VOTING RESULTS"], ["Guests who voted", v.voters], []];
+      const t = [["BEST DRESSED VOTING RESULTS"], ["Staff who voted", v.voters], []];
       CAT_ORDER.forEach(cat => { const ns = v.nominees.filter(n => n.cat === cat).sort((a, b) => b.votes - a.votes);
         t.push([v.labels[cat].toUpperCase(), "Total votes: " + v.perCat[cat]], ["Rank", "Nominee", "Staff ID", "Department", "Votes"]);
         ns.forEach((n, i) => t.push([i + 1, n.name, n.staffId || "", n.dept || "", n.votes])); t.push([]); });
@@ -1341,9 +1493,11 @@ function viewDashboard(){
     group("Registration", "teal",
       go("📝", "Staff Registration", "", "Staff QR page", "teal"),
       go("🔳", "Staff QR", "poster", "Poster to print", "teal"),
-      go("🎟", "Guest Registration", "guest", "Guest QR page", "pink"),
-      go("🔳", "Guest QR", "guest-poster", "Poster to print", "pink"),
-      go("🧾", "Registration Desk", "kiosk", "Tablet at the counter", "orange")),
+      go("🧾", "Registration Desk", "kiosk", "Tablet at the counter", "orange"),
+      el("a", {class:"db-link t-teal", href:"#seating", onclick:e => { e.preventDefault(); seatCard.open = true; paintSeats(); seatCard.scrollIntoView({behavior:"smooth", block:"start"}); }},
+        el("span", {class:"db-link-i", "aria-hidden":"true", text:"🍽"}), el("span", {class:"db-link-t"}, el("b", {text:"Seating Plan"}), el("small", {text:"Tables and who sits there"}))),
+      el("a", {class:"db-link t-gold", href:"#vip", onclick:e => { e.preventDefault(); setCard.open = true; const b = Array.from(setTabs.children).find(x => x.textContent === "VIP Guests"); if (b) b.click(); setCard.scrollIntoView({behavior:"smooth", block:"start"}); }},
+        el("span", {class:"db-link-i", "aria-hidden":"true", text:"⭐"}), el("span", {class:"db-link-t"}, el("b", {text:"VIP Guests"}), el("small", {text:"Add VIPs and their tables"})))),
     group("Big Screens", "gold",
       go("🎰", "Lucky Draw", "draw", "Projector", "gold"),
       go("👑", "King & Queen", "awards", "Projector", "violet")),
@@ -1379,7 +1533,6 @@ function viewDashboard(){
         setBox.innerHTML = "";
         setBox.append(H3("Staff Registration (QR Code)"), seg("ds-open", [[true, "Open"], [false, "Closed"]], r.open, v => save({open:v})),
           note("Closed = the registration pages show “Registration is closed. Please ask at the registration counter.”"),
-          H3("Guest Registration (Guest QR Code)"), seg("ds-gopen", [[true, "Open"], [false, "Registration desk only"]], r.guestOpen, v => save({guestOpen:v})),
           H3("Official Staff Email"),
           seg("ds-ereq", [[true, "Required for staff"], [false, "Optional"]], r.emailRequired !== false, v => save({emailRequired:v})),
           (() => { const a = el("input", {type:"text", value:r.emailDomains || "", style:"max-width:30rem", "aria-label":"Allowed email domains"});
@@ -1391,10 +1544,10 @@ function viewDashboard(){
           H3("Allowed Staff ID Prefixes"),
           (() => { const inp = el("input", {type:"text", value:r.prefixes || "", placeholder:"e.g. UOC, MG, SMR", style:"max-width:18rem", "aria-label":"Allowed staff ID prefixes"});
             return el("div", {class:"row", style:"margin-top:0"}, inp, el("button", {class:"btn primary", type:"button", text:"Save", onclick:() => { cache.reg.prefixes = inp.value; bg(call("apiSaveRegSettings", pin, {prefixes:inp.value}), x => { cache.reg = x; inp.value = x.prefixes; }); }})); })(),
-          note("Only staff IDs starting with these can register, for example UOC, MG, SMR. Add KU, KK later if Kota Kinabalu and Kuching staff join. Leave empty to allow any staff ID. Guests are not affected."),
+          note("Only staff IDs starting with these can register, for example UOC, MG, SMR. Add KU, KK later if Kota Kinabalu and Kuching staff join. Leave empty to allow any staff ID."),
           H3("Staff List (from HR)"),
           el("p", {class:"small", style:"margin:.2rem 0"}, el("b", {style:"color:" + (r.staffList ? "var(--ok)" : "var(--warn)"), text: r.staffList ? "● " + r.staffList + " staff on the list: checks are ON" : "● No staff list yet: checks are OFF"})),
-          note("Paste the HR staff list (Staff ID, Name, and Phone if available) into the “Staff List” tab of the Google Sheet. Then staff can only register with a Staff ID on the list, and anyone on the list is stopped from registering as a guest."));
+          note("Paste the HR staff list (Staff ID, Name, and Phone if available) into the “Staff List” tab of the Google Sheet. Then staff can only register with a Staff ID on the list."));
       }
       if (setTab === "draw"){
         const D = cache.draw, st = D.settings;
@@ -1409,8 +1562,7 @@ function viewDashboard(){
         setBox.append(H3("Lucky Number Range"), el("div", {class:"row"}, el("span", {text:"From"}), from, el("span", {text:"to"}), to),
           H3("Spin Time"), seg("ds-dur", [[5, "5 seconds"], [8, "8 seconds"], [10, "10 seconds"]], dur, v => { dur = v; dirty = true; }),
           H3("Draw From"), seg("ds-src", [["REGISTERED", "Registered numbers only"], ["RANGE", "Every number in the range"]], src, v => { src = v; dirty = true; }),
-          H3("Guests in the Lucky Draw"), seg("ds-gd", [[true, "Yes, guests can win"], [false, "No, staff only"]], gd, v => { gd = v; dirty = true; }),
-          note(D.poolCount + " numbers in the draw now · " + D.registered + " registered" + (D.guests ? " (" + D.guests + " guests)" : "")),
+          note(D.poolCount + " numbers in the draw now · " + D.registered + " registered"),
           el("div", {class:"row"}, save));
       }
       if (setTab === "prizes"){
@@ -1440,10 +1592,67 @@ function viewDashboard(){
         const saveA = o => { bg(call("apiSaveAwardSettings", pin, o), r => { cache.awards = r; }); };
         setBox.innerHTML = "";
         setBox.append(H3("Voting"), seg("ds-vopen", [[true, "Open"], [false, "Closed"]], V.open, v => { V.open = v; bg(call("apiSetVoting", pin, v), r => { cache.awards = r; }); }),
-          note(V.voters + " guests have voted."),
-          H3("Who Can Vote"), seg("ds-check", [["FULL", "Staff ID + last 4 phone digits"], ["STAFFID", "Staff ID only"], ["OPEN", "Open voting (one vote per phone)"]], V.check, v => saveA({check:v})),
-          H3("Guests (No Staff ID)"), seg("ds-gv", [[true, "Guests can vote (phone number)"], [false, "Staff only"]], V.guestsVote !== false, v => saveA({guestsVote:v})),
+          note(V.voters + " staff have voted. Staff vote for anyone on the list of registered staff."),
+          H3("Who Can Vote"), seg("ds-check", [["AUTO", "Staff ID (same phone as registration) ★"], ["FULL", "Staff ID + last 4 phone digits"], ["STAFFID", "Staff ID only"], ["OPEN", "Open voting (one vote per phone)"]], V.check, v => saveA({check:v})),
+          note("★ Recommended: staff only type their Staff ID on the phone they registered with. On any other phone they also need the last 4 digits of their phone number, so nobody can vote for someone else. Everyone votes once for King and once for Queen."),
           H3("Finalists Called to the Stage"), seg("ds-fin", [[3, "Top 3"], [4, "Top 4"], [5, "Top 5"], [0, "All nominees"]], V.finalists || 0, v => saveA({finalists:v})));
+      }
+      if (setTab === "tables"){
+        const r = cache.reg;
+        setBox.innerHTML = "";
+        if (r.seats === undefined){ setBox.append(note("Tables need the new Code.gs. Update the Apps Script (Deploy > Manage deployments > Edit > New version), then reload this page.")); return; }
+        const seats = el("input", {type:"number", min:"1", max:"50", value:String(r.seats || 10), style:"width:6rem", "aria-label":"Seats per table"});
+        const count = el("input", {type:"number", min:"0", value:String(r.tables || 0), style:"width:6rem", "aria-label":"Number of tables"});
+        const resv = el("input", {type:"text", value:r.reserved || "", placeholder:"e.g. 1, 2, 3", style:"max-width:14rem", "aria-label":"Reserved tables"});
+        [seats, count, resv].forEach(x => x.addEventListener("input", () => dirty = true));
+        const saveT = el("button", {class:"btn primary", type:"button", text:"Save Table Settings", onclick:() => { dirty = false;
+          bg(call("apiSaveRegSettings", pin, {seats:seats.value, tables:count.value, reserved:resv.value}), x => { cache.reg = x; settingsTab(true); }); }});
+        const reseat = el("button", {class:"btn", type:"button", text:"↻ Re-seat everyone by department", onclick:() => {
+          if (!confirm("Seat everyone again, department by department, with the current table settings? Table numbers already given out may change.")) return;
+          bg(call("apiReassignTables", pin), x => { cache.reg = x; settingsTab(true); load(); }); }});
+        const tl = r.tableList || [];
+        const tbl = tl.length ? el("div", {class:"tablewrap"}, el("table", {class:"tbl"},
+            el("thead", null, el("tr", null, ["Table", "People", "Departments"].map(h => el("th", {text:h})))),
+            el("tbody", null, tl.map(t => el("tr", null, el("td", {text: t.table ? (t.vip ? "★ " : "") + String(t.table) : "No table"}),
+              el("td", {text: t.count + (t.table ? " / " + r.seats : "")}), el("td", {class:"small", text:t.depts.join(", ")}))))))
+          : note("Nobody has registered yet.");
+        setBox.append(
+          H3("Table Size"), el("div", {class:"row"}, el("span", {text:"Seats per table"}), seats, el("span", {text:"Number of tables"}), count),
+          note("Staff of the same department sit together: each new person goes to a table of their department with a free seat, otherwise to the next empty table. 0 tables = not decided yet (tables are added as needed)."),
+          H3("VIP Tables"), el("div", {class:"row", style:"margin-top:0"}, resv),
+          note("Staff are never seated at these tables. VIP guests (VIP Guests tab) are seated here."),
+          el("div", {class:"row"}, saveT),
+          H3("Show Table Number to Staff"), seg("ds-showt", [[true, "Show after registering"], [false, "Hide for now"]], r.showTable !== false, v => { r.showTable = v; bg(call("apiSaveRegSettings", pin, {showTable:v})); }),
+          H3("Re-seat Everyone"), note("Use this after the number of seats or tables is confirmed. Staff see their new table when they open the registration page again."),
+          el("div", {class:"row"}, reseat),
+          H3("Tables Now"), tbl);
+      }
+      if (setTab === "vip"){
+        const r = cache.reg;
+        setBox.innerHTML = "";
+        if (!r.vips){ setBox.append(note("VIP guests need the new Code.gs. Update the Apps Script (Deploy > Manage deployments > Edit > New version), then reload this page.")); return; }
+        const list = r.vips.map(v => Object.assign({}, v));
+        const tb = el("tbody");
+        const inp = (v, ph, w, set, type) => { const i = el("input", {type:type || "text", value:v == null ? "" : String(v), placeholder:ph, style:w ? "width:" + w : null}); i.addEventListener("input", () => { set(i.value); dirty = true; }); return i; };
+        const paint = () => { tb.innerHTML = "";
+          if (!list.length) tb.append(el("tr", null, el("td", {colspan:"5", class:"muted small", text:"No VIP guests yet. Add them one by one, or paste a list below."})));
+          list.forEach((v, i) => tb.append(el("tr", null,
+            el("td", null, inp(v.name, "Name", null, x => v.name = x)), el("td", null, inp(v.title, "Title / organisation", null, x => v.title = x)),
+            el("td", null, inp(v.table, "Auto", "4.5rem", x => v.table = x, "number")), el("td", null, inp(v.notes, "Notes", null, x => v.notes = x)),
+            el("td", null, el("button", {class:"btn mini", type:"button", text:"✕", onclick:() => { list.splice(i, 1); dirty = true; paint(); }}))))); };
+        paint();
+        const save = el("button", {class:"btn primary", type:"button", text:"Save VIP Guests", onclick:() => { dirty = false; bg(call("apiSaveVips", pin, list), x => { cache.reg = x; settingsTab(true); load(); }); }});
+        const paste = el("textarea", {rows:"4", style:"width:100%", placeholder:"One VIP per line:  Name, Title / Organisation, Table (optional)\ne.g.  Dato’ Ahmad Ali, Guest of Honour, 1"});
+        const addPaste = el("button", {class:"btn", type:"button", text:"+ Add these to the list", onclick:() => {
+          const lines = paste.value.split(/\n+/).map(x => x.trim()).filter(Boolean); let n = 0;
+          lines.forEach(l => { const c = l.split(/\t|,/).map(x => x.trim()); if (!c[0] || /^name$/i.test(c[0])) return; list.push({name:c[0], title:c[1] || "", table:(c[2] || "").replace(/\D/g, ""), notes:c[3] || ""}); n++; });
+          paste.value = ""; dirty = true; paint(); toast(n + " VIP" + (n === 1 ? "" : "s") + " added. Press “Save VIP Guests” to keep them."); }});
+        setBox.append(
+          note("VIP guests are seated at the VIP tables (set them in the Tables tab: " + (r.reserved || "none yet") + "). Leave Table empty to seat a VIP automatically at a VIP table with a free seat. VIPs are not in the lucky draw or the King & Queen voting."),
+          el("div", {class:"tablewrap"}, el("table", {class:"tbl vip-tbl"}, el("thead", null, el("tr", null, ["Name", "Title / Organisation", "Table", "Notes", ""].map(h => el("th", {text:h})))), tb)),
+          el("div", {class:"row"}, el("button", {class:"btn", type:"button", text:"+ Add VIP", onclick:() => { list.push({name:"", title:"", table:"", notes:""}); paint(); }}), save),
+          H3("Add from a List"), note("Copy the rows from Excel or type them, one VIP per line: Name, Title / Organisation, Table. Then press “Save VIP Guests”."),
+          paste, el("div", {class:"row"}, addPaste));
       }
       if (setTab === "noms"){
         const V = cache.awards;
@@ -1472,7 +1681,7 @@ function viewDashboard(){
       }
     }catch(e){ setBox.innerHTML = ""; setBox.append(el("p", {class:"msg", text:errText(e)})); }
   }
-  const setTabs = el("div", {class:"ld-tabs"}, [["reg", "Registration"], ["draw", "Lucky Draw"], ["prizes", "Prizes"], ["vote", "Voting"], ["noms", "Nominees"]].map(([k, t]) =>
+  const setTabs = el("div", {class:"ld-tabs"}, [["reg", "Registration"], ["tables", "Tables"], ["vip", "VIP Guests"], ["draw", "Lucky Draw"], ["prizes", "Prizes"], ["vote", "Voting"]].map(([k, t]) =>
     el("button", {type:"button", "aria-selected": setTab === k, text:t, onclick:e => { setTab = k; setTabs.querySelectorAll("button").forEach(b => b.setAttribute("aria-selected", b === e.currentTarget)); settingsTab(!!cache); }})));
   const setCard = el("details", {class:"card db-settings"},
     el("summary", null, el("span", {text:"⚙ Event Settings"}), el("small", {class:"muted", text:"Change lucky draw and voting settings without touching the big screens"}), saving),
@@ -1482,6 +1691,68 @@ function viewDashboard(){
   /* warm the cache: right after the dashboard opens, and again when the mouse comes near */
   setTimeout(() => prefetch().catch(() => {}), 1500);
   setCard.querySelector("summary").addEventListener("pointerenter", () => { if (!cache) prefetch().catch(() => {}); });
+  /* ===== seating plan: every table, and who sits there by department ===== */
+  const seatQ = el("input", {type:"text", placeholder:"🔍 Search name, department or table", "aria-label":"Search seating", autocomplete:"off"});
+  const seatGrid = el("div", {class:"seat-grid"});
+  const seatSum = el("p", {class:"muted small", style:"margin:0"});
+  let vips = [], vipTables = [], seatsPer = 0;
+  function seatGroups(){
+    const by = {}, put = (t, r) => { t = parseInt(t, 10) > 0 ? parseInt(t, 10) : 0; (by[t] = by[t] || []).push(r); };
+    vips.forEach(v => put(v.table, {name:v.name, dept:"VIP", vip:true, title:v.title || "", notes:v.notes || ""}));
+    rows.forEach(r => put(r.table, r));
+    vipTables.forEach(t => { if (!by[t]) by[t] = []; });
+    return Object.keys(by).map(Number).sort((a, b) => (a || 1e9) - (b || 1e9)).map(t => ({table:t, people:by[t], vip:vipTables.indexOf(t) >= 0 || by[t].some(r => r.vip)}));
+  }
+  const byDept = people => { const d = {}; people.forEach(r => (d[r.vip ? "⭐ VIP" : (r.dept || "Other")] = d[r.vip ? "⭐ VIP" : (r.dept || "Other")] || []).push(r));
+    return Object.keys(d).sort((a, b) => (b === "⭐ VIP") - (a === "⭐ VIP") || a.localeCompare(b)).map(k => ({dept:k, people:d[k].sort((a, b) => a.name.localeCompare(b.name))})); };
+  const personLine = r => el("li", null, r.name, r.vip ? (r.title ? el("small", {text:" · " + r.title}) : null) : el("small", {text:[r.staffId, r.luckyNo ? "No. " + r.luckyNo : ""].filter(Boolean).map(x => " · " + x).join("")}));
+  const seatCsv = groups => { const t = [["SEATING PLAN"], [], ["Table", "VIP table", "Department / VIP", "Name", "Staff ID / Title", "Lucky No"]];
+    groups.forEach(g => byDept(g.people).forEach(d => d.people.forEach(r => t.push([g.table || "No table", g.vip ? "YES" : "", r.vip ? "VIP" : (r.dept || ""), r.name, r.vip ? (r.title || "") : (r.staffId || ""), r.vip ? "" : r.luckyNo]))));
+    return t; };
+  function dlSeating(){ saveCsv("Gala-seating-plan-" + stamp() + ".csv", seatCsv(seatGroups())); }
+  /* one table on its own: click a table chip or card */
+  const seatDlg = el("dialog", {class:"seat-dlg"});
+  function openTable(t){
+    const all = seatGroups(), i = all.findIndex(g => g.table === t), g = all[i]; if (!g) return;
+    seatDlg.innerHTML = "";
+    const nav = (d, txt) => el("button", {class:"btn mini", type:"button", text:txt, disabled: !all[i + d], onclick:() => openTable(all[i + d].table)});
+    seatDlg.append(
+      el("div", {class:"db-head"}, el("h2", null, el("span", {text: g.table ? "Table " + g.table : "No table yet"}), g.vip ? el("span", {class:"vip-badge", text:"VIP"}) : null),
+        el("span", null, nav(-1, "←"), " ", nav(1, "→"))),
+      el("p", {class:"muted small", text: g.people.length + (seatsPer && g.table ? " / " + seatsPer : "") + " seated"}),
+      el("div", null, g.people.length ? byDept(g.people).map(d => [el("p", {class:"seat-dept" + (d.dept === "⭐ VIP" ? " vip" : ""), text:d.dept + " (" + d.people.length + ")"}), el("ol", null, d.people.map(personLine))]).flat()
+        : el("p", {class:"muted", text:"Nobody at this table yet."})),
+      el("div", {class:"row"},
+        el("button", {class:"btn primary", type:"button", text:"⬇ Download this table", onclick:() => saveCsv("Gala-table-" + (g.table || "none") + "-" + stamp() + ".csv", seatCsv([g]))}),
+        el("button", {class:"btn", type:"button", text:"Close", onclick:() => seatDlg.close()})));
+    if (!seatDlg.open) seatDlg.showModal();
+  }
+  const seatChips = el("div", {class:"seat-chips", role:"group", "aria-label":"Tables"});
+  function paintSeats(){
+    if (!seatCard.open) return;
+    const q = seatQ.value.trim().toLowerCase(), seats = seatsPer || (cache && cache.reg && cache.reg.seats);
+    const groups = seatGroups(); seatGrid.innerHTML = ""; seatChips.innerHTML = "";
+    groups.forEach(g => seatChips.append(el("button", {type:"button", class:"seat-chip" + (g.vip ? " vip" : "") + (g.table ? "" : " none"), text:(g.vip ? "★ " : "") + (g.table ? "Table " + g.table : "No table") + " · " + g.people.length, onclick:() => openTable(g.table)})));
+    seatSum.textContent = groups.filter(g => g.table && g.people.length).length + " tables in use · " + rows.length + " staff" + (vips.length ? " + " + vips.length + " VIP" : "") + (seats ? " · " + seats + " seats per table" : "") + " · click a table to see who sits there";
+    let shown = 0;
+    groups.forEach(g => {
+      const match = !q || ("table " + g.table) === q || String(g.table) === q || (q === "vip" && g.vip) || g.people.some(r => (r.name + " " + r.dept + " " + (r.staffId || "") + " " + (r.title || "")).toLowerCase().indexOf(q) >= 0);
+      if (!match) return; shown++;
+      seatGrid.append(el("div", {class:"seat-card" + (g.table ? "" : " none") + (g.vip ? " vip" : "") + (seats && g.people.length >= seats ? " full" : ""), role:"button", tabindex:"0", title:"Open this table",
+          onclick:() => openTable(g.table), onkeydown:e => { if (e.key === "Enter") openTable(g.table); }},
+        el("h3", null, el("span", {text:(g.vip ? "★ " : "") + (g.table ? "Table " + g.table : "No table yet")}), el("small", {text: g.people.length + (seats && g.table ? " / " + seats : "") + " seated"})),
+        g.people.length ? byDept(g.people).map(d => [el("p", {class:"seat-dept" + (d.dept === "⭐ VIP" ? " vip" : ""), text:d.dept + " (" + d.people.length + ")"}),
+          el("ol", null, d.people.map(personLine))]).flat() : el("p", {class:"muted small", text:"VIP table · empty"})));
+    });
+    if (!shown) seatGrid.append(el("p", {class:"muted small", text: rows.length ? "No match." : "Nobody has registered yet."}));
+  }
+  seatQ.addEventListener("input", paintSeats);
+  const seatCard = el("details", {class:"card db-settings", id:"seating"},
+    el("summary", null, el("span", {text:"🍽 Seating Plan"}), el("small", {class:"muted", text:"Every table and who sits there, by department"})),
+    el("div", {class:"seat-tools"}, seatQ,
+      el("button", {class:"btn", type:"button", text:"⬇ Download seating plan", onclick:dlSeating})),
+    seatSum, seatChips, seatGrid, seatDlg);
+  seatCard.addEventListener("toggle", () => { if (seatCard.open){ paintSeats(); if (!cache) prefetch().then(paintSeats).catch(() => {}); } });
   const dlItem = (icon, title, sub, fn, tone) => el("button", {class:"dl-item t-" + tone, type:"button", onclick:async e => {
       const b = e.currentTarget; if (b.classList.contains("busy")) return; b.classList.add("busy"); toast("Preparing " + title + "…");
       try{ await fn(); }finally{ b.classList.remove("busy"); } }},
@@ -1492,17 +1763,19 @@ function viewDashboard(){
       dlItem("📋", "Registrations & Totals", "Totals by organisation and department, full list", dlRegistrations, "teal"),
       dlItem("✅", "Staff Registered & Voted", "Who registered and who voted", dlRegVote, "pink"),
       dlItem("👑", "Best Dressed Votes", "King & Queen results and every vote", dlVotes, "violet"),
-      dlItem("🎰", "Lucky Draw Winners", "Prize, number, name and status", dlDraw, "gold")));
+      dlItem("🎰", "Lucky Draw Winners", "Prize, number, name and status", dlDraw, "gold"),
+      dlItem("🍽", "Seating Plan", "Every table: VIPs and staff by department", async () => dlSeating(), "teal")));
   app.append(
     menu,
     el("section", {class:"db-top"},
       el("div", {class:"db-total"}, el("div", {class:"db-tl"}, el("p", {class:"db-label", text:"Total Registered"}), live), totalNum, lastAt),
-      el("div", {class:"db-total"}, el("p", {class:"db-label", text:"Best Dressed Voters"}), voteNum, el("p", {class:"db-sub", text:"guests have voted"})),
+      el("div", {class:"db-total"}, el("p", {class:"db-label", text:"Best Dressed Voters"}), voteNum, el("p", {class:"db-sub", text:"staff have voted"})),
       el("div", {class:"db-total db-orgcard"}, orgBox)),
     el("div", {class:"grid db-grid"},
       el("div", {class:"card"}, el("div", {class:"db-head"}, el("h2", {text:"By Department"}), deptCount), deptList),
       el("div", {class:"card"}, el("h2", {text:"Just Registered"}), feed)),
     el("div", {class:"card db-vote"}, el("div", {class:"db-head"}, el("h2", {class:"vote-cat"}, royalPair("sm"), el("span", {text:"Best Dressed Voting"}))), voteBox),
+    seatCard,
     setCard,
     dlCard);
   function bump(node){ node.classList.remove("db-bump"); void node.offsetWidth; node.classList.add("db-bump"); }
@@ -1510,11 +1783,11 @@ function viewDashboard(){
     try{
       const v = await call("apiAwardsState", PIN.get());
       voteBox.innerHTML = ""; voteNum.textContent = String(v.voters);
-      voteBox.append(el("p", {class:"muted small", style:"margin:0 0 .6rem"}, el("b", {style:"color:" + (v.open ? "var(--ok)" : "var(--warn)"), text: v.open ? "● Voting open" : "● Voting closed"}), " · " + v.voters + " guests voted"));
+      voteBox.append(el("p", {class:"muted small", style:"margin:0 0 .6rem"}, el("b", {style:"color:" + (v.open ? "var(--ok)" : "var(--warn)"), text: v.open ? "● Voting open" : "● Voting closed"}), " · " + v.voters + " staff voted"));
       const g = el("div", {class:"grid", style:"margin-top:0"});
       CAT_ORDER.forEach(cat => { const list = v.nominees.filter(n => n.cat === cat).sort((a, b) => b.votes - a.votes).slice(0, 3);
         g.append(el("div", null, el("p", {class:"vote-cat", style:"margin:0 0 .3rem"}, royalIcon(cat, "sm"), el("span", {text:v.labels[cat] + " · " + v.perCat[cat] + " votes"})),
-          list.length ? el("ol", {class:"db-top3"}, list.map(n => el("li", null, el("span", {text:n.name}), el("b", {text:String(n.votes)})))) : el("p", {class:"muted small", text:"No nominees yet."}))); });
+          list.length ? el("ol", {class:"db-top3"}, list.map(n => el("li", null, el("span", {text:n.name}), el("b", {text:String(n.votes)})))) : el("p", {class:"muted small", text:"No votes yet."}))); });
       voteBox.append(g);
     }catch(e){}
   }
@@ -1522,7 +1795,7 @@ function viewDashboard(){
     loadVotes();
     try{
       const d = await call("apiDashboard", PIN.get());
-      rows = d.rows;
+      rows = d.rows; vips = d.vips || []; vipTables = d.vipTables || []; seatsPer = d.seats || 0; paintSeats();
       const total = rows.length;
       if (lastTotal !== null && total > lastTotal){ bump(totalNum); toast((total - lastTotal) + " new registration" + (total - lastTotal > 1 ? "s" : "")); }
       lastTotal = total;
@@ -1555,7 +1828,7 @@ function viewDashboard(){
       feed.innerHTML = "";
       const latest = rows.slice().reverse().slice(0, 12);
       if (!latest.length) feed.append(el("li", {class:"muted", text:"Nobody yet."}));
-      latest.forEach(r => feed.append(el("li", null, el("span", {class:"n", text:String(r.luckyNo)}), el("span", null, el("b", {text:r.name}), el("div", {class:"sub", text:[r.staffId, r.dept].filter(Boolean).join(" · ")})), el("span", {class:"sub", text:r.time}))));
+      latest.forEach(r => feed.append(el("li", null, el("span", {class:"n", text:String(r.luckyNo)}), el("span", null, el("b", {text:r.name}), el("div", {class:"sub", text:[r.staffId, r.dept, r.table ? "Table " + r.table : ""].filter(Boolean).join(" · ")})), el("span", {class:"sub", text:r.time}))));
       lastAt.textContent = "Updates every 10 seconds · last checked " + new Date().toLocaleTimeString([], {hour:"numeric", minute:"2-digit", second:"2-digit"});
       live.classList.remove("off");
     }catch(e){ live.classList.add("off"); if (/PIN/i.test(errText(e))){ PIN.del(); viewDashboard(); } }
@@ -2044,6 +2317,23 @@ function royalIcon(cat, cls){
   return span;
 }
 /* King on the left, Queen on the right (same order as "King & Queen"), each with a small label */
+function galaIcon(kind){
+  const id = "gi" + (++_icoN), span = document.createElement("span");
+  span.className = "gala-ico " + kind; span.setAttribute("aria-hidden", "true");
+  span.innerHTML = kind === "tk"
+    ? '<svg viewBox="0 0 120 84"><defs><linearGradient id="' + id + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF3C4"/><stop offset=".45" stop-color="#F2CF73"/><stop offset="1" stop-color="#C98F2E"/></linearGradient></defs>'
+      + '<g transform="rotate(-8 60 42)"><path d="M14 18h92a6 6 0 0 1 6 6v10a8 8 0 0 0 0 16v10a6 6 0 0 1-6 6H14a6 6 0 0 1-6-6V50a8 8 0 0 0 0-16V24a6 6 0 0 1 6-6z" fill="url(#' + id + ')" stroke="#FFF3C4" stroke-width="1.5"/>'
+      + '<path d="M84 22v40" stroke="#8a5a14" stroke-width="2" stroke-dasharray="4 4"/><text x="46" y="48" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="15" fill="#3b1d5c">LUCKY</text>'
+      + '<path d="M98 34l2.4 5 5.4.6-4 3.7 1.1 5.3-4.9-2.7-4.9 2.7 1.1-5.3-4-3.7 5.4-.6z" fill="#3b1d5c"/></g></svg>'
+    : '<svg viewBox="0 0 100 100"><defs><radialGradient id="' + id + '"><stop offset="0" stop-color="#FFF3C4"/><stop offset=".6" stop-color="#F2CF73"/><stop offset="1" stop-color="#C98F2E"/></radialGradient></defs>'
+      + [0, 45, 90, 135, 180, 225, 270, 315].map(a => '<circle cx="' + (50 + 39 * Math.cos(a * Math.PI / 180)).toFixed(1) + '" cy="' + (50 + 39 * Math.sin(a * Math.PI / 180)).toFixed(1) + '" r="8" fill="' + (a % 90 ? "#FF7AC6" : "#3FE3CF") + '" stroke="#fff" stroke-opacity=".5"/>').join("")
+      + '<circle cx="50" cy="50" r="25" fill="url(#' + id + ')" stroke="#FFF3C4" stroke-width="1.5"/><text x="50" y="56" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="17" fill="#3b1d5c">8</text></svg>';
+  return span;
+}
+function galaPair(cls){
+  const one = (k, t, c) => el("span", {class:"royal-one"}, galaIcon(k), el("small", {class:"royal-tag " + c, text:t}));
+  return el("span", {class:"royal-pair " + (cls || "")}, one("tk", "Lucky No.", "lucky"), one("tb", "Your Table", "table"));
+}
 function royalPair(cls){
   const one = cat => el("span", {class:"royal-one"}, royalIcon(cat), el("small", {class:"royal-tag " + cat.toLowerCase(), text: cat === "KING" ? "King" : "Queen"}));
   return el("span", {class:"royal-pair " + (cls || "")}, one("KING"), one("QUEEN"));
@@ -2076,18 +2366,18 @@ function viewVote(){
   function closedCard(t, sub){ clear(); app.append(el("div", {class:"card center vote-card"}, royalPair("vote-crowns"), el("h2", {text:t}), bdTag(), el("p", {class:"muted", text:sub}))); }
   function step1(){
     if (!cfg.open) return closedCard("Best Dressed voting", "Voting isn’t open right now. Please check back when the emcee announces it.");
-    if (!cfg.nominees.length) return closedCard("Best Dressed voting", "The nominees haven’t been announced yet. Please check back soon.");
+    if (!cfg.allStaff && !cfg.nominees.length) return closedCard("Best Dressed voting", "The nominees haven’t been announced yet. Please check back soon.");
     const done = votedLocal(); if (done.QUEEN && done.KING) return thanks(done.name);
     onStep1 = true;
     if (cfg.check === "OPEN"){
       clear(); app.append(el("div", {class:"card center"}, el("p", {class:"muted", text:"Loading…"})));
-      call("apiVoteCheck", {deviceId:devId()}).then(r => { voter = {staffId:"", phone4:"", name:"", voted:r.voted}; if (r.voted.QUEEN && r.voted.KING) return thanks("", true); step2(); })
+      call("apiVoteCheck", {deviceId:devId()}).then(r => { voter = {staffId:"", phone4:"", name:"", voted:r.voted, candidates:r.candidates}; if (r.voted.QUEEN && r.voted.KING) return thanks("", true); step2(); })
         .catch(err => { clear(); app.append(el("div", {class:"card center"}, el("p", {class:"msg", text:errText(err)}))); });
       return;
     }
     clear();
     let mem = null; try{ mem = JSON.parse(localStorage.getItem("ghg-simple-reg-v1")); }catch(e){}
-    const gv = cfg.guestsVote !== false;
+    const gv = false;   /* staff only */
     /* Staff vote with their staff ID; guests (no staff ID) vote with their phone number */
     let who = (gv && mem && mem.org === "Guest" && !mem.staffId) ? "guest" : "staff";
     const sid = el("input", {type:"text", id:"vsid", autocapitalize:"characters", autocomplete:"off", placeholder:"e.g. UOC1234 or MG1234", value:(mem && mem.staffId) || ""});
@@ -2095,8 +2385,10 @@ function viewVote(){
     const ph = el("input", {type:"tel", id:"vph", inputmode:"numeric", maxlength:"4", autocomplete:"off", placeholder:"e.g. 6789"});
     const msg = el("p", {class:"msg", role:"status"});
     const btn = el("button", {class:"btn primary big", type:"submit", text:"Continue"});
-    const staffBits = [el("label", {class:"f", for:"vsid", text:"Staff ID"}), sid,
-      cfg.check === "FULL" ? el("label", {class:"f", for:"vph", text:"Last 4 digits of your registered phone number"}) : null, cfg.check === "FULL" ? ph : null].filter(Boolean);
+    const phLabel = el("label", {class:"f", for:"vph", text:"Last 4 digits of your registered phone number"});
+    const askPh = cfg.check === "FULL" || cfg.check === "AUTO";
+    const staffBits = [el("label", {class:"f", for:"vsid", text:"Staff ID"}), sid, askPh ? phLabel : null, askPh ? ph : null].filter(Boolean);
+    if (cfg.check === "AUTO"){ phLabel.hidden = true; ph.hidden = true; }
     const guestBits = [el("label", {class:"f", for:"vgph", text:"Phone Number"}), gph];
     const seg = gv ? el("div", {class:"who-seg", role:"radiogroup", "aria-label":"Who is voting"},
       el("button", {type:"button", role:"radio", text:"Staff"}), el("button", {type:"button", role:"radio", text:"Guest"})) : null;
@@ -2110,14 +2402,81 @@ function viewVote(){
       if (!idv){ msg.textContent = who === "guest" ? "Please enter your phone number." : "Please enter your staff ID."; (who === "guest" ? gph : sid).focus(); return; }
       if (who === "guest" && idv.replace(/\D/g, "").length < 9){ msg.textContent = "Please check your phone number."; gph.focus(); return; }
       btn.disabled = true; btn.textContent = "Checking…";
-      try{ const r = await call("apiVoteCheck", {staffId:idv, phone4:ph.value, deviceId:devId()}); voter = {staffId:idv, phone4:ph.value, name:r.name, voted:r.voted};
+      try{ const r = await call("apiVoteCheck", {staffId:idv, phone4:ph.value, deviceId:devId()}); voter = {staffId:idv, phone4:ph.value, name:r.name, voted:r.voted, candidates:r.candidates};
         if (r.voted.QUEEN && r.voted.KING) return thanks(r.name, true); step2(); }
-      catch(err){ msg.textContent = errText(err); btn.disabled = false; btn.textContent = "Continue"; } });
+      catch(err){ msg.textContent = errText(err); btn.disabled = false; btn.textContent = "Continue";
+        if (cfg.check === "AUTO" && /last 4 digits/i.test(msg.textContent) && ph.hidden){ phLabel.hidden = false; ph.hidden = false; ph.focus(); } } });
     app.append(el("div", {class:"card vote-card"}, royalPair("vote-crowns"),
       el("h2", {class:"center", text:"Vote for King & Queen"}), bdTag(),
       el("p", {class:"muted small center", text:"One vote per person for each award."}), f));
   }
+  /* the list of everyone registered, by department: tap a name for King, then for Queen */
+  function step2Staff(){
+    onStep1 = false; clear();
+    const people = voter.candidates || [], byId = {}; people.forEach(p => byId[p.id] = p);
+    const open = CAT_ORDER.filter(c => !voter.voted[c]);
+    const pick = {}; let cur = open[0];
+    const tabs = el("div", {class:"vt-tabs", role:"tablist", "aria-label":"Awards"});
+    const search = el("input", {type:"text", inputmode:"search", enterkeyhint:"search", class:"vt-search", placeholder:"🔍 Search name, staff ID or department", "aria-label":"Search staff", autocomplete:"off"});
+    const list = el("div", {class:"vt-list", role:"radiogroup"});
+    const sum = el("p", {class:"vt-sum", "aria-live":"polite"});
+    const msg = el("p", {class:"msg", role:"status"});
+    const submit = el("button", {class:"btn primary big", type:"button", text:"Submit my vote", disabled:true});
+    function paintTabs(){
+      tabs.innerHTML = "";
+      CAT_ORDER.forEach(c => { const done = voter.voted[c], p = byId[pick[c]];
+        tabs.append(el("button", {type:"button", role:"tab", class:"vt-tab " + c.toLowerCase() + (p ? " picked" : ""), "aria-selected":String(c === cur), disabled:!!done,
+            onclick:() => { cur = c; paintTabs(); paintList(); }},
+          royalIcon(c, "sm"), el("span", {class:"vt-tab-t"}, el("b", {text:cfg.labels[c]}), el("small", {text: done ? "✓ Already voted" : p ? "✓ " + p.name : "Tap a name below"})))); });
+    }
+    function paintList(){
+      const q = search.value.trim().toLowerCase(); list.innerHTML = "";
+      const groups = {}; people.forEach(p => { if (q && (p.name + " " + p.dept + " " + (p.staffId || "")).toLowerCase().indexOf(q) < 0) return; (groups[p.dept] = groups[p.dept] || []).push(p); });
+      const depts = Object.keys(groups).sort((a, b) => a.localeCompare(b));
+      if (!depts.length) list.append(el("p", {class:"muted small center", text: people.length ? "No one matches “" + search.value.trim() + "”." : "Nobody has registered yet."}));
+      depts.forEach(d => {
+        const det = el("details", {class:"vt-dept", open: (q || depts.length === 1 || groups[d].some(p => p.id === pick[cur])) ? true : null},
+          el("summary", null, el("span", {text:d}), el("small", {text:String(groups[d].length)})));
+        groups[d].forEach(p => { const on = pick[cur] === p.id, other = CAT_ORDER.find(c => c !== cur && pick[c] === p.id);
+          det.append(el("button", {type:"button", class:"vt-row", role:"radio", "aria-checked":String(on), onclick:() => choose(p)},
+            el("span", {class:"av " + (cur || "king").toLowerCase(), text:initials(p.name)}), el("span", {class:"vt-name"}, p.name, p.staffId ? el("small", {class:"vt-sid", text:p.staffId}) : null),
+            other ? el("small", {class:"vt-also", text:"your " + cfg.labels[other]}) : null,
+            el("span", {class:"nom-tick", "aria-hidden":"true", text:"✓"}))); });
+        list.append(det);
+      });
+    }
+    function paintSum(){
+      sum.innerHTML = "";
+      open.forEach(c => sum.append(el("span", null, cfg.labels[c] + ": ", el("b", {text: byId[pick[c]] ? byId[pick[c]].name : "—"}))));
+      submit.disabled = !Object.keys(pick).length;
+      submit.textContent = open.every(c => pick[c]) || Object.keys(pick).length === 0 ? "Submit my vote" : "Submit (only " + cfg.labels[Object.keys(pick)[0]] + ")";
+    }
+    function choose(p){
+      if (!cur) return;
+      if (pick[cur] === p.id) delete pick[cur]; else pick[cur] = p.id;
+      paintTabs(); paintList(); paintSum();
+      const next = open.find(c => c !== cur && !pick[c]);
+      if (pick[cur] && next) setTimeout(() => { cur = next; search.value = ""; paintTabs(); paintList(); tabs.scrollIntoView({behavior:"smooth", block:"start"}); }, 450);
+    }
+    search.addEventListener("input", paintList);
+    submit.addEventListener("click", async () => {
+      if (!Object.keys(pick).length) return;
+      submit.disabled = true; submit.textContent = "Sending your vote…"; msg.textContent = "";
+      try{
+        const r = await call("apiVote", {staffId:voter.staffId, phone4:voter.phone4, queen:pick.QUEEN || "", king:pick.KING || "", deviceId:devId()});
+        const done = votedLocal(); done.name = r.name; CAT_ORDER.forEach(c => { if (r.result[c] || voter.voted[c]) done[c] = true; }); try{ localStorage.setItem(vkey, JSON.stringify(done)); }catch(e){}
+        thanks(r.name);
+      }catch(err){ msg.textContent = errText(err); submit.disabled = false; paintSum(); }
+    });
+    paintTabs(); paintList(); paintSum();
+    app.append(el("div", {class:"card vote-card"},
+      voter.name ? el("p", {class:"muted small center", style:"margin:0", text:"Voting as"}) : el("h2", {class:"center", text:"Vote for King & Queen"}),
+      voter.name ? el("p", {class:"center", style:"margin:.1rem 0 .5rem;font-weight:800;font-size:1.1rem", text:voter.name}) : bdTag(),
+      el("p", {class:"muted small center", style:"margin:0 0 .6rem", text:"Choose one person for each award: tap the award, then tap a name."}),
+      tabs, search, list, el("div", {class:"vt-bar"}, sum, msg, submit)));
+  }
   function step2(){
+    if (voter.candidates) return step2Staff();
     onStep1 = false; clear();
     const pick = {};
     const submit = el("button", {class:"btn primary big", type:"button", text:"Submit my vote", disabled:true});
@@ -2233,6 +2592,50 @@ function vortexFx(host, cat, secs){
   return () => { alive = false; setTimeout(() => cv.remove(), 60); };
 }
 /* the big moment: white flash, shockwave, gold coins and confetti cannons */
+function royalFx(ov, cat){
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const cv = el("canvas", {class:"awx-fx", "aria-hidden":"true"}); ov.insertBefore(cv, ov.querySelector(".awc-stage"));
+  const cx = cv.getContext("2d"), dpr = devicePixelRatio || 1, W = innerWidth, H = innerHeight;
+  cv.width = W * dpr; cv.height = H * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const Q = cat === "QUEEN", t0 = performance.now(), ox = W / 2, oy = H * .42;
+  let parts = [];
+  const heart = (x, y, r) => { cx.beginPath(); cx.moveTo(x, y + r * .35); cx.bezierCurveTo(x, y - r * .3, x - r, y - r * .3, x - r, y + r * .25); cx.bezierCurveTo(x - r, y + r * .8, x, y + r * 1.05, x, y + r * 1.35);
+    cx.bezierCurveTo(x, y + r * 1.05, x + r, y + r * .8, x + r, y + r * .25); cx.bezierCurveTo(x + r, y - r * .3, x, y - r * .3, x, y + r * .35); cx.fill(); };
+  const diamond = (x, y, r) => { cx.beginPath(); cx.moveTo(x, y - r); cx.lineTo(x + r * .28, y - r * .28); cx.lineTo(x + r, y); cx.lineTo(x + r * .28, y + r * .28); cx.lineTo(x, y + r); cx.lineTo(x - r * .28, y + r * .28); cx.lineTo(x - r, y); cx.lineTo(x - r * .28, y - r * .28); cx.closePath(); cx.fill(); };
+  /* the big moment: a burst of diamonds (Queen) or gold stars (King) from the centre */
+  const pop = (n, sp) => { for (let k = 0; k < n; k++){ const a = Math.random() * 6.283, v = 3 + Math.random() * sp;
+    parts.push({k:"pop", x:ox, y:oy, vx:Math.cos(a) * v, vy:Math.sin(a) * v, r:4 + Math.random() * 8, life:0, max:80 + Math.random() * 50, c:(Q ? ["#ffffff", "#FFD1EA", "#FF7AC6", "#FFE08A"] : ["#ffffff", "#FFE08A", "#9CC3FF", "#F2CF73"])[k % 4]}); } };
+  setTimeout(() => pop(Q ? 220 : 160, Q ? 15 : 13), 1000);
+  if (Q) setTimeout(() => pop(140, 11), 1700);
+  (function frame(now){
+    if (!ov.isConnected) return;
+    const t = now - t0; cx.clearRect(0, 0, W, H);
+    /* turning light rays behind the winner */
+    cx.save(); cx.translate(ox, oy); cx.rotate(t / 9000);
+    for (let i = 0; i < 16; i++){ cx.rotate(Math.PI / 8); const g = cx.createLinearGradient(0, 0, Math.max(W, H), 0);
+      g.addColorStop(0, Q ? "rgba(255,170,215,.20)" : "rgba(255,230,150,.18)"); g.addColorStop(1, "rgba(255,255,255,0)");
+      cx.fillStyle = g; cx.beginPath(); cx.moveTo(0, 0); cx.lineTo(Math.max(W, H), -60); cx.lineTo(Math.max(W, H), 60); cx.closePath(); cx.fill(); }
+    cx.restore();
+    if (Q){
+      /* hearts floating up and diamonds twinkling around the stage */
+      if (t > 900 && Math.random() < .55) parts.push({k:"heart", x:Math.random() * W, y:H + 20, vy:-(1.2 + Math.random() * 2.2), sw:Math.random() * 6.3, r:7 + Math.random() * 12, life:0, max:600, c:["#FF3D9A", "#FF7AC6", "#FFB3DE", "#E0228A", "#FFE08A"][Math.floor(Math.random() * 5)]});
+      if (t > 900 && Math.random() < .6) parts.push({k:"twinkle", x:ox + (Math.random() - .5) * W * .8, y:oy + (Math.random() - .5) * H * .7, r:4 + Math.random() * 10, life:0, max:40 + Math.random() * 30, c:Math.random() < .6 ? "#ffffff" : "#FFD1EA"});
+    } else {
+      /* golden fountains from both corners */
+      if (t > 900 && t < 14000) for (const [x, d] of [[W * .06, 1], [W * .94, -1]]) for (let k = 0; k < 3; k++){ const a = -Math.PI / 2 + d * (.12 + Math.random() * .32), v = 11 + Math.random() * 9;
+        parts.push({k:"spark", x, y:H, vx:Math.cos(a) * v, vy:Math.sin(a) * v, r:1.5 + Math.random() * 2, life:0, max:70 + Math.random() * 30, c:Math.random() < .7 ? "#FFE08A" : "#ffffff"}); }
+      if (t > 900 && Math.random() < .35) parts.push({k:"twinkle", x:ox + (Math.random() - .5) * W * .8, y:oy + (Math.random() - .5) * H * .7, r:4 + Math.random() * 9, life:0, max:40 + Math.random() * 30, c:Math.random() < .6 ? "#ffffff" : "#9CC3FF"});
+    }
+    parts.forEach(p => { p.life++; const a = Math.max(0, 1 - p.life / p.max);
+      if (p.k === "heart"){ p.sw += .03; p.x += Math.sin(p.sw) * 1.1; p.y += p.vy; cx.globalAlpha = .85; cx.fillStyle = p.c; heart(p.x, p.y, p.r); }
+      else if (p.k === "twinkle"){ cx.globalAlpha = Math.sin(Math.PI * p.life / p.max); cx.fillStyle = p.c; diamond(p.x, p.y, p.r); }
+      else if (p.k === "spark"){ p.vy += .28; p.x += p.vx; p.y += p.vy; cx.globalAlpha = a; cx.fillStyle = p.c; cx.beginPath(); cx.arc(p.x, p.y, p.r, 0, 7); cx.fill(); }
+      else { p.vx *= .975; p.vy = p.vy * .975 + .05; p.x += p.vx; p.y += p.vy; cx.globalAlpha = a * (p.life % 8 < 4 ? 1 : .55); cx.fillStyle = p.c; diamond(p.x, p.y, p.r * (Q ? 1.1 : .9)); } });
+    parts = parts.filter(p => p.life < p.max && p.y > -40 && p.y < H + 60);
+    cx.globalAlpha = 1;
+    requestAnimationFrame(frame);
+  })(t0);
+}
 function burstFx(cat, big){
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   const fl = el("div", {class:"ld-flash gold", "aria-hidden":"true"}); document.body.append(fl); setTimeout(() => fl.remove(), 1100);
@@ -2271,6 +2674,12 @@ function viewAwards(pin){
     if (bm){ Sound.mode("intro", 1); MUSIC.play(bm, "King & Queen music", 70, true).then(ok => { if (!ok) Sound.mode("wait", 3); }); }
     else Sound.mode("wait", 3);
   }
+  /* finalist photos (added after voting closes) */
+  let photos = {};
+  const loadPhotos = () => call("apiAwardPhotos", pin).then(m => { photos = m || {}; render(); }).catch(() => {});
+  const photoOf = n => n && photos[n.id];
+  /* one award per page: "" = both side by side, "KING" = King page, "QUEEN" = Queen page */
+  let only = (() => { const a = (new URLSearchParams(location.search).get("award") || location.hash.replace(/^#/, "")).toUpperCase(); return CAT_ORDER.indexOf(a) >= 0 ? a : ""; })();
   const revealed = (() => { try{ return JSON.parse(sessionStorage.getItem("ghg-revealed")) || {}; }catch(e){ return {}; } })();
   const saveRev = () => { try{ sessionStorage.setItem("ghg-revealed", JSON.stringify(revealed)); }catch(e){} };
   const cards = {};
@@ -2293,19 +2702,29 @@ function viewAwards(pin){
   const dockBtn = el("button", {class:"ld-dock-btn", type:"button", "aria-label":"Show controls", text:"+"});
   const dock = el("div", {class:"ld-dock"},
     el("div", {class:"ld-dock-panel"},
-      el("button", {class:"ld-tool", type:"button", text:"⚙ Awards settings", onclick:() => { dock.classList.remove("open"); openSettings("nominees"); }}),
+      el("button", {class:"ld-tool", type:"button", text:"⚙ Awards settings", onclick:() => { dock.classList.remove("open"); openSettings("results"); }}),
       el("button", {class:"ld-tool", type:"button", text:"📈 Live results", onclick:() => { dock.classList.remove("open"); openSettings("results"); }}),
+      el("button", {class:"ld-tool", type:"button", text:"📷 Finalist photos", onclick:() => { dock.classList.remove("open"); openSettings("photos"); }}),
+      el("button", {class:"ld-tool", type:"button", text:"🤴 King page", onclick:() => { dock.classList.remove("open"); setStage("KING"); }}),
+      el("button", {class:"ld-tool", type:"button", text:"👸 Queen page", onclick:() => { dock.classList.remove("open"); setStage("QUEEN"); }}),
+      el("button", {class:"ld-tool", type:"button", text:"👑 Both awards", onclick:() => { dock.classList.remove("open"); setStage(""); }}),
       el("a", {class:"ld-tool", href:pageUrl("vote"), target:"_blank", rel:"noopener", text:"🗳 Vote King & Queen", onclick:() => dock.classList.remove("open")}),
       el("a", {class:"ld-tool", href:pageUrl("vote-poster"), target:"_blank", rel:"noopener", text:"▦ QR to vote", onclick:() => dock.classList.remove("open")}),
       el("a", {class:"ld-tool", href:pageUrl("dashboard"), target:"_blank", rel:"noopener", text:"📊 Dashboard", onclick:() => dock.classList.remove("open")}),
-      el("p", {class:"ld-keys", text:"Keys: 1 / 2 call King / Queen finalists · K / Q reveal · S stop / play music · L slow · F full screen"})), dockBtn);
+      el("p", {class:"ld-keys", text:"Keys: Space next page → Top 3 → reveal → next · N next page · 1 / 2 call King / Queen · K / Q reveal · S / L music · F full screen"})), dockBtn);
   dockBtn.addEventListener("click", e => { e.stopPropagation(); Sound.unlock(); dock.classList.toggle("open"); });
   document.addEventListener("click", e => { if (!dock.contains(e.target)) dock.classList.remove("open"); });
   let awStop = false, awSoft = false;
   const awDuck = f => { Sound.duck(f); MUSIC.duck(f); };
   const awKeys = stageKeys({fixed:true, stop:() => { Sound.unlock(); awStop = !awStop; if (awStop) awSoft = false; awDuck(awStop ? 0 : 1); awKeys.paint(awStop, awSoft); },
     slow:() => { if (awStop) return; awSoft = !awSoft; awDuck(awSoft ? .22 : 1); awKeys.paint(awStop, awSoft); }});
-  app.append(el("div", {class:"ld aw"}, head, el("section", {class:"aw-body"}, cards.KING.box, cards.QUEEN.box), strip), dock, dlg, awKeys.el);
+  const awBody = el("section", {class:"aw-body"}, cards.KING.box, cards.QUEEN.box);
+  const nextBtn = el("button", {class:"ld-btn gold aw-next", type:"button", onclick:() => nextStage()});
+  function setStage(c){ only = c || ""; render(); }
+  /* N / Next: both awards → King page → Queen page → both */
+  function nextStage(){ setStage(only === "" ? "KING" : only === "KING" ? "QUEEN" : ""); }
+  const awRoot = el("div", {class:"ld aw"}, head, awBody, strip);
+  app.append(awRoot, dock, dlg, awKeys.el, nextBtn);
 
   function fullscreen(){ Sound.unlock(); goFull(); }
   function leaders(cat){
@@ -2320,22 +2739,28 @@ function viewAwards(pin){
     const cut = k > 0 && voted.length > k ? voted[k - 1].votes : 0;
     return voted.filter(n => n.votes >= cut).sort((a, b) => a.name.localeCompare(b.name));
   }
-  const callText = () => "🎤 Call the " + (A && A.finalists ? "top " + A.finalists : "nominees");
+  const callText = () => "🎤 " + (A && A.finalists ? "Top " + A.finalists : "All nominees");
   function render(){
     if (!A) return;
+    awBody.classList.toggle("single", !!only); awRoot.classList.toggle("ov", !only);
+    CAT_ORDER.forEach(cat => cards[cat].box.classList.toggle("on", only === cat));
+    nextBtn.textContent = only === "" ? "Start: " + A.labels.KING + " ›" : only === "KING" ? "Next: " + A.labels.QUEEN + " ›" : "‹ Both awards";
     CAT_ORDER.forEach(cat => {
       const c = cards[cat], L = leaders(cat);
       if (c.label.dataset.t !== A.labels[cat]){ c.label.dataset.t = A.labels[cat]; c.label.textContent = A.labels[cat]; c.label.append(glints(9)); }
       c.count.textContent = A.perCat[cat] + " vote" + (A.perCat[cat] === 1 ? "" : "s") + " · " + L.list.length + " nominee" + (L.list.length === 1 ? "" : "s");
       const r = revealed[cat];
-      if (r){ c.box.classList.add("done"); c.orb.innerHTML = ""; c.orb.append(el("span", {text:initials(r.names[0])})); c.name.textContent = r.names.join(" & "); c.meta.textContent = r.tie ? "It’s a tie! · " + r.votes + " votes each" : [r.staffId, r.dept, r.votes + " votes"].filter(Boolean).join(" · "); c.btn.textContent = "↺ Reveal again"; }
-      else { c.box.classList.remove("done"); c.orb.innerHTML = "<span>?</span>"; c.name.textContent = ""; c.meta.textContent = ""; c.btn.textContent = "👑 Reveal the " + (cat === "QUEEN" ? "Queen" : "King"); }
+      if (r){ c.box.classList.add("done"); c.orb.innerHTML = ""; const pic = r.ids && r.ids.length === 1 ? photos[r.ids[0]] : null;
+        c.orb.classList.toggle("photo", !!pic); c.orb.append(pic ? el("img", {src:pic, alt:""}) : el("span", {text:initials(r.names[0])})); c.name.textContent = r.names.join(" & "); c.meta.textContent = r.tie ? "It’s a tie! · " + r.votes + " votes each" : [r.staffId, r.dept, r.votes + " votes"].filter(Boolean).join(" · "); c.btn.textContent = "↺ Reveal again"; }
+      else { c.box.classList.remove("done"); c.orb.classList.remove("photo"); c.orb.innerHTML = "<span>?</span>"; c.name.textContent = ""; c.meta.textContent = ""; c.btn.textContent = "👑 Reveal the " + (cat === "QUEEN" ? "Queen" : "King"); }
       c.btn.disabled = !L.winners.length;
       c.callBtn.disabled = !L.winners.length; c.callBtn.textContent = callText();
+      /* award page: only the Top 3 button (the reveal comes after the finalists); hidden once revealed */
+      c.btn.style.display = only ? "none" : ""; c.callBtn.className = only ? "ld-btn gold" : "ld-btn"; c.callBtn.style.display = only && revealed[cat] ? "none" : "";
     });
     status.innerHTML = "";
     status.append(A.open ? el("span", {class:"aw-live"}, el("i"), "Voting is OPEN · scan to vote") : el("span", {class:"aw-closed", text:"Voting is closed"}),
-      el("span", {class:"aw-tot", text:" · " + A.voters + " guest" + (A.voters === 1 ? "" : "s") + " voted"}));
+      el("span", {class:"aw-tot", text:" · " + A.voters + " staff voted"}));
     strip.classList.toggle("closed", !A.open);
     if (!qrImg.src){ const q = qrcode(0, "M"); q.addData(pageUrl("vote")); q.make(); qrImg.src = q.createDataURL(6, 2); }
     if (dlg.open) renderSettings();
@@ -2346,7 +2771,7 @@ function viewAwards(pin){
   let showing = false;
   async function showNominees(cat){
     if (showing || revealing || !A) return; Sound.unlock();
-    await refresh();
+    await refresh(); await loadPhotos();
     if (!leaders(cat).winners.length){ toast("No votes yet for this award."); return; }
     if (A.open && confirm("Voting is still open. Close voting now and call the finalists?")){ try{ A = await call("apiSetVoting", pin, false); render(); }catch(e){ toast(errText(e)); } }
     const list = finalists(cat);
@@ -2361,8 +2786,8 @@ function viewAwards(pin){
     const key = e => { if (mc.key(e)){ e.preventDefault(); e.stopPropagation(); return; }
       if (e.key === "Escape"){ e.preventDefault(); e.stopPropagation(); close(false); } else if (e.key === "Enter"){ e.preventDefault(); e.stopPropagation(); go(); }
       else if (e.code === "Space" || e.key === " "){ e.preventDefault(); e.stopPropagation(); if (revealBtn.classList.contains("show")) go(); } };
-    const grid = el("div", {class:"awn-grid" + (list.length > 6 ? " many" : "")});
-    const revealBtn = el("button", {class:"ld-btn gold awn-go", type:"button", text:"👑 Reveal the " + label, onclick:go});
+    const grid = el("div", {class:"awn-grid" + (list.length > 6 ? " many" : "") + (list.some(photoOf) ? " pics" : "")});
+    const revealBtn = el("button", {class:"ld-btn gold awn-go", type:"button", text:"Next › Reveal the " + (cat === "QUEEN" ? "Queen" : "King"), onclick:go});
     const ov = el("div", {class:"awc awn " + cat.toLowerCase(), role:"dialog", "aria-label":"Nominees for " + label},
       el("canvas", {class:"cele-sky", "aria-hidden":"true"}),
       el("div", {class:"awc-spot l", "aria-hidden":"true"}), el("div", {class:"awc-spot r", "aria-hidden":"true"}),
@@ -2382,7 +2807,7 @@ function viewAwards(pin){
     list.forEach((n, i) => timers.push(setTimeout(() => {
       grid.append(el("div", {class:"awn-card"},
         el("span", {class:"awn-badge", text:"Finalist"}),
-        el("span", {class:"awn-av " + cat.toLowerCase(), text:initials(n.name)}),
+        photoOf(n) ? el("span", {class:"awn-av photo " + cat.toLowerCase()}, el("img", {src:photoOf(n), alt:""})) : el("span", {class:"awn-av " + cat.toLowerCase(), text:initials(n.name)}),
         el("p", {class:"awn-name", text:n.name}),
         el("p", {class:"awn-meta", text:[n.staffId, n.dept].filter(Boolean).join(" · ")})));
       if (!fm) Sound.lock(true, 2);
@@ -2394,12 +2819,13 @@ function viewAwards(pin){
   let revealing = false;
   async function reveal(cat){
     if (revealing || !A) return; Sound.unlock();
-    await refresh();
+    await refresh(); await loadPhotos();
     const L = leaders(cat);
     if (!L.winners.length){ toast("No votes yet for this award."); return; }
     if (A.open && confirm("Voting is still open. Close voting now and reveal the winner?")){ try{ A = await call("apiSetVoting", pin, false); render(); }catch(e){ toast(errText(e)); } }
     revealing = true;
-    const fin = finalists(cat), label = A.labels[cat], names = (fin.length ? fin : L.list).map(n => n.name);
+    const fin = finalists(cat), label = A.labels[cat], pool = (fin.length ? fin : L.list), names = pool.map(n => n.name);
+    const rollImg = el("img", {alt:""}), rollPic = el("div", {class:"awr-pic"}, rollImg);
     const roll = el("div", {class:"aw-roll", "aria-live":"off"});
     const words = ("The " + label + " is…").split(" ");
     const ov = el("div", {class:"awc awr " + cat.toLowerCase(), role:"dialog", "aria-label":"The " + label + " is…"},
@@ -2409,7 +2835,7 @@ function viewAwards(pin){
       el("div", {class:"awc-stage"},
         el("div", {class:"awc-crownwrap"}, el("div", {class:"awc-burst", "aria-hidden":"true"}), royalIcon(cat, "awr-crown")),
         el("p", {class:"awr-title", "aria-hidden":"true"}, words.map((w, i) => el("span", {class:"awr-w", style:"animation-delay:" + (0.25 + i * 0.12) + "s", text:w}))),
-        el("div", {class:"awr-rollwrap"}, roll)));
+        rollPic, el("div", {class:"awr-rollwrap"}, roll)));
     document.body.append(ov);
     celebrationSky(ov, ov.querySelector(".cele-sky"), 1, null, true);
     const secs = 7, rmp3 = autoAw.reveal;
@@ -2420,14 +2846,15 @@ function viewAwards(pin){
     (function spin(){
       const t = (performance.now() - start) / (secs * 1000);
       if (t >= 1){ stopV(); ov.remove(); winnerScreen(cat, L, !!rmp3); return; }
-      roll.textContent = names[Math.floor(Math.random() * names.length)];
+      const rn = pool[Math.floor(Math.random() * pool.length)]; roll.textContent = rn.name;
+      const rp = photoOf(rn); rollPic.classList.toggle("on", !!rp); if (rp && rollImg.src !== rp) rollImg.src = rp;
       roll.classList.remove("tick"); void roll.offsetWidth; roll.classList.add("tick");
       setTimeout(spin, 60 + 340 * Math.pow(t, 2.4));
     })();
   }
   function winnerScreen(cat, L, fanfareInMp3){
     const w = L.winners, tie = w.length > 1, label = A.labels[cat];
-    revealed[cat] = {names:w.map(x => x.name), staffId: tie ? "" : (w[0].staffId || ""), dept: tie ? "" : w[0].dept, votes:L.top, tie}; saveRev(); render();
+    revealed[cat] = {names:w.map(x => x.name), ids:w.map(x => x.id), staffId: tie ? "" : (w[0].staffId || ""), dept: tie ? "" : w[0].dept, votes:L.top, tie}; saveRev(); render();
     const title = label.toUpperCase();
     const am = A.music || autoAw.awards;
     const startMusic = () => { if (am) MUSIC.play(am, "Award music", 90, true).then(ok => { if (!ok) Sound.mode("win", 3); }); else { MUSIC.stop(600); Sound.mode("win", 3); } };
@@ -2436,6 +2863,7 @@ function viewAwards(pin){
     const key = e => { if (mc.key(e)){ e.preventDefault(); e.stopPropagation(); return; } if (["Escape", "Enter", " "].indexOf(e.key) >= 0){ e.preventDefault(); e.stopPropagation(); close(); } };
     const chip = (cls, icon, text) => text ? el("span", {class:"awc-chip " + cls}, el("i", {"aria-hidden":"true", text:icon}), el("span", {text:text})) : null;
     const people = w.map((x, i) => el("div", {class:"awc-person", style:"animation-delay:" + (1.1 + i * .25) + "s"},
+      photoOf(x) ? el("div", {class:"awc-photo-wrap"}, el("div", {class:"awc-photo", style:"animation-delay:" + (1.1 + i * .25) + "s"}, el("img", {src:photoOf(x), alt:""}))) : null,
       el("h2", {class:"awc-name"}, el("span", {text:x.name})),
       el("div", {class:"awc-chips"}, chip("id", "🪪", x.staffId), chip("dept", "🏛", x.dept))));
     const ov = el("div", {class:"awc " + cat.toLowerCase(), role:"dialog", "aria-label":title + ": " + w.map(x => x.name).join(" and ")},
@@ -2453,22 +2881,25 @@ function viewAwards(pin){
     document.addEventListener("keydown", key, true);
     document.body.append(ov);
     celebrationSky(ov, ov.querySelector(".cele-sky"), 3, cat);
+    royalFx(ov, cat);
+    [0, 260, 560].concat(cat === "QUEEN" ? [900, 1300] : []).forEach(t => setTimeout(() => { if (!ov.isConnected) return; const r = el("div", {class:"awx-ring", "aria-hidden":"true"}); ov.append(r); setTimeout(() => r.remove(), 1700); }, t));
     if (!fanfareInMp3) Sound.win(3);
     burstFx(cat, true); ov.classList.add("shake"); confetti(); setTimeout(confetti, 1000);
     setTimeout(() => { if (ov.isConnected && !mc.stopped) startMusic(); }, fanfareInMp3 ? 3600 : 1600);   /* after the fanfare */
   }
 
   /* ----- settings dialog ----- */
-  let tab = "nominees";
+  let tab = "results";
   function openSettings(t){ tab = t || tab; renderSettings(); if (!dlg.open) dlg.showModal(); }
   function renderSettings(){
     if (!A) return;
     dlg.innerHTML = "";
-    const tabs = [["nominees","Nominees"],["results","Live results"],["voting","Voting"],["music","Titles & music"],["reset","Reset"]];
+    const tabs = [["results","Live results"],["photos","Finalist photos"],["voting","Voting"],["music","Titles & music"],["reset","Reset"]];
     const nav = el("div", {class:"ld-tabs"}, tabs.map(([k, t]) => el("button", {type:"button", "aria-selected": tab === k, text:t, onclick:() => { tab = k; renderSettings(); }})));
     const pane = el("div", {class:"ld-pane"});
     if (tab === "nominees") pane.append(nomineesPane());
     if (tab === "results") pane.append(resultsPane());
+    if (tab === "photos") pane.append(photosPane());
     if (tab === "voting") pane.append(votingPane());
     if (tab === "music") pane.append(musicPane());
     if (tab === "reset") pane.append(resetPane());
@@ -2503,6 +2934,49 @@ function viewAwards(pin){
       el("p", {class:"muted small", text:"Add the shortlisted nominees for each award. Type a name to pick from registered guests. Guests vote from their phones on the voting page."}),
       wrap, el("div", {class:"row"}, save));
   }
+  /* a picture from the phone or laptop, made small enough to keep in the Google Sheet */
+  function shrinkPhoto(file){
+    return new Promise((ok, bad) => {
+      const img = new Image(), url = URL.createObjectURL(file);
+      img.onload = () => { URL.revokeObjectURL(url);
+        let size = 420, q = .82, out = "";
+        for (let k = 0; k < 8; k++){
+          const s = Math.min(1, size / Math.min(img.width, img.height)), w = Math.round(img.width * s), h = Math.round(img.height * s), side = Math.min(w, h);
+          const c = document.createElement("canvas"); c.width = c.height = side; const g = c.getContext("2d");
+          g.drawImage(img, (img.width - side / s) / 2, Math.max(0, (img.height - side / s) / 2.8), side / s, side / s, 0, 0, side, side);   /* square, a little above centre (faces) */
+          out = c.toDataURL("image/jpeg", q); if (out.length < 46000) return ok(out);
+          size = Math.round(size * .85); q = Math.max(.5, q - .06);
+        }
+        bad(new Error("That photo is too large. Please choose a smaller picture."));
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); bad(new Error("That file isn’t a picture. Please choose a JPG or PNG photo.")); };
+      img.src = url;
+    });
+  }
+  function photosPane(){
+    const box = el("div");
+    CAT_ORDER.forEach(cat => {
+      const list = finalists(cat).length ? finalists(cat) : leaders(cat).list.filter(n => n.votes > 0);
+      box.append(el("h3", {class:"vote-cat"}, royalIcon(cat, "sm"), el("span", {text:A.labels[cat] + " · " + (A.finalists ? "top " + A.finalists : "nominees")})));
+      if (!list.length) box.append(el("p", {class:"muted small", text:"No votes yet."}));
+      list.forEach(n => {
+        const pick = el("input", {type:"file", accept:"image/*", hidden:true});
+        pick.addEventListener("change", async () => { const f = pick.files && pick.files[0]; if (!f) return;
+          try{ toast("Uploading the photo…"); const data = await shrinkPhoto(f); photos = await call("apiSaveAwardPhoto", pin, n.id, n.name, data); render(); renderSettings(); toast("Photo saved for " + n.name + "."); }
+          catch(e){ toast(errText(e)); } });
+        box.append(el("div", {class:"ph-row"},
+          el("span", {class:"ph-av"}, photos[n.id] ? el("img", {src:photos[n.id], alt:""}) : initials(n.name)),
+          el("span", {class:"ph-t"}, el("b", {text:n.name}), el("small", {text:[n.staffId, n.dept].filter(Boolean).join(" · ")})),
+          pick,
+          el("button", {class:"btn", type:"button", text: photos[n.id] ? "Change photo" : "📷 Add photo", onclick:() => pick.click()}),
+          photos[n.id] ? el("button", {class:"btn mini", type:"button", text:"✕", "aria-label":"Remove photo", onclick: async () => { try{ photos = await call("apiSaveAwardPhoto", pin, n.id, n.name, ""); render(); renderSettings(); }catch(e){ toast(errText(e)); } }}) : null));
+      });
+    });
+    return el("div", null,
+      el("p", {class:"muted small", text:"After voting closes, add a photo for each finalist. The photo shows when the finalists are called to the stage and on the winner screen. Keep this screen away from the projector: the list shows who the finalists are."}),
+      A.open ? el("p", {class:"msg", text:"Voting is still open, so the finalists may still change."}) : null,
+      box);
+  }
   function resultsPane(){
     const box = el("div");
     CAT_ORDER.forEach(cat => {
@@ -2519,20 +2993,15 @@ function viewAwards(pin){
     const link = pageUrl("vote");
     return el("div", null,
       el("h3", {text: A.open ? "Voting is OPEN" : "Voting is CLOSED"}),
-      el("p", {class:"muted small", text:"Open voting when the nominees are announced, and close it just before the reveal. Revealing a winner also offers to close voting."}),
+      el("p", {class:"muted small", text:"Staff vote for anyone on the list of registered staff. Open voting when the emcee announces it, and close it just before the reveal. Revealing a winner also offers to close voting."}),
       el("div", {class:"row"}, el("button", {class:"btn primary", type:"button", text: A.open ? "Close voting" : "Open voting", onclick: async () => { try{ A = await call("apiSetVoting", pin, !A.open); render(); toast(A.open ? "Voting is open." : "Voting is closed."); }catch(e){ toast(errText(e)); } }})),
       el("h3", {text:"Finalists called to the stage"}),
       el("p", {class:"muted small", text:"“Call the top 3” shows only the nominees with the most votes (in alphabetical order, no vote counts), so the emcee can call them up before the reveal. Ties at the cut-off are all included."}),
       el("div", {class:"ld-seg", role:"radiogroup", "aria-label":"Finalists"}, [[3, "Top 3"], [4, "Top 4"], [5, "Top 5"], [0, "All nominees"]].map(([v, t]) =>
         el("label", null, el("input", {type:"radio", name:"fin", value:String(v), checked: (A.finalists || 0) === v, onchange: async () => { try{ A = await call("apiSaveAwardSettings", pin, {finalists:v}); render(); toast("Saved."); }catch(e){ toast(errText(e)); } }}), el("span", {text:t})))),
-      el("h3", {text:"Guests (no staff ID)"}),
-      el("div", {class:"ld-seg", role:"radiogroup", "aria-label":"Guests can vote"},
-        [[true, "Guests can vote (with their phone number)"], [false, "Staff only"]].map(([v, t]) => el("label", null,
-          el("input", {type:"radio", name:"gvote", checked: (A.guestsVote !== false) === v, onchange: async () => { try{ A = await call("apiSaveAwardSettings", pin, {guestsVote:v}); render(); toast(v ? "Guests can vote." : "Voting is now staff only."); }catch(e){ toast(errText(e)); } }}),
-          el("span", {text:t})))),
       el("h3", {text:"Who can vote"}),
       el("div", {class:"ld-seg", style:"flex-direction:column;align-items:stretch"},
-        [["FULL", "Registered staff: staff ID + last 4 phone digits (most secure)"], ["STAFFID", "Registered staff: staff ID only"], ["OPEN", "Open voting: anyone with the QR, one vote per phone"]]
+        [["AUTO", "Staff ID only, on the phone used to register (other phones also need the last 4 phone digits) · recommended"], ["FULL", "Registered staff: staff ID + last 4 phone digits"], ["STAFFID", "Registered staff: staff ID only"], ["OPEN", "Open voting: anyone with the QR, one vote per phone"]]
           .map(([v, t]) => el("label", null, el("input", {type:"radio", name:"vcheck", value:v, checked: A.check === v, onchange: async () => { try{ A = await call("apiSaveAwardSettings", pin, {check:v}); render(); toast("Saved."); }catch(e){ toast(errText(e)); } }}), el("span", {text:t})))),
       el("h3", {text:"Voting link and poster"}),
       el("p", {class:"small", style:"word-break:break-all", text:link}),
@@ -2576,16 +3045,19 @@ function viewAwards(pin){
 
   document.addEventListener("keydown", e => {
     const tag = (e.target.tagName || "").toLowerCase(); if (["input","select","textarea"].includes(tag) || dlg.open || revealing || showing) return;
-    if (tag === "button"){ if (!/^[12kKqQfFsSlL ]$/.test(e.key)) return; e.target.blur(); }
+    if (tag === "button"){ if (!/^[12kKqQfFsSlLnN ]$/.test(e.key)) return; e.target.blur(); }
+    if (e.key === "n" || e.key === "N"){ nextStage(); return; }
     if (e.key === "s" || e.key === "S"){ awKeys.el.querySelector(".skey").click(); return; }
     if (e.key === "l" || e.key === "L"){ awKeys.el.querySelectorAll(".skey")[1].click(); return; }
-    if (e.code === "Space" || e.key === " "){ e.preventDefault(); const next = CAT_ORDER.find(c => !revealed[c]); if (next) showNominees(next); return; }
+    if (e.code === "Space" || e.key === " "){ e.preventDefault();
+      if (only){ if (!revealed[only]) showNominees(only); else nextStage(); return; }   /* one award per page: after the reveal, Space goes to the next page */
+      nextStage(); return; }   /* overview: Space opens the King page */
     if (e.key === "1") showNominees("KING"); else if (e.key === "2") showNominees("QUEEN");
     else if (e.key === "q" || e.key === "Q") reveal("QUEEN"); else if (e.key === "k" || e.key === "K") reveal("KING"); else if (e.key === "f" || e.key === "F") fullscreen();
   });
   const kickMusic = () => { if (bgOn) return; Sound.unlock(); waitMusic(); };
   document.addEventListener("pointerdown", kickMusic, {once:true}); document.addEventListener("keydown", kickMusic, {once:true});
-  refresh(); setInterval(() => { if (!revealing && !dlg.open) refresh(); }, 10000);
+  refresh(); loadPhotos(); setInterval(() => { if (!revealing && !dlg.open) refresh(); }, 10000);
   call("apiDashboard", pin).then(d => { guests = d.rows.map(r => ({name:r.name, staffId:r.staffId, dept:r.dept})); }).catch(() => {});
 }
 
@@ -2712,14 +3184,6 @@ function viewDraw(pin){
       el("h3", {text:"Spin time"}), dur,
       el("h3", {text:"Draw from"}), src,
       el("p", {class:"muted small", text:"“Registered numbers only” is recommended: only people who scanned the QR code and registered can win."}),
-      el("h3", {text:"Guests in the lucky draw"}),
-      el("p", {class:"muted small", text:"Guests are people registered without a staff ID (" + (S.guests || 0) + " registered). Choose “Staff only” if the committee decides guests can’t win. Their numbers are then left out of the draw."}),
-      el("div", {class:"ld-seg", role:"radiogroup", "aria-label":"Guests in the lucky draw"},
-        [[true, "Yes, guests can win"], [false, "No, staff only"]].map(([v, t]) => el("label", null,
-          el("input", {type:"radio", name:"gdraw", checked: (st.guestsInDraw !== false) === v, onchange: async () => {
-            try{ S = await call("apiSaveDrawSettings", pin, {from:st.from, to:st.to, duration:st.duration, source:st.source, introVideo:st.introVideo || "", winnerMusic:st.winnerMusic || "", introMusic:st.introMusic || "", guestsInDraw:v});
-              render(); toast(v ? "Guests are in the lucky draw." : "Lucky draw is now staff only."); renderSettings(); }catch(e){ toast(errText(e)); } }}),
-          el("span", {text:t})))),
       el("h3", {text:"Your own music (optional)"}),
       el("p", {class:"muted small", text:"Sound only, no window: upload an MP3 next to index.html on GitHub (for example winner.mp3) and type its name. Add #t=45 to start 45 seconds in (winner.mp3#t=45). Or paste a YouTube link: the official YouTube player then shows in a small corner window, and some music videos block this. If a song can’t play, the built-in music plays instead. Leave empty to use winner.mp3 / intro.mp3 automatically if they are on GitHub, otherwise the built-in music."}),
       el("p", {class:"small", style:"margin:.6rem 0 .2rem;font-weight:700", text:"Winner music (while the winner walks up to collect)"}), el("div", {class:"row", style:"margin-top:0"}, wm, test(wm, "Winner music")),
@@ -3242,7 +3706,16 @@ function viewGuest(){
     return;
   }
   const mem = remembered();
-  if (mem){ viewResult(mem, "You’re registered. Enjoy the evening!", false); return; }
+  if (mem){
+    viewResult(mem, "You’re registered. Enjoy the evening!", false);
+    if (mem.staffId) call("apiMyReg", {staffId:mem.staffId, name:mem.name}).then(r => {
+      if (!r || B.view !== "form" || !document.body.contains(app)) return;
+      if (r.status === "none"){ forget(); viewForm(); return; }   /* cleared after a rehearsal: register again */
+      if (String(r.table || "") !== String(mem.table || "") || Number(r.luckyNo) !== Number(mem.luckyNo)){
+        const m2 = Object.assign({}, mem, {table:r.table || "", luckyNo:r.luckyNo}); remember(m2); viewResult(m2, "You’re registered. Enjoy the evening!", false); }
+    }).catch(() => {});
+    return;
+  }
   const name = el("input", {type:"text", id:"gname", autocomplete:"name", autocapitalize:"words", required:true});
   const company = el("input", {type:"text", id:"gcompany", autocomplete:"organization", placeholder:"e.g. Ministry of Higher Education"});
   const phone = el("input", {type:"tel", id:"gphone", inputmode:"tel", autocomplete:"tel", placeholder:"e.g. 012-345 6789", required:true});
@@ -3310,8 +3783,8 @@ function posterView(o){
     el("p", {class:"p2-fine", text:o.fine})));
 }
 function viewPoster(){
-  posterView({tone:"teal", badge:"Staff", title:["Staff", "Registration"], url:B.appUrl, alt:"QR code for staff registration",
-    cta:"Scan to register", steps:["Scan QR Code", "Fill in your details", "Get your lucky draw number"], fine:"No sign-in needed. One registration per person."});
+  posterView({tone:"gala", badge:"Staff Only", top:galaPair("poster-crowns"), title:["Staff", "Registration"], tag:"Lucky Draw & Table Seating", url:B.appUrl, alt:"QR code for staff registration",
+    cta:"Scan to register", steps:["Scan QR Code", "Fill in your details", ["Get your lucky number", "and your table / seating"]], fine:"No sign-in needed. One registration per person."});
 }
 function viewGuestPoster(){
   posterView({tone:"pink", badge:"Guest", title:["Guest", "Registration"], url:pageUrl("guest"), alt:"QR code for guest registration",
@@ -3319,12 +3792,12 @@ function viewGuestPoster(){
 }
 function viewVotePoster(){
   posterView({tone:"royal", badge:"Best Dressed", top:royalPair("poster-crowns"), title:["Vote for", "King & Queen"], tag:"Best Dressed of the Evening", url:pageUrl("vote"), alt:"QR code to vote for King and Queen",
-    cta:"Scan to vote", steps:["Scan QR Code", ["Enter your Staff ID", "Guests: Phone Number"], "Pick your King & Queen"], fine:"One vote per person for each award."});
+    cta:"Scan to vote", steps:["Scan QR Code", "Enter your Staff ID", "Pick your King & Queen from the staff list"], fine:"One vote per person for each award."});
 }
 
 if (B.view === "dashboard") viewDashboard();
-else if (B.view === "guest") viewGuest();
-else if (B.view === "guest-poster") viewGuestPoster();
+else if (B.view === "guest") viewForm();   /* staff only now */
+else if (B.view === "guest-poster") viewPoster();
 else if (B.view === "poster") viewPoster();
 else if (B.view === "kiosk") kioskPinGate(viewForm);
 else if (B.view === "draw") staffGate("Lucky draw", "Enter the staff PIN to run the lucky draw.", viewDraw);
