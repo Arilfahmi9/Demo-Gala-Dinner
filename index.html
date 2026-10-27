@@ -3698,6 +3698,9 @@ function viewDraw(pin){
       const P = S.prizes, i = P.findIndex(x => x.name === name), g = P.length - 1;
       k = i === g ? "grand" : i === g - 1 ? "first" : i === g - 2 ? "second" : i === g - 3 && i > 0 ? "third" : "";
     }
+    const tm = (S.settings && S.settings.tierMusic) || {};   /* rows in the Settings sheet: Third / Second / First / Grand prize music */
+    if (k && tm[k]) return tm[k];
+    if (k === "second" && tm.third) return tm.third;
     return k === "second" ? (autoMusic.second || autoMusic.third) : (autoMusic[k] || "");
   }
   ["background", "runway", "awards", "winner"].forEach(k => mp3Default(k + ".mp3").then(v => { autoMusic[k] = v; if (k === "background" && curTrack === "bg"){ curTrack = null; render(); } }));
