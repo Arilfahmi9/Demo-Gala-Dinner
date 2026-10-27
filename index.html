@@ -3820,7 +3820,7 @@ function viewDraw(pin){
     if (!w) return;
     /* stays on screen until the winner has collected the prize: Continue (Enter) or Prize collected (C) */
     const close = () => { if (!ov.isConnected) return; ov.classList.add("out"); document.removeEventListener("keydown", key, true); setTimeout(() => ov.remove(), 700); };
-    const collected = () => { close(); const p = pending(); if (p) act(p.id, "collected"); };
+    const collected = () => { if (ov.isConnected){ document.removeEventListener("keydown", key, true); ov.remove(); } quietNow(); const p = pending(); if (p) act(p.id, "collected"); };
     const key = e => {
       if (e.key === "Enter" || e.key === "Escape"){ e.preventDefault(); e.stopPropagation(); close(); }
       else if (e.key === "c" || e.key === "C"){ e.preventDefault(); e.stopPropagation(); collected(); }
@@ -4037,13 +4037,19 @@ function viewDraw(pin){
   async function refresh(){ try{ S = await call("apiDrawState", pin); render(); }catch(e){ handle(e); } }
   function handle(e){ if (/PIN/i.test(errText(e))){ PIN.del(); location.reload(); } else toast(errText(e)); }
   let syncP = Promise.resolve();
+  /* prize collected: silence and a clean "ready" screen straight away */
+  function quietNow(){
+    MUSIC.stop(0); try{ Sound.mode("draw", 1); }catch(e){}
+    document.querySelectorAll(".coin-canvas,.grand-banner,.bolt,.shock-ring,.land-burst,.lasers").forEach(e => e.remove());
+    num.classList.remove("zoomland", "grandnum", "lockhit");
+  }
   async function act(id, action, redraw){
     if (busy) return;
     /* Call again and Prize collected update the screen at once; the sheet is saved in the background */
     const w = S && S.winners.find(x => x.id === id);
     if (w && (action === "call" || action === "collected")){
       const before = JSON.stringify(S);
-      if (action === "call") w.calls = (w.calls || 0) + 1; else { w.status = "Collected"; MUSIC.stop(900); curTrack = null; }
+      if (action === "call") w.calls = (w.calls || 0) + 1; else { w.status = "Collected"; quietNow(); curTrack = "bg"; }
       render();
       syncP = call("apiWinnerAction", pin, id, action).then(r => { if (!busy){ S = r; render(); } if (dlg.open) renderSettings(); })
         .catch(e => { S = JSON.parse(before); render(); handle(e); });
