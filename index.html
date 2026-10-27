@@ -3678,7 +3678,19 @@ function viewDraw(pin){
   let mcSoft = false, mcStop = false, lastPhase = "";
   const sk = stageKeys({stop:() => toggleQuiet(), slow:() => toggleSoft(), fixed:true});
   function applyQuiet(){ const f = mcStop ? 0 : mcSoft ? .22 : 1; Sound.duck(f); MUSIC.duck(f); sk.paint(mcStop, mcSoft); }
-  const autoMusic = {winner:"", intro:"", countdown:"", background:"", runway:"", awards:""};
+  const autoMusic = {winner:"", intro:"", countdown:"", background:"", runway:"", awards:"", third:"", second:"", first:"", grand:""};
+  /* a song for each top prize, if the file is on GitHub: third.mp3, second.mp3 (else third.mp3), first.mp3, grand.mp3 */
+  ["third", "second", "first", "grand"].forEach(k => mp3Default(k + ".mp3").then(v => { autoMusic[k] = v; }));
+  function prizeSong(name){
+    if (!name || !S) return "";
+    const t = String(name).toLowerCase();
+    let k = /grand|utama/.test(t) ? "grand" : /first|1st|pertama/.test(t) ? "first" : /second|2nd|kedua/.test(t) ? "second" : /third|3rd|ketiga/.test(t) ? "third" : "";
+    if (!k){ /* not named: count back from the grand prize at the end of the list */
+      const P = S.prizes, i = P.findIndex(x => x.name === name), g = P.length - 1;
+      k = i === g ? "grand" : i === g - 1 ? "first" : i === g - 2 ? "second" : i === g - 3 && i > 0 ? "third" : "";
+    }
+    return k === "second" ? (autoMusic.second || autoMusic.third) : (autoMusic[k] || "");
+  }
   ["background", "runway", "awards", "winner"].forEach(k => mp3Default(k + ".mp3").then(v => { autoMusic[k] = v; if (k === "background" && curTrack === "bg"){ curTrack = null; render(); } }));
   /* music for each moment:  waiting = none · drawing = none (sound effects only) ·
      winner walking up = awards.mp3 for big / grand prizes, runway.mp3 for the others (winner.mp3 or the setting if you prefer) */
@@ -3689,7 +3701,8 @@ function viewDraw(pin){
     if (kind === "none"){ MUSIC.stop(0); Sound.mode("draw", tr); return; }
     /* waiting to draw: quiet (no background song); music only plays once a number is drawn and the winner is called */
     if (kind === "bg"){ MUSIC.stop(600); Sound.mode("draw", tr); return; }
-    const f = (S.settings && S.settings.winnerMusic) || (tr >= 2 ? autoMusic.awards : autoMusic.runway) || autoMusic.winner;
+    const wn = S && S.winners.find(x => x.id === id);
+    const f = prizeSong(wn && wn.prize) || (S.settings && S.settings.winnerMusic) || (tr >= 2 ? autoMusic.awards : autoMusic.runway) || autoMusic.winner;
     MUSIC.stop(0); Sound.mode("draw", tr);
     walkTimer = setTimeout(() => {
       if (curTrack !== k) return;
