@@ -552,6 +552,29 @@ body:not(.drawmode) .mc.fixed{display:none}
 .ph-av img{width:100%;height:100%;object-fit:cover}
 .ph-row .ph-t{flex:1;min-width:0}
 .ph-row .ph-t small{display:block;color:var(--muted)}
+/* ===== smoother on big screens: glows are fixed, only opacity / transform animate ===== */
+@keyframes finBlink{0%,100%{opacity:1}50%{opacity:.62}}
+@keyframes labelBlink{0%,100%{opacity:1}50%{opacity:.7}}
+@keyframes cardGlow{0%,100%{border-color:rgba(127,178,255,.75)}50%{border-color:rgba(255,122,198,.85)}}
+@keyframes orbPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+@keyframes stripGlow{0%,100%{border-color:rgba(242,207,115,.6)}50%{border-color:rgba(255,122,198,.85)}}
+@keyframes qrGlow{0%,100%{opacity:1}50%{opacity:.92}}
+.awn .awn-card,.awn-card{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.awn .awn-name{filter:drop-shadow(0 0 1.5px #000) drop-shadow(0 0 12px rgba(255,224,138,.75))!important;animation:shimmer 6s linear infinite,finBlink 1.6s ease-in-out infinite!important}
+.aw.ov .aw-card .aw-label{filter:drop-shadow(0 0 1.5px #000) drop-shadow(0 0 14px rgba(255,224,138,.6))!important;animation:shimmer 5s linear infinite,labelBlink 1.4s ease-in-out infinite!important}
+.aw.ov .aw-card{box-shadow:0 0 0 1px rgba(242,207,115,.3),0 0 50px rgba(255,61,154,.25)}
+.aw.ov .aw-orb{box-shadow:0 0 0 5px rgba(242,207,115,.6),0 0 50px rgba(255,122,198,.45)}
+.aw.ov .aw-qr{box-shadow:0 0 0 5px #F2CF73,0 0 45px rgba(255,61,154,.55)}
+.aw.ov .aw-strip{box-shadow:0 0 50px rgba(242,207,115,.25)}
+.aw-congrats-title{filter:drop-shadow(0 0 1.5px #000) drop-shadow(0 0 18px rgba(255,255,255,.6))}
+.aw.final .aw-name{filter:drop-shadow(0 0 1.5px #000) drop-shadow(0 0 16px rgba(255,224,138,.7))}
+/* finalist boxes: big enough for the photos */
+.awn .awn-card{width:clamp(15rem,24vw,24rem)!important;padding:2.6vh 1.2vw 2.4vh!important}
+.awn .awn-av,.awn-grid.pics .awn-av{width:clamp(8.5rem,24vh,14rem)!important;font-size:clamp(2.2rem,6vh,3.6rem)!important}
+.awn-grid{gap:2vw!important;max-width:96vw!important}
+.awn-grid.many .awn-card{width:clamp(11rem,17vw,17rem)!important}
+.awn-grid.many .awn-av{width:clamp(6rem,16vh,9rem)!important}
+.awn-go{font-size:clamp(.95rem,1.3vw,1.2rem)!important;min-width:min(22rem,70vw)!important;padding:clamp(.75rem,1.8vh,1.05rem) 1.8rem!important;letter-spacing:.14em}
 /* ===== King & Queen stage: LED-friendly text (white edge + dark outline) ===== */
 .awc .awc-title span,.awn .awc-title span,.awr .awr-w{-webkit-text-stroke:.022em rgba(255,255,255,.92);paint-order:stroke fill}
 .awc.king .awc-title span,.awr.king .awr-w{filter:drop-shadow(0 0 1.5px #0a0630) drop-shadow(0 0 1.5px #0a0630) drop-shadow(0 0 22px rgba(74,130,255,.85))!important}
@@ -627,6 +650,26 @@ body:not(.drawmode) .mc.fixed{display:none}
 @keyframes qrGlow{0%,100%{box-shadow:0 0 0 4px #F2CF73,0 0 30px rgba(242,207,115,.5)}50%{box-shadow:0 0 0 6px #FF7AC6,0 0 60px rgba(255,61,154,.7)}}
 .aw.ov .ld-title span{background-size:400% 100%!important;animation:shimmer 3.5s linear infinite!important}
 @media (prefers-reduced-motion:reduce){ .aw.ov *{animation:none!important} }
+/* finale: both winners revealed, back on the "both awards" page */
+.aw-congrats{display:none;text-align:center;margin:.4vh 0 1.2vh;position:relative;z-index:2}
+.aw.final .aw-congrats{display:block}
+.aw.final .aw-strip,.aw.final ~ .aw-next{display:none!important}
+.aw-congrats-kick{margin:0;font-weight:800;letter-spacing:.42em;text-transform:uppercase;color:#FFE08A;font-size:clamp(.9rem,2.4vh,1.6rem);text-shadow:0 0 14px rgba(242,207,115,.7),0 2px 0 #000;animation:fadeUp .8s ease both}
+.aw-congrats-title{margin:.3vh 0 0;font-family:var(--display);font-weight:800;text-transform:uppercase;letter-spacing:.06em;line-height:1.05;font-size:clamp(1.8rem,6.2vh,4.6rem);
+  background:linear-gradient(90deg,#7FB2FF,#FFE08A,#FF7AC6,#ffffff,#C38BFF,#7FB2FF);background-size:400% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:shimmer 3s linear infinite,labelBlink 1.4s ease-in-out infinite,popIn 1s cubic-bezier(.2,1.5,.4,1) both}
+@keyframes popIn{0%{opacity:0;transform:scale(.4)}100%{opacity:1;transform:none}}
+.aw-finale{position:fixed;inset:0;pointer-events:none;z-index:0}
+.aw-finale canvas{position:absolute;inset:0;width:100%;height:100%}
+.aw.final .aw-body,.aw.final .ld-head{position:relative;z-index:1}
+.aw.final .aw-card{justify-content:center!important}
+.aw.final .aw-orb{width:clamp(9rem,27vh,16rem)!important;border:5px solid #F2CF73}
+.aw.final .aw-card.queen .aw-orb{border-color:#FFB3DE}
+.aw.final .aw-name{font-size:clamp(1.9rem,5.4vh,4rem);background:linear-gradient(110deg,#FFF3C4,#ffffff 30%,#F2CF73 55%,#FFF3C4 80%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  -webkit-text-stroke:.02em rgba(255,255,255,.9);paint-order:stroke fill;animation:shimmer 3s linear infinite,finBlink 1.8s ease-in-out infinite}
+.aw.final .aw-card.queen .aw-name{background-image:linear-gradient(110deg,#FFE3F3,#ffffff 30%,#FF9AD0 55%,#FFE08A 80%)}
+.aw.final .aw-meta{color:#F3ECFF;font-size:clamp(1rem,2.4vh,1.5rem)}
+.aw.final .aw-count{display:none}
 /* thin see-through scrollbars; the dashboard scrolls inside the page so the background fills the edge */
 html{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.22) transparent}
 ::-webkit-scrollbar{width:8px;height:8px;background:transparent}
@@ -2292,7 +2335,7 @@ const MUSIC = (function(){
 
   /* twinkling stars, shooting stars, fireworks with star-shaped sparks and falling gold glitter */
 function celebrationSky(ov, cv, tr, petalKind, calm){
-  const cx = cv.getContext("2d"), dpr = devicePixelRatio || 1, W = innerWidth, H = innerHeight;
+  const cx = cv.getContext("2d"), dpr = Math.min(devicePixelRatio || 1, 1.25), W = innerWidth, H = innerHeight;
   cv.width = W * dpr; cv.height = H * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0);
   const cols = ["#F2CF73", "#FFF3C4", "#E0228A", "#F59E2B", "#B57BFF", "#6E95EE", "#7EE0B8", "#ffffff"];
   const stars = Array.from({length:tr >= 3 ? 200 : 140}, () => ({x:Math.random() * W, y:Math.random() * H, r:.6 + Math.random() * 1.8, ph:Math.random() * 6.3, sp:.02 + Math.random() * .05}));
@@ -2614,7 +2657,7 @@ function glints(n){ const b = el("span", {class:"glints", "aria-hidden":"true"})
 function vortexFx(host, cat, secs){
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return () => {};
   const cv = el("canvas", {class:"vortex-canvas", "aria-hidden":"true"}); host.prepend(cv);
-  const W = innerWidth, H = innerHeight, dpr = devicePixelRatio || 1; cv.width = W * dpr; cv.height = H * dpr;
+  const W = innerWidth, H = innerHeight, dpr = Math.min(devicePixelRatio || 1, 1.25); cv.width = W * dpr; cv.height = H * dpr;
   const cx = cv.getContext("2d"); cx.setTransform(dpr, 0, 0, dpr, 0, 0); const ox = W / 2, oy = H * .58, cols = PAL[cat];
   let parts = [], alive = true; const t0 = performance.now();
   (function frame(now){
@@ -2633,7 +2676,7 @@ function vortexFx(host, cat, secs){
 function royalFx(ov, cat){
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   const cv = el("canvas", {class:"awx-fx", "aria-hidden":"true"}); ov.insertBefore(cv, ov.querySelector(".awc-stage"));
-  const cx = cv.getContext("2d"), dpr = devicePixelRatio || 1, W = innerWidth, H = innerHeight;
+  const cx = cv.getContext("2d"), dpr = Math.min(devicePixelRatio || 1, 1.25), W = innerWidth, H = innerHeight;
   cv.width = W * dpr; cv.height = H * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0);
   const Q = cat === "QUEEN", t0 = performance.now(), ox = W / 2, oy = H * .42;
   let parts = [];
@@ -2678,7 +2721,7 @@ function burstFx(cat, big){
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   const fl = el("div", {class:"ld-flash gold", "aria-hidden":"true"}); document.body.append(fl); setTimeout(() => fl.remove(), 1100);
   const cv = el("canvas", {class:"coin-canvas", "aria-hidden":"true"}); document.body.append(cv);
-  const dpr = devicePixelRatio || 1, W = innerWidth, H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; const cx = cv.getContext("2d"); cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const dpr = Math.min(devicePixelRatio || 1, 1.25), W = innerWidth, H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; const cx = cv.getContext("2d"); cx.setTransform(dpr, 0, 0, dpr, 0, 0);
   const cols = PAL[cat], parts = [], ox = W / 2, oy = H * .5;
   for (let k = 0; k < (big ? 280 : 180); k++){ const a = Math.random() * 6.283, sp = 4 + Math.random() * (big ? 17 : 12);
     parts.push({x:ox, y:oy, vx:Math.cos(a) * sp, vy:Math.sin(a) * sp - 4, r:3 + Math.random() * 5, rot:Math.random() * 6, vr:(Math.random() - .5) * .4, life:0, coin:Math.random() < .55, c:cols[k % cols.length]}); }
@@ -2714,8 +2757,14 @@ function viewAwards(pin){
   }
   /* finalist photos (added after voting closes) */
   let photos = {};
-  const loadPhotos = () => call("apiAwardPhotos", pin).then(m => { photos = m || {}; render(); }).catch(() => {});
+  const loadPhotos = () => call("apiAwardPhotos", pin).then(m => { photos = m || {}; photosAt = Date.now(); render(); }).catch(() => {});
   const photoOf = n => n && photos[n.id];
+  let lastSync = 0, photosAt = 0;
+  /* use what this screen already has when voting is closed and it was refreshed in the last 30 s; otherwise fetch both at once */
+  async function syncNow(){
+    if (A && !A.open && photosAt && Date.now() - lastSync < 30000){ refresh(); loadPhotos(); return; }
+    await Promise.all([refresh(), loadPhotos()]);
+  }
   /* one award per page: "" = both side by side, "KING" = King page, "QUEEN" = Queen page */
   let only = (() => { const a = (new URLSearchParams(location.search).get("award") || location.hash.replace(/^#/, "")).toUpperCase(); return CAT_ORDER.indexOf(a) >= 0 ? a : ""; })();
   const revealed = (() => { try{ return JSON.parse(sessionStorage.getItem("ghg-revealed")) || {}; }catch(e){ return {}; } })();
@@ -2761,7 +2810,19 @@ function viewAwards(pin){
   function setStage(c){ only = c || ""; render(); }
   /* N / Next: both awards → King page → Queen page → both */
   function nextStage(){ setStage(only === "" ? "KING" : only === "KING" ? "QUEEN" : ""); }
-  const awRoot = el("div", {class:"ld aw"}, head, awBody, strip);
+  /* finale: shown on the "both awards" page once both winners are revealed */
+  const finale = el("div", {class:"aw-finale", "aria-hidden":"true"});
+  const congrats = el("div", {class:"aw-congrats"}, el("p", {class:"aw-congrats-kick", text:"Congratulations to our"}), el("h2", {class:"aw-congrats-title", text:"King & Queen of the Night"}));
+  let finaleOn = false;
+  function finaleFx(on){
+    if (on === finaleOn) return; finaleOn = on; finale.innerHTML = "";
+    if (!on) return;
+    const cv = el("canvas"); finale.append(cv);
+    celebrationSky(finale, cv, 3, "QUEEN");
+    confetti(); setTimeout(confetti, 900); setTimeout(() => { if (finaleOn) burstFx("QUEEN", true); }, 400);
+    try{ Sound.unlock(); Sound.win(3); }catch(e){}
+  }
+  const awRoot = el("div", {class:"ld aw"}, finale, head, congrats, awBody, strip);
   app.append(awRoot, dock, dlg, awKeys.el, nextBtn);
 
   function fullscreen(){ Sound.unlock(); goFull(); }
@@ -2781,6 +2842,8 @@ function viewAwards(pin){
   function render(){
     if (!A) return;
     awBody.classList.toggle("single", !!only); awRoot.classList.toggle("ov", !only);
+    const fin = !only && !!revealed.KING && !!revealed.QUEEN;
+    awRoot.classList.toggle("final", fin); nextBtn.hidden = fin; finaleFx(fin);
     CAT_ORDER.forEach(cat => cards[cat].box.classList.toggle("on", only === cat));
     nextBtn.textContent = only === "" ? "Start: " + A.labels.KING + " ›" : only === "KING" ? "Next: " + A.labels.QUEEN + " ›" : "‹ Both awards";
     CAT_ORDER.forEach(cat => {
@@ -2803,13 +2866,13 @@ function viewAwards(pin){
     if (!qrImg.src){ const q = qrcode(0, "M"); q.addData(pageUrl("vote")); q.make(); qrImg.src = q.createDataURL(6, 2); }
     if (dlg.open) renderSettings();
   }
-  async function refresh(){ try{ A = await call("apiAwardsState", pin); render(); }catch(e){ if (/PIN/i.test(errText(e))){ PIN.del(); location.reload(); } else toast(errText(e)); } }
+  async function refresh(){ try{ A = await call("apiAwardsState", pin); lastSync = Date.now(); render(); }catch(e){ if (/PIN/i.test(errText(e))){ PIN.del(); location.reload(); } else toast(errText(e)); } }
 
   /* ----- call the nominees to the stage (no votes shown), then reveal from there ----- */
   let showing = false;
   async function showNominees(cat){
     if (showing || revealing || !A) return; Sound.unlock();
-    await refresh(); await loadPhotos();
+    await syncNow();
     if (!leaders(cat).winners.length){ toast("No votes yet for this award."); return; }
     if (A.open && confirm("Voting is still open. Close voting now and call the finalists?")){ try{ A = await call("apiSetVoting", pin, false); render(); }catch(e){ toast(errText(e)); } }
     const list = finalists(cat);
@@ -2825,7 +2888,7 @@ function viewAwards(pin){
       if (e.key === "Escape"){ e.preventDefault(); e.stopPropagation(); close(false); } else if (e.key === "Enter"){ e.preventDefault(); e.stopPropagation(); go(); }
       else if (e.code === "Space" || e.key === " "){ e.preventDefault(); e.stopPropagation(); if (revealBtn.classList.contains("show")) go(); } };
     const grid = el("div", {class:"awn-grid" + (list.length > 6 ? " many" : "") + (list.some(photoOf) ? " pics" : "")});
-    const revealBtn = el("button", {class:"ld-btn gold awn-go", type:"button", text:"Next › Reveal the " + (cat === "QUEEN" ? "Queen" : "King"), onclick:go});
+    const revealBtn = el("button", {class:"ld-btn gold awn-go", type:"button", text:"👑 Reveal the " + (cat === "QUEEN" ? "Queen" : "King"), onclick:go});
     const ov = el("div", {class:"awc awn " + cat.toLowerCase(), role:"dialog", "aria-label":"Nominees for " + label},
       el("canvas", {class:"cele-sky", "aria-hidden":"true"}),
       el("div", {class:"awc-spot l", "aria-hidden":"true"}), el("div", {class:"awc-spot r", "aria-hidden":"true"}),
@@ -2857,7 +2920,7 @@ function viewAwards(pin){
   let revealing = false;
   async function reveal(cat){
     if (revealing || !A) return; Sound.unlock();
-    await refresh(); await loadPhotos();
+    await syncNow();
     const L = leaders(cat);
     if (!L.winners.length){ toast("No votes yet for this award."); return; }
     if (A.open && confirm("Voting is still open. Close voting now and reveal the winner?")){ try{ A = await call("apiSetVoting", pin, false); render(); }catch(e){ toast(errText(e)); } }
@@ -3095,7 +3158,7 @@ function viewAwards(pin){
   });
   const kickMusic = () => { if (bgOn) return; Sound.unlock(); waitMusic(); };
   document.addEventListener("pointerdown", kickMusic, {once:true}); document.addEventListener("keydown", kickMusic, {once:true});
-  refresh(); loadPhotos(); setInterval(() => { if (!revealing && !dlg.open) refresh(); }, 10000);
+  refresh(); loadPhotos(); setInterval(() => { if (!revealing && !showing && !dlg.open) refresh(); }, 10000); setInterval(() => { if (!revealing && !showing && !dlg.open) loadPhotos(); }, 30000);
   call("apiDashboard", pin).then(d => { guests = d.rows.map(r => ({name:r.name, staffId:r.staffId, dept:r.dept})); }).catch(() => {});
 }
 
@@ -3396,7 +3459,7 @@ function viewDraw(pin){
       document.querySelector(".ld").classList.add("quake"); setTimeout(() => document.querySelector(".ld") && document.querySelector(".ld").classList.remove("quake"), 900);
       /* gold rain from the top for a few seconds */
       const cv = el("canvas", {class:"coin-canvas", "aria-hidden":"true"}); document.body.append(cv);
-      const dpr = devicePixelRatio || 1, W = innerWidth, H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; const cx = cv.getContext("2d"); cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const dpr = Math.min(devicePixelRatio || 1, 1.25), W = innerWidth, H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; const cx = cv.getContext("2d"); cx.setTransform(dpr, 0, 0, dpr, 0, 0);
       const drops = []; const t0 = performance.now();
       (function frame(now){
         if (now - t0 < 3500) for (let k = 0; k < 6; k++) drops.push({x:Math.random() * W, y:-20, vy:3 + Math.random() * 5, r:4 + Math.random() * 5, rot:Math.random() * 6, vr:(Math.random() - .5) * .3});
@@ -3444,7 +3507,7 @@ function viewDraw(pin){
     panel.classList.add("spinfx"); if (tr >= 2) panel.classList.add("hot");
     document.querySelector(".ld").classList.add("dim");
     const cv = el("canvas", {class:"spin-canvas", "aria-hidden":"true"}); panel.prepend(cv);
-    const r = panel.getBoundingClientRect(), dpr = devicePixelRatio || 1, W = r.width, H = r.height, cx0 = W / 2, cy0 = H * .5;
+    const r = panel.getBoundingClientRect(), dpr = Math.min(devicePixelRatio || 1, 1.25), W = r.width, H = r.height, cx0 = W / 2, cy0 = H * .5;
     cv.width = W * dpr; cv.height = H * dpr; const cx = cv.getContext("2d"); cx.setTransform(dpr, 0, 0, dpr, 0, 0);
     const cols = tr >= 3 ? ["#FFF3C4", "#F2CF73", "#FF7AC6", "#ffffff"] : tr === 2 ? ["#F2CF73", "#FF7AC6", "#B57BFF", "#FFF3C4"] : ["#F2CF73", "#FFF3C4", "#8FB2FF", "#FF9AD0"];
     let parts = [], alive = true; const t0 = performance.now();
@@ -3473,7 +3536,7 @@ function viewDraw(pin){
     num.classList.remove("zoomland"); void num.offsetWidth; num.classList.add("zoomland");
     const burst = el("div", {class:"land-burst" + (tr >= 3 ? " grand" : ""), "aria-hidden":"true"}); panel.append(burst); setTimeout(() => burst.remove(), 1800);
     const cv = el("canvas", {class:"coin-canvas", "aria-hidden":"true"}); document.body.append(cv);
-    const dpr = devicePixelRatio || 1, W = innerWidth, H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; const cx = cv.getContext("2d"); cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const dpr = Math.min(devicePixelRatio || 1, 1.25), W = innerWidth, H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; const cx = cv.getContext("2d"); cx.setTransform(dpr, 0, 0, dpr, 0, 0);
     const nr = num.getBoundingClientRect(), ox = nr.left + nr.width / 2, oy = nr.top + nr.height / 2;
     const parts = [];
     const n = tr >= 3 ? 260 : tr === 2 ? 190 : 140;
@@ -3506,7 +3569,7 @@ function viewDraw(pin){
   function fireworks(count, tr){
     let cv = document.getElementById("fw");
     if (!cv){ cv = el("canvas", {id:"fw", "aria-hidden":"true"}); document.body.append(cv); }
-    const cx = cv.getContext("2d"), dpr = devicePixelRatio || 1; cv.width = innerWidth * dpr; cv.height = innerHeight * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const cx = cv.getContext("2d"), dpr = Math.min(devicePixelRatio || 1, 1.25); cv.width = innerWidth * dpr; cv.height = innerHeight * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0);
     const cols = ["#F2CF73", "#FFF3C4", "#E0228A", "#F59E2B", "#8B3FC1", "#4A63E0", "#7EE0B8"];
     let rockets = [], sparks = [], running = true;
     for (let i = 0; i < count; i++){
@@ -3726,7 +3789,7 @@ function confetti(){
   if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   let cv = document.getElementById("confetti");
   if (!cv){ cv = el("canvas", {id:"confetti", "aria-hidden":"true"}); document.body.append(cv); }
-  const cx = cv.getContext("2d"), dpr = devicePixelRatio || 1; cv.width = innerWidth*dpr; cv.height = innerHeight*dpr; cx.setTransform(dpr,0,0,dpr,0,0);
+  const cx = cv.getContext("2d"), dpr = Math.min(devicePixelRatio || 1, 1.25); cv.width = innerWidth*dpr; cv.height = innerHeight*dpr; cx.setTransform(dpr,0,0,dpr,0,0);
   const cs = getComputedStyle(document.documentElement), cols = ["--jade","--saffron","--rose","--lapis","--gold"].map(h => cs.getPropertyValue(h).trim());
   let bits = []; for (let i = 0; i < 200; i++){ const a = Math.random()*Math.PI*2, s = 4+Math.random()*9; bits.push({x:innerWidth/2, y:innerHeight*.45, vx:Math.cos(a)*s, vy:Math.sin(a)*s-5, w:5+Math.random()*7, h:3+Math.random()*5, r:Math.random()*6, vr:(Math.random()-.5)*.35, c:cols[i%5], life:0}); }
   (function frame(){ cx.clearRect(0,0,innerWidth,innerHeight);
